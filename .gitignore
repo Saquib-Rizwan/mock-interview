@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+*.log
+
+# Python
+ml-service/venv/
+ml-service/__pycache__/
+ml-service/**/__pycache__/
+*.pyc
+
+# Prisma
+backend/prisma/migrations/dev.db
+
+# Editors/OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
