@@ -1,6 +1,6 @@
 # Phase 0 — Project Scaffolding
 
-Status: ready for review.
+Status: **complete and verified** (confirmed working end to end, 2026-08-02).
 
 ## What was implemented
 
@@ -68,7 +68,7 @@ Postgres runs in Docker with a named volume `mock-interview_pgdata`, so data sur
 
 - **No Prisma models.** `schema.prisma` declares the datasource and generator only. All models land in Phase 1.
 - **Backend does not connect to Postgres at runtime.** Prisma's connection is verified via CLI, but no `PrismaClient` is instantiated in `src/index.ts` yet — nothing needs the DB until Phase 1.
-- **Frontend not visually verified by me.** No browser automation is available in this environment. I confirmed: TypeScript compiles, `vite build` succeeds, the dev server serves HTML, and the backend endpoint the page calls returns correct JSON with permissive CORS headers. **The rendered page itself is unverified — that's the one thing that needs your eyes.** See verification step 5.
+- ~~**Frontend not visually verified by me.**~~ **Resolved.** No browser automation was available in this environment, so I verified only that TypeScript compiles, `vite build` succeeds, the dev server serves HTML, and the backend endpoint returns correct JSON with permissive CORS headers. The user confirmed in a browser that the page renders `Backend: ok` / `ML service: ok`, closing the browser→backend hop.
 - **CORS is wide open** (`cors()` with no options, `Access-Control-Allow-Origin: *`). Fine for local dev, must be restricted to a known origin before any deployment.
 - **No auth, no business logic, no tests.** Phase 0 is deliberately a walking skeleton.
 - **No process manager.** Each service is started in its own terminal by hand. If juggling three terminals gets annoying, `concurrently` or adding backend/ml-service to docker-compose are the options — deferred, not needed yet.
@@ -134,6 +134,6 @@ echo "SELECT 1;" | npx prisma db execute --stdin --schema prisma/schema.prisma
 ```
 This opens a connection using `DATABASE_URL` from `.env` and runs a trivial query. Expect `Script executed successfully.` A failure here means the connection string is wrong or the container isn't up — the error will name which.
 
-## Open question for Phase 1
+## Decision carried into Phase 1
 
-Whether to move to Prisma 7 before defining models. Cheaper to do now than after migrations exist.
+**Prisma stays on 6.x.** Considered upgrading to 7 before defining models (cheaper before migrations exist than after), decided against it: 6.19 already generates the Prisma 7 patterns that matter (`prisma-client` generator, `prisma.config.ts`), and 6.x has far better documentation coverage — which matters more than being current while learning the tool. The CLI's upgrade nag can be ignored. Revisit only if a needed feature is 7-only.

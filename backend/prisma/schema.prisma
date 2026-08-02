@@ -1,8 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+// Prisma schema for the placement interview prep platform.
+// Table/column names are mapped to snake_case so raw SQL needs no quoting.
 
 generator client {
   provider = "prisma-client"
@@ -12,4 +9,103 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// Round types are an enum, not a table, so new types need no schema migration
+// beyond adding a variant.
+enum RoundType {
+  aptitude
+  technical
+  hr
+  coding
+  group_discussion
+  managerial
+  other
+}
+
+enum QuestionCategory {
+  company_specific
+  os
+  cn
+  dbms
+  dsa
+  general_hr
+  other
+}
+
+enum QuestionType {
+  text
+  coding
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+}
+
+model Company {
+  id    String @id @default(uuid())
+  name  String @unique
+  roles Role[]
+
+  @@map("company")
+}
+
+model Role {
+  id        String  @id @default(uuid())
+  companyId String  @map("company_id")
+  name      String
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  rounds    Round[]
+
+  // The same role name may exist at different companies, but not twice at one.
+  @@unique([companyId, name])
+  @@map("role")
+}
+
+model Round {
+  id        String    @id @default(uuid())
+  roleId    String    @map("role_id")
+  // Explicit sequence within the role. Mapped to order_index because ORDER is
+  // a reserved SQL word.
+  order     Int       @map("order_index")
+  roundType RoundType @map("round_type")
+  roundName String    @map("round_name")
+  notes     String?
+  role      Role      @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  questions RoundQuestion[]
+
+  @@unique([roleId, order])
+  @@map("round")
+}
+
+model Question {
+  id       String           @id @default(uuid())
+  text     String
+  category QuestionCategory
+  // Discrete points, kept separate so Phase 4 can hand the LLM a checklist
+  // rather than prose it has to re-parse.
+  expectedAnswerPoints String[]     @map("expected_answer_points")
+  difficulty           Difficulty
+  questionType         QuestionType @map("question_type")
+
+  rounds RoundQuestion[]
+
+  @@map("question")
+}
+
+// Join table: lets general-bank questions attach to any round alongside
+// company-specific ones.
+model RoundQuestion {
+  roundId    String   @map("round_id")
+  questionId String   @map("question_id")
+  round      Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  // No cascade from Question: general-bank questions are shared across
+  // companies, so removing one round must never delete the question itself.
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@id([roundId, questionId])
+  @@map("round_question")
 }
