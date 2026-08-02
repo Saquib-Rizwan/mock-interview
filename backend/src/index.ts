@@ -1,6 +1,8 @@
 import "dotenv/config";
 import cors from "cors";
 import express from "express";
+import type { NextFunction, Request, Response } from "express";
+import { authRouter } from "./auth/routes";
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 4000;
@@ -39,6 +41,16 @@ app.get("/health/full", async (_req, res) => {
   }
 
   res.json(result);
+});
+
+app.use("/auth", authRouter);
+
+// Last-resort handler. Async routes reach it via the asyncHandler wrapper,
+// which forwards promise rejections to next(). Errors are logged in full but
+// never returned to the client, since stack traces leak internals.
+app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+  console.error(err);
+  res.status(500).json({ error: "Internal server error" });
 });
 
 app.listen(PORT, () => {

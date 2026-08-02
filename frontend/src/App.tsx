@@ -1,43 +1,50 @@
-import { useEffect, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { ProtectedRoute } from "./auth/ProtectedRoute";
+import { useAuth } from "./auth/useAuth";
+import { Dashboard } from "./pages/Dashboard";
+import { Login } from "./pages/Login";
+import { Signup } from "./pages/Signup";
 import "./App.css";
 
-const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL ?? "http://localhost:4000";
-
-type HealthFull = {
-  backend: string;
-  mlService: { status: string; error?: string };
-};
+// Keeps a logged-in user off the login/signup pages, which would otherwise let
+// them overwrite their own session.
+function PublicOnly({ children }: { children: React.ReactNode }) {
+  const { user, loading } = useAuth();
+  if (loading) return <p className="centered">Loading…</p>;
+  return user ? <Navigate to="/" replace /> : <>{children}</>;
+}
 
 function App() {
-  const [health, setHealth] = useState<HealthFull | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(`${BACKEND_URL}/health/full`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json() as Promise<HealthFull>;
-      })
-      .then(setHealth)
-      .catch((err) => setError(err instanceof Error ? err.message : String(err)));
-  }, []);
-
   return (
-    <main style={{ fontFamily: "sans-serif", padding: "2rem" }}>
-      <h1>Mock Interview Prep — Phase 0</h1>
-      <p>This page calls the backend, which in turn calls the ml-service.</p>
-      {error && <p style={{ color: "crimson" }}>Error reaching backend: {error}</p>}
-      {!error && !health && <p>Loading...</p>}
-      {health && (
-        <ul>
-          <li>Backend: {health.backend}</li>
-          <li>
-            ML service: {health.mlService.status}
-            {health.mlService.error ? ` (${health.mlService.error})` : ""}
-          </li>
-        </ul>
-      )}
+    <main>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            <PublicOnly>
+              <Login />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicOnly>
+              <Signup />
+            </PublicOnly>
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        {/* Unknown paths go home; ProtectedRoute then decides login vs dashboard. */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </main>
   );
 }

@@ -44,6 +44,19 @@ enum Difficulty {
   hard
 }
 
+// Mapped to app_user because USER is a reserved word in PostgreSQL: an
+// unquoted `SELECT * FROM user` resolves to the current database user rather
+// than erroring, which is a confusing failure to debug.
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String?
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("app_user")
+}
+
 model Company {
   id    String @id @default(uuid())
   name  String @unique
