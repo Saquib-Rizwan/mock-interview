@@ -137,3 +137,13 @@ This opens a connection using `DATABASE_URL` from `.env` and runs a trivial quer
 ## Decision carried into Phase 1
 
 **Prisma stays on 6.x.** Considered upgrading to 7 before defining models (cheaper before migrations exist than after), decided against it: 6.19 already generates the Prisma 7 patterns that matter (`prisma-client` generator, `prisma.config.ts`), and 6.x has far better documentation coverage — which matters more than being current while learning the tool. The CLI's upgrade nag can be ignored. Revisit only if a needed feature is 7-only.
+
+---
+
+## In plain English
+
+This phase built **nothing that a user can see** — and that was the point. The goal was a "walking skeleton": four pieces of software that each do almost nothing, but which can prove they're able to talk to each other. Getting three languages (TypeScript, Python, SQL) and four processes to cooperate is the part that usually goes wrong, and it's much cheaper to find that out now than after you've written real features on top.
+
+The four pieces are a **React frontend** (the pages you see, port 5173), a **Node/Express backend** (the brain that decides everything, port 4000), a **Python FastAPI service** (which will call the LLM later, port 8001), and **PostgreSQL** running inside Docker (the database, port 5433). The rule that shapes everything afterwards is that the frontend never talks to the database or the Python service directly — it only ever asks the backend, and the backend goes and gets whatever is needed. That keeps one place responsible for security and business rules.
+
+The trick used to prove it all works is the `/health/full` endpoint. Anyone can write four programs that each claim "I'm alive" in isolation; that proves nothing about whether they can reach each other. So `/health/full` makes the backend actually call the Python service and report back what it heard. When the browser shows `Backend: ok, ML service: ok`, three separate network hops just succeeded in sequence. Everything after this phase is built on that foundation being solid.

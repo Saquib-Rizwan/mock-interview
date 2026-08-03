@@ -149,3 +149,13 @@ The heavier option: drops the entire database, re-applies every migration from s
 Ran and confirmed: the migration applied cleanly; all five verification queries above return the stated results; the seed produces identical counts when run twice (idempotent); `npm run build` compiles with no TypeScript errors against the regenerated client.
 
 Not verified: nothing in this phase is user-visible, so there is no UI check to do. Prisma Studio is offered above for convenience rather than as a gap in my testing.
+
+---
+
+## In plain English
+
+This phase decided **the shape of the data** — what a company, a role, an interview round and a question actually are, and how they connect. Getting this wrong is the expensive kind of wrong: once real data exists, changing the shape means migrations, rewrites and things quietly breaking. So the whole phase is five tables and a lot of deliberate thinking, with no visible output.
+
+The chain is straightforward: a **Company** has many **Roles**, a Role has many **Rounds**, and rounds are explicitly numbered so "round 3" always means round 3 rather than "whatever the database happened to return third". The interesting piece is how questions attach. A question is *not* owned by a round. Instead there's a fifth table, `RoundQuestion`, that just records pairs — "this round uses that question". That indirection is what lets one general OS question be used by TCS, Deloitte and every future company at once, while a TCS-specific question sits in the same round beside it. Change that one question and it updates everywhere it's used. The seed proves this literally: *"Tell me about yourself"* is a single row referenced by both companies' HR rounds.
+
+The seeded data is deliberately lopsided — TCS has four rounds including coding, Deloitte has two with none — because a schema that only ever sees one shape hasn't been tested. Two other choices are worth knowing about. Expected answer points are stored as a **list**, not a paragraph, so Phase 4 can hand the AI a checklist to grade against instead of prose it has to interpret. And deleting a question that's still attached to rounds is **blocked** by the database, while deleting a company cleanly removes its whole tree — because a company's rounds are meaningless without it, but a shared question being silently stripped from every company is a disaster you'd notice far too late.
