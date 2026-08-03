@@ -11,6 +11,70 @@ export type User = {
 
 export type AuthResponse = { token: string; user: User };
 
+export type RoundType =
+  | "aptitude"
+  | "technical"
+  | "hr"
+  | "coding"
+  | "group_discussion"
+  | "managerial"
+  | "other";
+
+export type QuestionCategory =
+  | "company_specific"
+  | "os"
+  | "cn"
+  | "dbms"
+  | "dsa"
+  | "general_hr"
+  | "other";
+
+export type Difficulty = "easy" | "medium" | "hard";
+
+export type CompanySummary = { id: string; name: string; roleCount: number };
+export type RoleSummary = { id: string; name: string; roundCount: number };
+
+export type CompanyDetail = {
+  id: string;
+  name: string;
+  roles: RoleSummary[];
+};
+
+export type RoundSummary = {
+  id: string;
+  order: number;
+  roundType: RoundType;
+  roundName: string;
+  notes: string | null;
+  questionCount: number;
+};
+
+export type RoleDetail = {
+  id: string;
+  name: string;
+  company: { id: string; name: string };
+  rounds: RoundSummary[];
+};
+
+// expectedAnswerPoints is intentionally absent — the server does not send it.
+export type QuestionSummary = {
+  id: string;
+  text: string;
+  category: QuestionCategory;
+  difficulty: Difficulty;
+  questionType: "text" | "coding";
+};
+
+export type RoundDetail = {
+  id: string;
+  order: number;
+  roundType: RoundType;
+  roundName: string;
+  notes: string | null;
+  role: { id: string; name: string; company: { id: string; name: string } };
+  questions: QuestionSummary[];
+};
+
 // Thrown for any non-2xx response so callers can show the server's message
 // rather than a generic failure.
 export class ApiError extends Error {
@@ -58,6 +122,11 @@ export const api = {
     }),
 
   me: () => request<{ user: User }>("/auth/me"),
+
+  companies: () => request<{ companies: CompanySummary[] }>("/catalog/companies"),
+  company: (id: string) => request<{ company: CompanyDetail }>(`/catalog/companies/${id}`),
+  role: (id: string) => request<{ role: RoleDetail }>(`/catalog/roles/${id}`),
+  round: (id: string) => request<{ round: RoundDetail }>(`/catalog/rounds/${id}`),
 
   healthFull: () =>
     request<{ backend: string; mlService: { status: string; error?: string } }>(

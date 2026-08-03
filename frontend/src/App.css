@@ -1,8 +1,39 @@
-main {
+/* ---------------------------------------------------------------- chrome */
+
+.topbar {
   display: flex;
-  justify-content: center;
-  padding: 3rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.25rem;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
 }
+
+.brand {
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.page {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* Login and signup center a single card instead of a content column. */
+.page > .card {
+  margin: 2rem auto 0;
+}
+
+/* ----------------------------------------------------------------- forms */
 
 .card {
   width: 100%;
@@ -15,13 +46,19 @@ main {
 }
 
 h1 {
-  margin: 0 0 1.25rem;
-  font-size: 1.4rem;
+  margin: 0 0 0.4rem;
+  font-size: 1.5rem;
+}
+
+h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.05rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  margin-top: 1.25rem;
 }
 
 label {
@@ -61,9 +98,149 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.link-button {
+  background: none;
+  color: var(--accent);
+  padding: 0;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
 a {
   color: var(--accent);
 }
+
+/* ------------------------------------------------------------ navigation */
+
+.crumbs {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.crumbs a {
+  text-decoration: none;
+}
+
+.crumbs a:hover {
+  text-decoration: underline;
+}
+
+.tiles,
+.rounds,
+.questions {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.9rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.tile:hover {
+  border-color: var(--accent);
+}
+
+.tile:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tile-title {
+  font-weight: 600;
+}
+
+/* Company/role tiles: title left, count right. */
+.tiles .tile {
+  justify-content: space-between;
+}
+
+.round-index {
+  flex: 0 0 1.75rem;
+  height: 1.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.round-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+  min-width: 0;
+}
+
+/* -------------------------------------------------------------- questions */
+
+.question {
+  padding: 0.9rem 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.question-text {
+  margin: 0 0 0.6rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.badge-coding,
+.badge-hard {
+  border-color: color-mix(in srgb, var(--error) 45%, transparent);
+  color: var(--error);
+}
+
+.badge-easy {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+.note {
+  margin: 0.75rem 0 0;
+  padding: 0.7rem 0.85rem;
+  border-left: 3px solid var(--border);
+  background: var(--card);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ----------------------------------------------------------------- misc */
 
 code {
   font-family: ui-monospace, Consolas, monospace;
@@ -87,31 +264,8 @@ code {
   font-size: 0.85rem;
 }
 
-.mono {
-  font-family: ui-monospace, Consolas, monospace;
-  font-size: 0.85rem;
-}
-
 .centered {
   text-align: center;
   color: var(--muted);
   padding: 2rem;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.4rem 1rem;
-  margin: 1.25rem 0;
-  font-size: 0.92rem;
-}
-
-.details dt {
-  font-weight: 600;
-  color: var(--muted);
-}
-
-.details dd {
-  margin: 0;
-  overflow-wrap: anywhere;
 }

@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import type { NextFunction, Request, Response } from "express";
 import { authRouter } from "./auth/routes";
+import { catalogRouter } from "./catalog/routes";
 
 const app = express();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 4000;
@@ -44,6 +45,7 @@ app.get("/health/full", async (_req, res) => {
 });
 
 app.use("/auth", authRouter);
+app.use("/catalog", catalogRouter);
 
 // Last-resort handler. Async routes reach it via the asyncHandler wrapper,
 // which forwards promise rejections to next(). Errors are logged in full but

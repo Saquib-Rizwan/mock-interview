@@ -1,51 +1,94 @@
+import type { ReactNode } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { useAuth } from "./auth/useAuth";
-import { Dashboard } from "./pages/Dashboard";
+import { Layout } from "./components/Layout";
+import { Companies } from "./pages/Companies";
+import { CompanyDetail } from "./pages/CompanyDetail";
 import { Login } from "./pages/Login";
+import { RoleDetail } from "./pages/RoleDetail";
+import { RoundDetail } from "./pages/RoundDetail";
 import { Signup } from "./pages/Signup";
 import "./App.css";
 
 // Keeps a logged-in user off the login/signup pages, which would otherwise let
 // them overwrite their own session.
-function PublicOnly({ children }: { children: React.ReactNode }) {
+function PublicOnly({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <p className="centered">Loading…</p>;
   return user ? <Navigate to="/" replace /> : <>{children}</>;
 }
 
+// Every browse page needs the same guard and chrome, so they are composed once
+// here rather than repeated per route.
+function Private({ children }: { children: ReactNode }) {
+  return (
+    <ProtectedRoute>
+      <Layout>{children}</Layout>
+    </ProtectedRoute>
+  );
+}
+
 function App() {
   return (
-    <main>
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PublicOnly>
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <PublicOnly>
+            <main className="page">
               <Login />
-            </PublicOnly>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <PublicOnly>
+            </main>
+          </PublicOnly>
+        }
+      />
+      <Route
+        path="/signup"
+        element={
+          <PublicOnly>
+            <main className="page">
               <Signup />
-            </PublicOnly>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-        {/* Unknown paths go home; ProtectedRoute then decides login vs dashboard. */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </main>
+            </main>
+          </PublicOnly>
+        }
+      />
+
+      <Route
+        path="/"
+        element={
+          <Private>
+            <Companies />
+          </Private>
+        }
+      />
+      <Route
+        path="/companies/:id"
+        element={
+          <Private>
+            <CompanyDetail />
+          </Private>
+        }
+      />
+      <Route
+        path="/roles/:id"
+        element={
+          <Private>
+            <RoleDetail />
+          </Private>
+        }
+      />
+      <Route
+        path="/rounds/:id"
+        element={
+          <Private>
+            <RoundDetail />
+          </Private>
+        }
+      />
+
+      {/* Unknown paths go home; ProtectedRoute then decides login vs companies. */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
 
