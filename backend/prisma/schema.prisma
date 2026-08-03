@@ -54,7 +54,31 @@ model User {
   name         String?
   createdAt    DateTime @default(now()) @map("created_at")
 
+  submissions Submission[]
+
   @@map("app_user")
+}
+
+// One saved attempt at a text question, with the LLM's feedback on it.
+// Gap analysis and suggested answer are separate columns so the UI can present
+// them differently and later analytics can query gaps on their own.
+model Submission {
+  id              String   @id @default(uuid())
+  userId          String   @map("user_id")
+  questionId      String   @map("question_id")
+  answerText      String   @map("answer_text")
+  gapAnalysis     String   @map("gap_analysis")
+  suggestedAnswer String   @map("suggested_answer")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Restrict, not Cascade: a question still referenced by submitted work should
+  // not be deletable out from under that history.
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  // History is always read as "this user's attempts at this question".
+  @@index([userId, questionId])
+  @@map("submission")
 }
 
 model Company {
@@ -104,7 +128,8 @@ model Question {
   difficulty           Difficulty
   questionType         QuestionType @map("question_type")
 
-  rounds RoundQuestion[]
+  rounds      RoundQuestion[]
+  submissions Submission[]
 
   @@map("question")
 }

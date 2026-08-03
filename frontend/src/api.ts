@@ -65,6 +65,28 @@ export type QuestionSummary = {
   questionType: "text" | "coding";
 };
 
+export type QuestionDetail = {
+  id: string;
+  text: string;
+  category: QuestionCategory;
+  difficulty: Difficulty;
+  questionType: "text" | "coding";
+  // How many criteria the answer is graded against. The criteria themselves
+  // stay on the server.
+  expectedPointCount: number;
+};
+
+export type PointVerdict = { point: string; covered: boolean; comment: string };
+
+export type Submission = {
+  id: string;
+  questionId?: string;
+  answerText: string;
+  gapAnalysis: string;
+  suggestedAnswer: string;
+  createdAt: string;
+};
+
 export type RoundDetail = {
   id: string;
   order: number;
@@ -127,6 +149,19 @@ export const api = {
   company: (id: string) => request<{ company: CompanyDetail }>(`/catalog/companies/${id}`),
   role: (id: string) => request<{ role: RoleDetail }>(`/catalog/roles/${id}`),
   round: (id: string) => request<{ round: RoundDetail }>(`/catalog/rounds/${id}`),
+  question: (id: string) =>
+    request<{ question: QuestionDetail }>(`/catalog/questions/${id}`),
+
+  submit: (questionId: string, answerText: string) =>
+    request<{ submission: Submission; points: PointVerdict[] }>("/submissions", {
+      method: "POST",
+      body: JSON.stringify({ questionId, answerText }),
+    }),
+
+  submissionsFor: (questionId: string) =>
+    request<{ submissions: Submission[] }>(
+      `/submissions?questionId=${encodeURIComponent(questionId)}`
+    ),
 
   healthFull: () =>
     request<{ backend: string; mlService: { status: string; error?: string } }>(

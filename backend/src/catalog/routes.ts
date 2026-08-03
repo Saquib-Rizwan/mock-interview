@@ -98,6 +98,32 @@ catalogRouter.get(
   })
 );
 
+// Single question, for the answering page. expectedAnswerPoints stays server
+// side for the same reason as in the round listing: it is the answer key.
+catalogRouter.get(
+  "/questions/:id",
+  asyncHandler(async (req, res) => {
+    const question = await prisma.question.findUnique({
+      where: { id: req.params.id },
+      select: {
+        id: true,
+        text: true,
+        category: true,
+        difficulty: true,
+        questionType: true,
+        // Count only, so the UI can say "graded against 5 points" without
+        // revealing what they are.
+        expectedAnswerPoints: true,
+      },
+    });
+
+    if (!question) return res.status(404).json({ error: "Question not found" });
+
+    const { expectedAnswerPoints, ...rest } = question;
+    res.json({ question: { ...rest, expectedPointCount: expectedAnswerPoints.length } });
+  })
+);
+
 catalogRouter.get(
   "/rounds/:id",
   asyncHandler(async (req, res) => {

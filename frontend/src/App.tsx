@@ -6,6 +6,7 @@ import { Layout } from "./components/Layout";
 import { Companies } from "./pages/Companies";
 import { CompanyDetail } from "./pages/CompanyDetail";
 import { Login } from "./pages/Login";
+import { QuestionDetail } from "./pages/QuestionDetail";
 import { RoleDetail } from "./pages/RoleDetail";
 import { RoundDetail } from "./pages/RoundDetail";
 import { Signup } from "./pages/Signup";
@@ -82,6 +83,15 @@ function App() {
         element={
           <Private>
             <RoundDetail />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/questions/:id"
+        element={
+          <Private>
+            <QuestionDetail />
           </Private>
         }
       />

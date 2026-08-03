@@ -230,6 +230,135 @@ a {
   color: var(--accent);
 }
 
+/* -------------------------------------------------- answering & feedback */
+
+a.question {
+  display: block;
+  text-decoration: none;
+  color: var(--text);
+}
+
+a.question:hover {
+  border-color: var(--accent);
+}
+
+a.question:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.lead {
+  font-size: 1.05rem;
+  margin: 0.5rem 0 0.75rem;
+}
+
+textarea {
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  resize: vertical;
+}
+
+textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+h3 {
+  margin: 1.25rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.verdicts {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.verdicts li {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 0.9rem;
+}
+
+.verdict-mark {
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.verdicts .covered {
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
+.verdicts .covered .verdict-mark {
+  color: var(--ok);
+}
+
+.verdicts .missed {
+  border-color: color-mix(in srgb, var(--error) 45%, transparent);
+}
+
+.verdicts .missed .verdict-mark {
+  color: var(--error);
+}
+
+.feedback {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.suggested {
+  margin-top: 1.25rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.suggested summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.suggested p {
+  margin-top: 0.75rem;
+  font-size: 0.92rem;
+}
+
+.attempts {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.attempts li {
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.attempt-answer {
+  margin: 0.35rem 0;
+  font-size: 0.9rem;
+  white-space: pre-wrap;
+}
+
 .note {
   margin: 0.75rem 0 0;
   padding: 0.7rem 0.85rem;

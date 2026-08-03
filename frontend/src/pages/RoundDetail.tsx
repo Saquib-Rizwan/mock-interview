@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { api } from "../api";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { CATEGORY_LABELS, ROUND_TYPE_LABELS } from "../components/labels";
@@ -46,21 +46,22 @@ export function RoundDetail() {
       ) : (
         <ul className="questions">
           {round.questions.map((q) => (
-            <li key={q.id} className="question">
-              <p className="question-text">{q.text}</p>
-              <div className="tags">
-                <span className="badge">{CATEGORY_LABELS[q.category]}</span>
-                <span className={`badge badge-${q.difficulty}`}>{q.difficulty}</span>
-                {q.questionType === "coding" && <span className="badge">Coding</span>}
-              </div>
+            <li key={q.id}>
+              {/* Carries the round id so the question page can link back. */}
+              <Link to={`/questions/${q.id}?round=${round.id}`} className="question">
+                <p className="question-text">{q.text}</p>
+                <div className="tags">
+                  <span className="badge">{CATEGORY_LABELS[q.category]}</span>
+                  <span className={`badge badge-${q.difficulty}`}>{q.difficulty}</span>
+                  {q.questionType === "coding" && <span className="badge">Coding</span>}
+                </div>
+              </Link>
             </li>
           ))}
         </ul>
       )}
 
-      <p className="muted small">
-        Answering is not built yet — that comes in the next phase.
-      </p>
+      <p className="muted small">Click a question to answer it and get feedback.</p>
     </>
   );
 }
