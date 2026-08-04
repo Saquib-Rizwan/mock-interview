@@ -1,0 +1,206 @@
+[
+  {
+    "text": "Name the seven layers of the OSI model and state the unit of data at each.",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Physical (bits), Data Link (frames), Network (packets), Transport (segments), Session, Presentation, Application",
+      "Physical handles raw bit transmission over the medium",
+      "Data Link handles framing, MAC addressing and error/flow control on a single link",
+      "Network handles logical addressing and routing between networks",
+      "Transport handles process-to-process delivery, reliability and congestion control",
+      "Session manages dialogs, Presentation handles translation/encryption/compression, Application is the user interface"
+    ]
+  },
+  {
+    "text": "What is the difference between a hub, a switch and a router?",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A hub works at the physical layer and simply broadcasts incoming data to all connected ports",
+      "A switch works at the data link layer and forwards frames only to the correct port using MAC addresses",
+      "A router works at the network layer and forwards packets between different networks using IP addresses and a routing table",
+      "A hub creates one shared collision domain; a switch gives each port its own collision domain",
+      "A switch reduces unnecessary traffic; a router additionally separates broadcast domains"
+    ]
+  },
+  {
+    "text": "Explain circuit switching, message switching and packet switching, and where each is used.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Circuit switching reserves a dedicated path for the whole duration of the communication, as in traditional telephone networks",
+      "Circuit switching is reliable with fixed delay but wastes capacity when the link is idle",
+      "Message switching stores and forwards a complete message at each node, suitable for non-real-time data like email",
+      "Packet switching splits data into independently routed packets, used by the internet",
+      "Packet switching uses bandwidth efficiently and handles bursty traffic well, but packets may be delayed, lost or arrive out of order"
+    ]
+  },
+  {
+    "text": "Compare the datagram approach and the virtual circuit approach in packet switching.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Datagram is connectionless: no path is set up beforehand and each packet is routed independently",
+      "Virtual circuit is connection-oriented: a path is established before data transfer and all packets follow it",
+      "Datagram packets carry the full destination address, giving higher per-packet overhead",
+      "Virtual circuit packets carry a short circuit identifier instead, lowering overhead",
+      "Datagram packets may arrive out of order or be lost; virtual circuit packets arrive in order and more reliably",
+      "IP uses the datagram approach; ATM and Frame Relay use virtual circuits"
+    ]
+  },
+  {
+    "text": "What is the difference between flow control and congestion control?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Flow control prevents a fast sender from overwhelming a slow receiver",
+      "Flow control is an end-to-end concern based on the receiver's buffer/window size",
+      "Congestion control prevents senders from overwhelming the network itself",
+      "Congestion control responds to conditions inside the network, such as router queue buildup and packet loss",
+      "TCP implements flow control via the advertised receive window and congestion control via slow start, congestion avoidance, fast retransmit and fast recovery"
+    ]
+  },
+  {
+    "text": "Explain the Stop-and-Wait, Go-Back-N and Selective Repeat protocols.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Stop-and-Wait sends one frame and waits for its acknowledgement before sending the next; window size is 1",
+      "Stop-and-Wait is simple but inefficient because the sender is idle while waiting",
+      "Go-Back-N allows N unacknowledged frames in flight and uses cumulative acknowledgements",
+      "On error, Go-Back-N retransmits the lost frame and every frame after it, even correctly received ones",
+      "Selective Repeat retransmits only the specific lost or damaged frames and buffers out-of-order frames at the receiver",
+      "Selective Repeat is more efficient but requires more buffering and more complex bookkeeping"
+    ]
+  },
+  {
+    "text": "How does CRC differ from a simple checksum for error detection?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A checksum computes a sum-based value over the data, transmits it, and the receiver recomputes and compares",
+      "CRC treats the data as a polynomial and uses polynomial division to produce a remainder as the check value",
+      "CRC is substantially more robust, particularly at detecting burst errors",
+      "Checksums are cheaper to compute and are used in TCP/UDP/IP headers",
+      "CRC is used at the data link layer, for example in the Ethernet frame trailer, and in storage systems",
+      "Both detect errors only; neither corrects them"
+    ]
+  },
+  {
+    "text": "Explain CSMA/CD and CSMA/CA, and why wireless networks use CA rather than CD.",
+    "category": "cn",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Both sense the medium before transmitting to reduce collisions",
+      "CSMA/CD detects collisions during transmission, sends a jam signal, then backs off for a random time and retries",
+      "CSMA/CA tries to avoid collisions using an interframe space and a random backoff within a contention window before transmitting",
+      "CSMA/CA relies on acknowledgements, since a sender assumes collision if no ACK arrives",
+      "Wireless cannot reliably detect collisions because a station cannot listen while transmitting and because of the hidden terminal problem",
+      "CSMA/CD is used in legacy shared Ethernet; CSMA/CA is used in Wi-Fi"
+    ]
+  },
+  {
+    "text": "What is subnetting and why is it useful?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Subnetting divides a large network into smaller logical networks called subnets",
+      "Bits are borrowed from the host portion to create the subnet portion",
+      "Number of subnets is 2 raised to the borrowed bits; usable hosts per subnet is 2 raised to the remaining host bits, minus 2",
+      "Two addresses are reserved per subnet: the network ID (all host bits 0) and the broadcast address (all host bits 1)",
+      "Benefits include more efficient IP allocation, reduced broadcast traffic and congestion, and better security through isolation"
+    ]
+  },
+  {
+    "text": "What are the main differences between IPv4 and IPv6?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "IPv4 uses 32-bit addresses, IPv6 uses 128-bit addresses, solving address exhaustion",
+      "IPv4 has a variable header of 20 to 60 bytes; IPv6 has a fixed 40-byte header",
+      "IPv6 removes the header checksum to speed up router processing",
+      "IPv6 replaces the IPv4 options field with separate extension headers",
+      "In IPv6 fragmentation is done only by the source, not by intermediate routers",
+      "IPv6 renames TTL to Hop Limit and adds a Flow Label field for flow identification"
+    ]
+  },
+  {
+    "text": "What is ARP and what problem does it solve?",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Address Resolution Protocol maps a known IP address to the corresponding MAC address on a local network",
+      "It is needed because delivery on a LAN happens using MAC addresses, not IP addresses",
+      "The sender first checks its ARP cache for the mapping",
+      "If absent, it broadcasts an ARP request asking who owns that IP",
+      "The device with that IP replies with its MAC address, which the sender caches for future use"
+    ]
+  },
+  {
+    "text": "What is NAT and why is it needed?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Network Address Translation lets many devices with private IP addresses share one public IP address",
+      "It exists because the IPv4 address space is limited and cannot give every device a public address",
+      "It runs on a router or firewall at the network boundary",
+      "It rewrites IP addresses and port numbers, tracking mappings in a NAT table",
+      "It also provides incidental security by hiding the internal network structure from outside"
+    ]
+  },
+  {
+    "text": "Explain the TCP connection termination process.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Termination normally takes four steps because the connection is full duplex and each direction closes independently",
+      "The client sends FIN to indicate it has no more data to send",
+      "The server acknowledges with ACK, at which point the connection is half-closed",
+      "The server may continue sending data, then sends its own FIN when ready",
+      "The client sends a final ACK and the connection is fully closed",
+      "A three-way variant occurs when the server combines its ACK and FIN into one segment"
+    ]
+  },
+  {
+    "text": "Explain what happens, step by step, when you type a URL into a browser and press Enter.",
+    "category": "cn",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The browser checks its cache, then the OS resolver and local DNS cache, for the domain's IP address",
+      "If not cached, a DNS query is resolved via the root server, the TLD server and finally the authoritative name server",
+      "ARP resolves the MAC address of the default gateway for the first hop",
+      "A TCP connection is established with the server using the three-way handshake, and TLS is negotiated for HTTPS",
+      "The browser sends an HTTP GET request and the server responds with the resource",
+      "The browser parses the HTML and issues further requests for referenced assets, then renders the page"
+    ]
+  },
+  {
+    "text": "What are the four types of network delay, and which of them is affected by congestion?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Transmission delay: time to push all bits of the packet onto the link, equal to packet size divided by bandwidth",
+      "Propagation delay: time for a bit to travel across the medium, equal to distance divided by propagation velocity",
+      "Queueing delay: time the packet waits in a router's buffer before being processed",
+      "Processing delay: time the router takes to examine the header and decide where to forward",
+      "Queueing delay is the one most affected by congestion, and it has no fixed formula because it depends on live traffic",
+      "Total nodal delay is the sum of all four"
+    ]
+  }
+]

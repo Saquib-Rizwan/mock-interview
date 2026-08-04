@@ -29,6 +29,9 @@ enum QuestionCategory {
   cn
   dbms
   dsa
+  // Added in Phase 5 when OOPS source material arrived and fitted no existing
+  // category. Filing it under `other` would have made it unfilterable.
+  oops
   general_hr
   other
 }

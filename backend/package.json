@@ -5,11 +5,14 @@
   "type": "commonjs",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
     "db:seed": "prisma db seed",
     "db:reset": "prisma migrate reset",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "ingest": "tsx scripts/ingest-questions.ts",
+    "attach": "tsx scripts/attach-questions.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",

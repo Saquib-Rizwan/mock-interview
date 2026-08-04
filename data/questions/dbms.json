@@ -1,0 +1,205 @@
+[
+  {
+    "text": "What are the ACID properties of a transaction? Give an example of each.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Atomicity: a transaction executes fully or not at all, with partial changes rolled back on failure",
+      "Consistency: the database moves from one valid state to another, with all constraints satisfied",
+      "Isolation: concurrent transactions do not interfere with each other's intermediate state",
+      "Durability: once committed, changes survive crashes, typically via write-ahead logging",
+      "Example: a bank transfer must debit and credit together (atomicity) and must persist once confirmed (durability)"
+    ]
+  },
+  {
+    "text": "Explain the three levels of data abstraction in a DBMS.",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Physical level: how data is actually stored on disk, including file structures, blocks and indexes",
+      "Logical level: what data is stored and how it relates, in terms of tables, columns, data types and constraints",
+      "View level: customised subsets of the logical data presented to particular users",
+      "Each higher level is insulated from changes made at the level beneath it",
+      "Developers work at the logical level while users see the view level and the physical level stays hidden"
+    ]
+  },
+  {
+    "text": "What is the difference between logical and physical data independence?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Logical independence is the ability to change the logical schema without rewriting application programs",
+      "Example of logical independence: splitting an Address column into Street, City and PIN without breaking existing apps",
+      "Physical independence is the ability to change physical storage without affecting the logical schema",
+      "Example of physical independence: moving data from HDD to SSD or adding an index, with no SQL changes needed",
+      "Physical independence is easier to achieve in practice than logical independence"
+    ]
+  },
+  {
+    "text": "Explain super key, candidate key, primary key, alternate key and foreign key.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A super key is any set of columns that uniquely identifies a row, possibly with redundant columns",
+      "A candidate key is a minimal super key: removing any column destroys uniqueness",
+      "The primary key is the candidate key chosen as the official row identifier; it must be unique and not null",
+      "Alternate keys are the remaining candidate keys not chosen as primary",
+      "A foreign key references the primary or alternate key of another table and may be null if the relationship is optional",
+      "Every primary key is a candidate key and every candidate key is a super key, but not the reverse"
+    ]
+  },
+  {
+    "text": "What is a functional dependency? Explain partial and transitive dependencies.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "X determines Y means any two rows agreeing on X must agree on Y",
+      "A partial dependency is when a non-key attribute depends on only part of a composite primary key",
+      "Partial dependencies violate 2NF and are removed by splitting the table",
+      "A transitive dependency is when a non-key attribute depends on another non-key attribute, so A determines B and B determines C",
+      "Transitive dependencies violate 3NF and cause update anomalies",
+      "Example: roll number determines student name is a partial dependency if the key is (roll number, course code)"
+    ]
+  },
+  {
+    "text": "What is BCNF, and how does it differ from 3NF?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "BCNF requires that for every functional dependency X determines Y, X must be a super key",
+      "3NF additionally allows a dependency where the dependent attribute is itself part of a candidate key",
+      "BCNF is therefore stricter: every BCNF relation is in 3NF, but not every 3NF relation is in BCNF",
+      "BCNF violations typically arise when there are overlapping candidate keys",
+      "Decomposing to BCNF is always lossless but may not preserve all functional dependencies",
+      "3NF can always be achieved while preserving dependencies, which is why it is sometimes preferred"
+    ]
+  },
+  {
+    "text": "What is denormalisation? When is it justified and what does it cost?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Deliberately introducing controlled redundancy to avoid expensive joins",
+      "Techniques include merging tables, adding derived/pre-computed columns, and materialised views",
+      "Justified for read-heavy, write-light workloads such as dashboards and analytics reports",
+      "Costs include extra storage and slower writes because duplicated data must be kept in sync",
+      "Main risk is update anomalies and stale data when copies drift out of sync",
+      "Should be applied only after measuring that joins are the real bottleneck"
+    ]
+  },
+  {
+    "text": "What is the difference between the WHERE and HAVING clauses in SQL?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "WHERE filters individual rows before grouping takes place",
+      "HAVING filters groups after GROUP BY has been applied",
+      "Aggregate functions cannot be used in WHERE but can be used in HAVING",
+      "Logical evaluation order is FROM, WHERE, GROUP BY, HAVING, SELECT, ORDER BY, LIMIT",
+      "Filtering early in WHERE is usually more efficient because fewer rows reach the grouping stage"
+    ]
+  },
+  {
+    "text": "Explain INNER JOIN, LEFT JOIN, RIGHT JOIN and FULL OUTER JOIN.",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "INNER JOIN returns only rows with a match in both tables",
+      "LEFT JOIN returns all rows from the left table plus matching rows from the right, with nulls where there is no match",
+      "RIGHT JOIN returns all rows from the right table plus matching rows from the left",
+      "FULL OUTER JOIN returns all rows from both tables, with nulls where there is no match on either side",
+      "A LEFT JOIN with a WHERE clause requiring the right key to be null finds rows present only in the left table"
+    ]
+  },
+  {
+    "text": "What are the isolation levels in SQL, and which anomaly does each prevent?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Read Uncommitted prevents nothing and allows dirty reads",
+      "Read Committed prevents dirty reads by only reading committed data",
+      "Repeatable Read additionally prevents non-repeatable reads by holding shared locks on read rows",
+      "Serializable additionally prevents phantom reads, typically using range or predicate locks",
+      "A dirty read sees another transaction's uncommitted change that may later be rolled back",
+      "Stronger isolation means more safety but more locking and lower concurrency"
+    ]
+  },
+  {
+    "text": "Explain dirty read, non-repeatable read and phantom read with examples.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Dirty read: a transaction reads data written by another transaction that has not committed and may roll back",
+      "Non-repeatable read: a transaction reads the same row twice and gets different values because another transaction updated and committed in between",
+      "Phantom read: a transaction re-runs a range query and sees new rows that another transaction inserted and committed",
+      "The difference is that non-repeatable reads concern changed rows while phantoms concern newly appearing rows",
+      "They are prevented by Read Committed, Repeatable Read and Serializable respectively"
+    ]
+  },
+  {
+    "text": "What is two-phase locking (2PL), and how does strict 2PL improve on it?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "2PL has a growing phase where a transaction acquires locks and a shrinking phase where it releases them",
+      "Once a transaction releases any lock it may not acquire another",
+      "This guarantees conflict serializability",
+      "Basic 2PL still permits cascading aborts, because another transaction may read data that is later rolled back",
+      "Strict 2PL holds all exclusive locks until commit or abort",
+      "Strict 2PL prevents both dirty reads and dirty writes and is what most real systems implement"
+    ]
+  },
+  {
+    "text": "What is an index, and what is the trade-off in adding one?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "An index is an auxiliary sorted structure that lets the database locate rows without scanning the whole table",
+      "It turns a sequential scan into a lookup, typically O(log n) with a B+ tree",
+      "The cost is extra storage plus slower inserts, updates and deletes, since every index must be maintained",
+      "Indexes are only used if the query allows it; applying a function to an indexed column usually prevents index use",
+      "Over-indexing a write-heavy table can do more harm than good"
+    ]
+  },
+  {
+    "text": "What is the difference between a B-tree and a B+ tree, and why do databases prefer B+ trees for indexes?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "In a B-tree, keys and data pointers appear in both internal nodes and leaves",
+      "In a B+ tree, all keys are duplicated down to the leaves and internal nodes only guide the search",
+      "B+ tree leaves are linked left to right in a sequential chain",
+      "The linked leaves make range scans and ordered traversal very efficient",
+      "Because internal nodes hold only keys, each node fits more keys, giving a shallower tree and fewer disk reads",
+      "This is why most DBMS index implementations use B+ trees"
+    ]
+  },
+  {
+    "text": "What is sharding, and what makes a good shard key?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Sharding splits a large database horizontally into independent pieces called shards, each hosted separately",
+      "It is a form of horizontal scaling that improves performance, scalability and availability",
+      "Common strategies are range-based, hash-based, directory-based and geographic sharding",
+      "A good shard key has high cardinality so data can spread across many shards",
+      "It should distribute traffic evenly to avoid hotspots on popular values",
+      "Monotonically increasing keys such as timestamps make poor shard keys because all new writes land on one shard"
+    ]
+  }
+]

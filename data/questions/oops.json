@@ -1,0 +1,205 @@
+[
+  {
+    "text": "What is object-oriented programming, and what problems does it solve compared to procedural code?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A paradigm built around objects that bundle data (attributes) with the code (methods) that operates on it",
+      "Models software using real-world entities such as Car, Student or Account with properties and behaviours",
+      "Procedural code lacks modular structure; classes group related data and logic together",
+      "Procedural code reuses poorly; inheritance allows existing code to be extended rather than duplicated",
+      "Procedural code exposes data freely; encapsulation hides internal state behind controlled access",
+      "Overall benefits are modularity, reusability, maintainability and scalability"
+    ]
+  },
+  {
+    "text": "What is the difference between a class and an object?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A class is a blueprint or template defining structure and behaviour",
+      "An object is a concrete instance of that class, created in memory",
+      "A class defines attributes and methods but occupies no memory for instance data until an object exists",
+      "Many objects can be created from one class, each with its own attribute values",
+      "Analogy: the class is the architectural plan, the object is the actual house built from it"
+    ]
+  },
+  {
+    "text": "Explain the four pillars of OOP.",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Encapsulation: wrapping data and the methods that act on it into a single unit and restricting direct access to internal state",
+      "Inheritance: a derived class acquires properties and behaviour from a base class, promoting code reuse",
+      "Polymorphism: the same interface behaves differently depending on context, via overloading or overriding",
+      "Abstraction: hiding unnecessary implementation detail and exposing only the essential features",
+      "Encapsulation is about hiding data; abstraction is about hiding complexity"
+    ]
+  },
+  {
+    "text": "What is the difference between encapsulation and abstraction?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Encapsulation bundles data with its methods and restricts direct access, typically using private fields with getters and setters",
+      "Abstraction hides implementation complexity and exposes only what the caller needs to know",
+      "Encapsulation is about how data is protected; abstraction is about what is exposed at the design level",
+      "Encapsulation is achieved with access modifiers; abstraction with abstract classes, pure virtual functions or interfaces",
+      "Encapsulation is an implementation technique, abstraction is a design principle, and they are usually applied together"
+    ]
+  },
+  {
+    "text": "Explain the private, protected and public access specifiers.",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Private members are accessible only inside the class that declares them",
+      "Protected members are accessible inside the class and in its derived classes",
+      "Public members are accessible from anywhere",
+      "In Java there is also a default (package-private) level, accessible only within the same package",
+      "Private members are not directly accessible in a derived class but still exist in the object and can be reached through inherited public or protected methods"
+    ]
+  },
+  {
+    "text": "What is a constructor? Explain the different types of constructor.",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A special method invoked automatically when an object is created, used to initialise it",
+      "It has the same name as the class and no return type",
+      "Default/non-parameterised constructor takes no arguments and is used when no values are supplied",
+      "Parameterised constructor accepts arguments to initialise the object at creation time",
+      "Copy constructor creates a new object as a copy of an existing one",
+      "Memory is allocated before the constructor runs; the constructor only initialises"
+    ]
+  },
+  {
+    "text": "What is the difference between shallow copy and deep copy?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A shallow copy copies the reference or address of dynamically allocated members, so both objects point to the same memory",
+      "With a shallow copy, modifying data through one object is visible through the other",
+      "A deep copy allocates new memory and copies the actual values, making the objects fully independent",
+      "Deep copy is needed when a class owns pointers or dynamically allocated resources",
+      "A shallow copy of an object holding a pointer can also cause a double-free or dangling pointer when both destructors run"
+    ]
+  },
+  {
+    "text": "What is a destructor, and why does Java not have one?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A destructor is a special member function called automatically when an object goes out of scope or is explicitly deleted",
+      "In C++ it shares the class name prefixed with a tilde, takes no parameters and has no return type",
+      "It is used to release resources such as heap memory, file handles and connections",
+      "Java has no destructors because it uses automatic garbage collection to reclaim unreachable objects",
+      "The garbage collector prevents memory leaks without manual deletion, though collection timing is not deterministic",
+      "finalize() existed as a rough equivalent but is deprecated due to unpredictability"
+    ]
+  },
+  {
+    "text": "Explain the different types of inheritance.",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Single: one derived class inherits from one base class",
+      "Multilevel: a class derives from a class that is itself derived, forming a chain",
+      "Hierarchical: several derived classes inherit from a single base class",
+      "Multiple: one class inherits from two or more base classes, supported in C++ but not by classes in Java",
+      "Hybrid: a combination of two or more of the above",
+      "Java achieves multiple inheritance safely through interfaces rather than classes"
+    ]
+  },
+  {
+    "text": "What is the diamond problem, and how do C++ and Java each deal with it?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "It occurs in multiple inheritance when classes B and C both inherit from A, and D inherits from both B and C",
+      "D then has two copies of A's members, so the compiler cannot tell which one to use, creating ambiguity",
+      "In C++ it can be resolved manually with explicit scope resolution, such as obj.B::show()",
+      "The proper C++ fix is virtual inheritance, which ensures only one shared copy of the base class exists",
+      "Java avoids it by not allowing multiple inheritance of classes",
+      "Java uses interfaces for multiple inheritance, and the implementing class must supply its own method definition"
+    ]
+  },
+  {
+    "text": "What is the difference between compile-time and run-time polymorphism?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Compile-time (static binding, early binding) resolves the method at compile time based on the signature",
+      "Compile-time polymorphism is achieved through method overloading and, in C++, operator overloading",
+      "Run-time (dynamic binding, late binding) resolves the method at execution time based on the actual object type",
+      "Run-time polymorphism is achieved through method overriding, using virtual functions in C++",
+      "Run-time polymorphism lets a base class pointer or reference invoke the derived class implementation"
+    ]
+  },
+  {
+    "text": "What is the difference between method overloading and method overriding?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Overloading uses the same method name with different parameter lists within the same class",
+      "Overriding redefines a base class method in a derived class with the same name, parameters and return type",
+      "Overloading is compile-time polymorphism; overriding is run-time polymorphism",
+      "Overloading needs no inheritance; overriding requires an inheritance relationship",
+      "Return type alone cannot distinguish overloaded methods",
+      "An overriding method must keep the same signature, though Java permits a covariant return type"
+    ]
+  },
+  {
+    "text": "What is a virtual function, and what happens if you omit the virtual keyword in C++?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A member function in a base class expected to be overridden in derived classes",
+      "Declaring it virtual tells the compiler to use run-time binding instead of compile-time binding",
+      "Without virtual, C++ binds based on the pointer or reference type rather than the actual object type",
+      "So calling through a base class pointer would run the base class version rather than the derived override",
+      "A base class with virtual functions should also have a virtual destructor, otherwise deleting a derived object through a base pointer only runs the base destructor and leaks resources"
+    ]
+  },
+  {
+    "text": "What is an abstract class and a pure virtual function? Why would you use one?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "An abstract class cannot be instantiated and serves as a base interface for derived classes",
+      "In C++ a class becomes abstract by having at least one pure virtual function, declared with = 0",
+      "A pure virtual function has no definition in the base class and must be overridden by derived classes",
+      "It is used when a generic base concept makes no sense on its own, such as Shape versus Circle or Rectangle",
+      "It forces derived classes to provide their own implementation, guaranteeing a consistent interface",
+      "An abstract class may still contain concrete methods and data shared by all subclasses"
+    ]
+  },
+  {
+    "text": "In Java, when would you use an abstract class rather than an interface?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Use an abstract class when subclasses need to share common implementation or state",
+      "Abstract classes can have constructors, instance fields and any access modifier; interfaces cannot have constructors or instance state",
+      "Interface fields are implicitly public static final constants",
+      "A class can extend only one abstract class but implement many interfaces",
+      "Use an interface to declare a capability or contract that unrelated classes can implement",
+      "Interfaces can now provide default and static methods, but still cannot hold instance state"
+    ]
+  }
+]

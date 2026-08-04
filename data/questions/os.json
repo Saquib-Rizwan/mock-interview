@@ -1,0 +1,199 @@
+[
+  {
+    "text": "What is an operating system, and why do we need one?",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "System software acting as an intermediary between user applications and hardware",
+      "Without it every application would need its own hardware-handling code, making programs large and duplicated",
+      "Provides controlled resource allocation so one program cannot monopolise CPU, memory or I/O",
+      "Provides memory protection so processes cannot corrupt each other's memory",
+      "Core functions include process management, memory management, file system management, device management and security"
+    ]
+  },
+  {
+    "text": "What is a kernel? Explain the difference between a monolithic kernel and a microkernel.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The kernel is the part of the OS that interacts directly with hardware and performs the most critical tasks",
+      "Monolithic: the entire OS runs as one large program in kernel mode (e.g. Linux, UNIX)",
+      "Microkernel: only essential services run in kernel mode, the rest run in user mode (e.g. MINIX, Mach)",
+      "Monolithic is faster because there are fewer mode switches between components",
+      "Microkernel is more stable and secure because a failing service does not bring down the kernel"
+    ]
+  },
+  {
+    "text": "What is a system call, and why can a user program not access hardware directly?",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A mechanism by which a user program requests a service from the kernel that it lacks permission to perform itself",
+      "User programs run in restricted user mode and cannot directly access I/O devices or other processes' memory",
+      "A system call triggers a controlled switch from user mode to kernel mode",
+      "Categories include process control, file management, device management, information maintenance and communication",
+      "Examples: fork, exec, open, read, write, exit"
+    ]
+  },
+  {
+    "text": "What is the difference between user mode and kernel mode, and why does the distinction exist?",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Kernel mode is privileged, with full access to hardware and all system resources",
+      "User mode is restricted, with limited access to system resources",
+      "Applications normally run in user mode",
+      "The separation prevents a buggy or malicious program from crashing or compromising the whole system",
+      "Switching to kernel mode happens via system calls, interrupts or exceptions"
+    ]
+  },
+  {
+    "text": "What is a Process Control Block (PCB), and why does the OS need one per process?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A data structure holding all information about a process: process ID, state, program counter, CPU registers, memory limits, open files",
+      "Each process has its own PCB; the collection of PCBs forms the process table",
+      "Enables context switching by storing the exact state needed to pause and resume a process",
+      "Lets the OS track and manage many processes at once, which multiprogramming requires",
+      "Stored in protected kernel memory, inaccessible to user-mode programs"
+    ]
+  },
+  {
+    "text": "What is context switching, and why is it considered overhead?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Saving the state of the currently running process and restoring the state of another process that is ready to run",
+      "The CPU saves registers and program counter into the current process's PCB, then loads the next process's context from its PCB",
+      "It is overhead because no useful user work is done during the switch",
+      "Enables multitasking, fair CPU sharing and responsiveness to interactive tasks",
+      "Cost depends on the number of registers to save/restore, memory speed and hardware support"
+    ]
+  },
+  {
+    "text": "Describe the states a process can be in during its lifetime.",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "New: the process is being created and resources are being set up",
+      "Ready: waiting to be assigned to the CPU",
+      "Running: currently executing on the CPU",
+      "Waiting/Blocked: waiting for an I/O operation or event to complete",
+      "Terminated: execution finished or the process was killed, and resources are released",
+      "Suspended: temporarily swapped out, can return to ready or waiting later"
+    ]
+  },
+  {
+    "text": "What is the difference between user-level threads and kernel-level threads?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "User-level threads are managed by a user-space thread library; the kernel is unaware of them",
+      "Kernel-level threads are created and scheduled by the operating system",
+      "User-level context switching is faster because it needs no kernel involvement",
+      "If one user-level thread blocks on a system call, the whole process can block; with kernel threads only that thread blocks",
+      "Kernel threads can be scheduled across multiple CPU cores for true parallelism"
+    ]
+  },
+  {
+    "text": "Compare FCFS, Shortest Job First and Round Robin CPU scheduling, including their drawbacks.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "FCFS runs processes in arrival order; simple but suffers the convoy effect where short jobs wait behind long ones",
+      "SJF picks the smallest burst time first and is optimal for average waiting time",
+      "SJF requires knowing burst times in advance and can starve long processes",
+      "Round Robin gives each process a fixed time quantum in cyclic order, which suits time-sharing systems",
+      "Round Robin with too small a quantum causes excessive context-switching overhead; too large and it degenerates towards FCFS"
+    ]
+  },
+  {
+    "text": "What is a race condition, and what is a critical section?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A race condition occurs when multiple processes access and modify shared data concurrently and the result depends on execution order",
+      "The outcome is unpredictable and may differ between runs",
+      "A critical section is the part of the code where shared resources are accessed",
+      "Only one process should execute its critical section at a time",
+      "A correct solution must provide mutual exclusion, progress and bounded waiting"
+    ]
+  },
+  {
+    "text": "What is a semaphore? Explain the difference between binary and counting semaphores.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A synchronisation primitive (an integer counter) used to control access to shared resources",
+      "Two atomic operations: wait/P decrements and blocks if the value would go negative, signal/V increments and may wake a blocked process",
+      "A binary semaphore takes only 0 or 1 and behaves like a lock",
+      "A counting semaphore takes any non-negative value and is used when several identical resources exist",
+      "The operations must be atomic, otherwise the semaphore itself becomes a race condition"
+    ]
+  },
+  {
+    "text": "What is virtual memory, and how does demand paging work?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Virtual memory lets a system run programs larger than physical RAM by using disk space as an extension of memory",
+      "Each process gets its own virtual address space, which also provides isolation between processes",
+      "In demand paging, pages are loaded into memory only when they are actually referenced",
+      "Referencing a page that is not in memory causes a page fault, and the OS loads it from disk",
+      "Saves memory and speeds up program startup, but frequent page faults are expensive"
+    ]
+  },
+  {
+    "text": "Explain the difference between internal and external fragmentation, and how each is addressed.",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Internal fragmentation is wasted space inside an allocated block, when a process is given more memory than it uses",
+      "External fragmentation is wasted space between allocated blocks: enough total memory is free but it is scattered in pieces too small to use",
+      "Internal fragmentation arises with fixed partitioning and is reduced by variable partitioning or paging",
+      "External fragmentation arises with variable partitioning and is addressed by compaction or paging",
+      "Paging largely eliminates external fragmentation because any free frame can hold any page"
+    ]
+  },
+  {
+    "text": "Compare FIFO, LRU and Optimal page replacement algorithms, and explain Belady's anomaly.",
+    "category": "os",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "FIFO evicts the oldest loaded page; simple to implement with a queue but may evict a frequently used page",
+      "LRU evicts the page unused for the longest time; a good approximation of real behaviour but needs usage tracking",
+      "Optimal evicts the page that will not be used for the longest time in future; best possible but requires future knowledge",
+      "Optimal is not implementable and is used only as a benchmark",
+      "Belady's anomaly is when increasing the number of frames increases the number of page faults",
+      "Belady's anomaly can occur with FIFO but not with LRU or Optimal, which are stack algorithms"
+    ]
+  },
+  {
+    "text": "What is thrashing? What causes it and how can it be resolved?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Thrashing is when the system spends more time swapping pages in and out than executing useful work",
+      "Caused by too many processes competing for too little physical memory",
+      "Each process lacks its working set, so page faults become constant",
+      "Symptom is high CPU utilisation with very low actual throughput",
+      "Fixes include reducing the degree of multiprogramming, using the working set model, and adding more physical memory"
+    ]
+  }
+]

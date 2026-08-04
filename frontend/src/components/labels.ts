@@ -17,6 +17,7 @@ export const CATEGORY_LABELS: Record<QuestionCategory, string> = {
   cn: "Networks",
   dbms: "DBMS",
   dsa: "DSA",
+  oops: "OOPS",
   general_hr: "General HR",
   other: "Other",
 };

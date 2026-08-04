@@ -20,12 +20,15 @@ export type RoundType =
   | "managerial"
   | "other";
 
+// Must stay in sync with the QuestionCategory enum in prisma/schema.prisma.
+// Adding a value there without adding it here makes the badge render blank.
 export type QuestionCategory =
   | "company_specific"
   | "os"
   | "cn"
   | "dbms"
   | "dsa"
+  | "oops"
   | "general_hr"
   | "other";
 
