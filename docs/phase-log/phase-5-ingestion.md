@@ -1,6 +1,6 @@
 # Phase 5 — General Question Bank Ingestion
 
-Status: ready for review.
+Status: **complete and verified** (ingestion, attachment and grading of an ingested question all confirmed in the browser, 2026-08-03).
 
 ## Schema change (flagged and approved before implementing)
 
@@ -176,7 +176,7 @@ Expect `0` — no question in the bank is ungradable.
 
 Ingested all four files: 15 inserted from each, 60 total, database now holds 73 questions and 0 with empty answer points. Re-ran `os.json` and got `inserted: 0, skipped: 15`. Fed the script a file containing one valid and one invalid record — it reported all four validation problems by index and inserted neither record (confirmed the valid one was absent from the database afterwards). Attached 4 OS and 3 OOPS questions to the TCS technical round and 2 DBMS questions to the Deloitte HR round; re-attaching an already-attached question by explicit id reported `attached: 0, skipped (already attached): 1`. Confirmed via the catalog API that the Deloitte HR round returns the company-specific question alongside the newly ingested DBMS one, **and that `expectedAnswerPoints` is still absent from the API response**. Backend typechecks (now including `scripts/`), frontend lints and builds clean.
 
-**Not verified by me:** the rendered browser pages, and end-to-end grading of a newly ingested question through the live LLM. ml-service was not running during my checks. Steps 4 and 5 above need your eyes — step 5 in particular, since it is the only thing that proves ingested answer points work with the Phase 4 grader rather than merely being stored.
+**Not verified by me:** the rendered browser pages, and end-to-end grading of a newly ingested question through the live LLM — ml-service was not running during my checks. **The user confirmed all of this on 2026-08-03**: category badges render correctly (including the new `oops` one), the Deloitte HR round shows an ingested question beside the company-specific one, and submitting an answer to a newly ingested question returns proper per-point feedback. That last check is the important one, since it proves the answer points written into the JSON files reach the Phase 4 grader in a usable shape rather than merely being stored.
 
 ---
 
