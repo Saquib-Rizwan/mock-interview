@@ -54,13 +54,20 @@ function validate(record: unknown, index: number): string[] {
   }
 
   const points = r.expectedAnswerPoints;
-  if (!Array.isArray(points) || points.length === 0) {
-    // Phase 4 grades strictly against these points, so a question without them
-    // cannot be answered — better to reject at load time than to discover it
-    // when a student submits.
-    errors.push(`${label} expectedAnswerPoints must be a non-empty array`);
-  } else if (points.some((p) => typeof p !== "string" || !p.trim())) {
+  if (Array.isArray(points) && points.some((p) => typeof p !== "string" || !p.trim())) {
     errors.push(`${label} expectedAnswerPoints must contain only non-empty strings`);
+  } else if (r.questionType === "coding") {
+    // Coding questions are graded by test cases, not by the LLM against a
+    // rubric, so answer points are meaningless here. Their signature and tests
+    // come from ingest-coding.ts, which this script cannot express.
+    if (Array.isArray(points) && points.length > 0) {
+      errors.push(`${label} coding questions must not have expectedAnswerPoints`);
+    }
+  } else if (!Array.isArray(points) || points.length === 0) {
+    // Phase 4 grades strictly against these points, so a text question without
+    // them cannot be answered — better to reject at load time than to discover
+    // it when a student submits.
+    errors.push(`${label} expectedAnswerPoints must be a non-empty array`);
   }
 
   return errors;

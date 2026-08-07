@@ -1,0 +1,50 @@
+[
+  {
+    "text": "Given the root of a binary tree, invert the tree so that every node's left and right children are swapped, and return the root.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "invertTree",
+      "paramTypes": ["TreeNode"],
+      "returnType": "TreeNode",
+      "starterCode": {
+        "python": "def invertTree(root):\n    # root is a TreeNode or None. Each node has .val, .left and .right\n    pass\n",
+        "javascript": "function invertTree(root) {\n  // root is a TreeNode or null. Each node has .val, .left and .right\n\n}\n",
+        "cpp": "TreeNode* invertTree(TreeNode* root) {\n    // Each node has val, left and right\n\n}\n",
+        "java": "public TreeNode invertTree(TreeNode root) {\n    // Each node has val, left and right\n\n}\n"
+      },
+      "testCases": [
+        { "input": "[[4,2,7,1,3,6,9]]", "expected": "[4,7,2,9,6,3,1]", "isSample": true },
+        { "input": "[[2,1,3]]", "expected": "[2,3,1]", "isSample": true },
+        { "input": "[[]]", "expected": "[]", "isSample": false },
+        { "input": "[[1]]", "expected": "[1]", "isSample": false },
+        { "input": "[[1,2]]", "expected": "[1,null,2]", "isSample": false },
+        { "input": "[[1,null,2,null,3]]", "expected": "[1,2,null,3]", "isSample": false }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, return its maximum depth — the number of nodes along the longest path from the root down to the furthest leaf.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "maxDepth",
+      "paramTypes": ["TreeNode"],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def maxDepth(root):\n    pass\n",
+        "javascript": "function maxDepth(root) {\n\n}\n",
+        "cpp": "int maxDepth(TreeNode* root) {\n\n}\n",
+        "java": "public int maxDepth(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        { "input": "[[3,9,20,null,null,15,7]]", "expected": "3", "isSample": true },
+        { "input": "[[1,null,2]]", "expected": "2", "isSample": true },
+        { "input": "[[]]", "expected": "0", "isSample": false },
+        { "input": "[[1]]", "expected": "1", "isSample": false },
+        { "input": "[[1,2,3,4,5]]", "expected": "3", "isSample": false },
+        { "input": "[[1,2,null,3,null,4]]", "expected": "4", "isSample": false }
+      ]
+    }
+  }
+]

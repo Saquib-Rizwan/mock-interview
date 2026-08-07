@@ -4,6 +4,8 @@ import express from "express";
 import type { NextFunction, Request, Response } from "express";
 import { authRouter } from "./auth/routes";
 import { catalogRouter } from "./catalog/routes";
+import { codingRouter } from "./coding/routes";
+import { judge0Health } from "./judge0/client";
 import { submissionsRouter } from "./submissions/routes";
 
 const app = express();
@@ -17,14 +19,16 @@ app.get("/health", (_req, res) => {
   res.json({ status: "ok", service: "backend" });
 });
 
-// Proves the full chain: frontend -> backend -> ml-service.
+// Proves the full chain: frontend -> backend -> ml-service -> judge0.
 app.get("/health/full", async (_req, res) => {
   const result: {
     backend: string;
     mlService: { status: string; error?: string };
+    judge0: { status: string; error?: string };
   } = {
     backend: "ok",
     mlService: { status: "unreachable" },
+    judge0: await judge0Health(),
   };
 
   try {
@@ -48,6 +52,7 @@ app.get("/health/full", async (_req, res) => {
 app.use("/auth", authRouter);
 app.use("/catalog", catalogRouter);
 app.use("/submissions", submissionsRouter);
+app.use("/coding", codingRouter);
 
 // Last-resort handler. Async routes reach it via the asyncHandler wrapper,
 // which forwards promise rejections to next(). Errors are logged in full but

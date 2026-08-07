@@ -17,10 +17,11 @@
 // src/index.ts, which is what normally loads .env.
 import "dotenv/config";
 import { prisma } from "../src/prisma";
-import { Difficulty, QuestionCategory } from "../src/generated/prisma/enums";
+import { Difficulty, QuestionCategory, QuestionType } from "../src/generated/prisma/enums";
 
 const CATEGORIES = Object.values(QuestionCategory) as string[];
 const DIFFICULTIES = Object.values(Difficulty) as string[];
+const TYPES = Object.values(QuestionType) as string[];
 
 function parseArgs(argv: string[]): Record<string, string | true> {
   const args: Record<string, string | true> = {};
@@ -80,7 +81,7 @@ async function main() {
     console.error(
       "Usage:\n" +
         "  --list                                  show all rounds and their ids\n" +
-        "  --round <id> --category <cat> [--count n] [--difficulty d]\n" +
+        "  --round <id> --category <cat> [--count n] [--difficulty d] [--type text|coding]\n" +
         "  --round <id> --ids <id1,id2,...>"
     );
     process.exit(1);
@@ -136,6 +137,15 @@ async function main() {
       process.exit(1);
     }
 
+    // Category alone is not enough once a category holds both kinds: `dsa`
+    // contains text questions and coding ones, and attaching a text question to
+    // a coding round renders an answer box where an editor should be.
+    const questionType = typeof args.type === "string" ? args.type : null;
+    if (questionType && !TYPES.includes(questionType)) {
+      console.error(`--type must be one of: ${TYPES.join(", ")}`);
+      process.exit(1);
+    }
+
     const count = args.count ? Number(args.count) : 5;
     if (!Number.isInteger(count) || count < 1) {
       console.error("--count must be a positive whole number");
@@ -146,6 +156,7 @@ async function main() {
       where: {
         category: category as QuestionCategory,
         ...(difficulty ? { difficulty: difficulty as Difficulty } : {}),
+        ...(questionType ? { questionType: questionType as QuestionType } : {}),
         // Never pull a question that is already in this round.
         id: { notIn: [...attachedIds] },
       },

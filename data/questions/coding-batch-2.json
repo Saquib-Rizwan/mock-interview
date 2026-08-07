@@ -1,0 +1,759 @@
+[
+  {
+    "text": "Given the heads of two sorted linked lists, merge them into one sorted list and return its head.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "mergeTwoLists",
+      "paramTypes": [
+        "ListNode",
+        "ListNode"
+      ],
+      "returnType": "ListNode",
+      "starterCode": {
+        "python": "def mergeTwoLists(list1, list2):\n    pass\n",
+        "javascript": "function mergeTwoLists(list1, list2) {\n\n}\n",
+        "cpp": "ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {\n\n}\n",
+        "java": "public ListNode mergeTwoLists(ListNode list1, ListNode list2) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,4],[1,3,4]]",
+          "expected": "[1,1,2,3,4,4]",
+          "isSample": true
+        },
+        {
+          "input": "[[],[]]",
+          "expected": "[]",
+          "isSample": true
+        },
+        {
+          "input": "[[],[0]]",
+          "expected": "[0]",
+          "isSample": false
+        },
+        {
+          "input": "[[1],[2]]",
+          "expected": "[1,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,6,7],[1,2,3]]",
+          "expected": "[1,2,3,5,6,7]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,1,1],[1,1]]",
+          "expected": "[1,1,1,1,1]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the head of a linked list and an integer n, remove the nth node from the end of the list and return the head.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "removeNthFromEnd",
+      "paramTypes": [
+        "ListNode",
+        "int"
+      ],
+      "returnType": "ListNode",
+      "starterCode": {
+        "python": "def removeNthFromEnd(head, n):\n    pass\n",
+        "javascript": "function removeNthFromEnd(head, n) {\n\n}\n",
+        "cpp": "ListNode* removeNthFromEnd(ListNode* head, int n) {\n\n}\n",
+        "java": "public ListNode removeNthFromEnd(ListNode head, int n) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,4,5],2]",
+          "expected": "[1,2,3,5]",
+          "isSample": true
+        },
+        {
+          "input": "[[1],1]",
+          "expected": "[]",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2],1]",
+          "expected": "[1]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2],2]",
+          "expected": "[2]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3],3]",
+          "expected": "[2,3]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5,6],6]",
+          "expected": "[2,3,4,5,6]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the head of a linked list, return the middle node. If there are two middle nodes, return the second one.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "middleNode",
+      "paramTypes": [
+        "ListNode"
+      ],
+      "returnType": "ListNode",
+      "starterCode": {
+        "python": "def middleNode(head):\n    pass\n",
+        "javascript": "function middleNode(head) {\n\n}\n",
+        "cpp": "ListNode* middleNode(ListNode* head) {\n\n}\n",
+        "java": "public ListNode middleNode(ListNode head) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,4,5]]",
+          "expected": "[3,4,5]",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2,3,4,5,6]]",
+          "expected": "[4,5,6]",
+          "isSample": true
+        },
+        {
+          "input": "[[1]]",
+          "expected": "[1]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2]]",
+          "expected": "[2]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3]]",
+          "expected": "[2,3]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5,6,7]]",
+          "expected": "[4,5,6,7]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the head of a linked list, return true if the sequence of values reads the same forwards and backwards.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isPalindromeList",
+      "paramTypes": [
+        "ListNode"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isPalindromeList(head):\n    pass\n",
+        "javascript": "function isPalindromeList(head) {\n\n}\n",
+        "cpp": "bool isPalindromeList(ListNode* head) {\n\n}\n",
+        "java": "public boolean isPalindromeList(ListNode head) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,2,1]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,2,1]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4]]",
+          "expected": "false",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the head of a linked list and a value, remove every node holding that value and return the new head.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "removeElements",
+      "paramTypes": [
+        "ListNode",
+        "int"
+      ],
+      "returnType": "ListNode",
+      "starterCode": {
+        "python": "def removeElements(head, val):\n    pass\n",
+        "javascript": "function removeElements(head, val) {\n\n}\n",
+        "cpp": "ListNode* removeElements(ListNode* head, int val) {\n\n}\n",
+        "java": "public ListNode removeElements(ListNode head, int val) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,6,3,4,5,6],6]",
+          "expected": "[1,2,3,4,5]",
+          "isSample": true
+        },
+        {
+          "input": "[[7,7,7,7],7]",
+          "expected": "[]",
+          "isSample": true
+        },
+        {
+          "input": "[[],1]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3],4]",
+          "expected": "[1,2,3]",
+          "isSample": false
+        },
+        {
+          "input": "[[1],1]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[6,1,6],6]",
+          "expected": "[1]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the roots of two binary trees, return true if they have the same structure and the same values at every position.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isSameTree",
+      "paramTypes": [
+        "TreeNode",
+        "TreeNode"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isSameTree(p, q):\n    pass\n",
+        "javascript": "function isSameTree(p, q) {\n\n}\n",
+        "cpp": "bool isSameTree(TreeNode* p, TreeNode* q) {\n\n}\n",
+        "java": "public boolean isSameTree(TreeNode p, TreeNode q) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3],[1,2,3]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2],[1,null,2]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2,1],[1,1,2]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[],[]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1],[]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4],[1,2,3,4]]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, return the length of the longest path between any two nodes, measured in edges. The path need not pass through the root.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "diameterOfBinaryTree",
+      "paramTypes": [
+        "TreeNode"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def diameterOfBinaryTree(root):\n    pass\n",
+        "javascript": "function diameterOfBinaryTree(root) {\n\n}\n",
+        "cpp": "int diameterOfBinaryTree(TreeNode* root) {\n\n}\n",
+        "java": "public int diameterOfBinaryTree(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,4,5]]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2]]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[1,null,2,null,3,null,4]]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5,6,7]]",
+          "expected": "4",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, return true if it is height-balanced — every node's two subtrees differ in depth by at most one.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isBalanced",
+      "paramTypes": [
+        "TreeNode"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isBalanced(root):\n    pass\n",
+        "javascript": "function isBalanced(root) {\n\n}\n",
+        "cpp": "bool isBalanced(TreeNode* root) {\n\n}\n",
+        "java": "public boolean isBalanced(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[3,9,20,null,null,15,7]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2,2,3,3,null,null,4,4]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,null,3]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5,6,7]]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, return its values level by level, as a list of lists ordered from the root downwards.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "levelOrder",
+      "paramTypes": [
+        "TreeNode"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def levelOrder(root):\n    pass\n",
+        "javascript": "function levelOrder(root) {\n\n}\n",
+        "cpp": "vector<vector<int>> levelOrder(TreeNode* root) {\n\n}\n",
+        "java": "public int[][] levelOrder(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[3,9,20,null,null,15,7]]",
+          "expected": "[[3],[9,20],[15,7]]",
+          "isSample": true
+        },
+        {
+          "input": "[[1]]",
+          "expected": "[[1]]",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5]]",
+          "expected": "[[1],[2,3],[4,5]]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,null,2,null,3]]",
+          "expected": "[[1],[2],[3]]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,4,8,11,null,13,4,7,2]]",
+          "expected": "[[5],[4,8],[11,13,4],[7,2]]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, imagine standing to its right. Return the values of the nodes you can see, ordered from top to bottom.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "rightSideView",
+      "paramTypes": [
+        "TreeNode"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def rightSideView(root):\n    pass\n",
+        "javascript": "function rightSideView(root) {\n\n}\n",
+        "cpp": "vector<int> rightSideView(TreeNode* root) {\n\n}\n",
+        "java": "public int[] rightSideView(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,null,5,null,4]]",
+          "expected": "[1,3,4]",
+          "isSample": true
+        },
+        {
+          "input": "[[1,null,3]]",
+          "expected": "[1,3]",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "[1]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4]]",
+          "expected": "[1,3,4]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,null,5,6,null]]",
+          "expected": "[1,3,6]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary tree, return true if it is a valid binary search tree — every node in the left subtree is strictly smaller, every node in the right subtree strictly larger, all the way down.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "isValidBST",
+      "paramTypes": [
+        "TreeNode"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isValidBST(root):\n    pass\n",
+        "javascript": "function isValidBST(root) {\n\n}\n",
+        "cpp": "bool isValidBST(TreeNode* root) {\n\n}\n",
+        "java": "public boolean isValidBST(TreeNode root) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[2,1,3]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[[5,1,4,null,null,3,6]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[5,4,6,null,null,3,7]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[10,5,15,null,null,6,20]]",
+          "expected": "false",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given the root of a binary search tree and an integer k, return the kth smallest value in the tree, counting from 1.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "kthSmallest",
+      "paramTypes": [
+        "TreeNode",
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def kthSmallest(root, k):\n    pass\n",
+        "javascript": "function kthSmallest(root, k) {\n\n}\n",
+        "cpp": "int kthSmallest(TreeNode* root, int k) {\n\n}\n",
+        "java": "public int kthSmallest(TreeNode root, int k) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[3,1,4,null,2],1]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[[5,3,6,2,4,null,null,1],3]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[[1],1]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[[2,1,3],2]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[[2,1,3],3]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[[4,2,6,1,3,5,7],5]",
+          "expected": "5",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer array and an integer k, return the kth largest element. This is the kth largest by position in sorted order, not the kth distinct value.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "findKthLargest",
+      "paramTypes": [
+        "int[]",
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def findKthLargest(nums, k):\n    pass\n",
+        "javascript": "function findKthLargest(nums, k) {\n\n}\n",
+        "cpp": "int findKthLargest(vector<int>& nums, int k) {\n\n}\n",
+        "java": "public int findKthLargest(int[] nums, int k) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[3,2,1,5,6,4],2]",
+          "expected": "5",
+          "isSample": true
+        },
+        {
+          "input": "[[3,2,3,1,2,4,5,5,6],4]",
+          "expected": "4",
+          "isSample": true
+        },
+        {
+          "input": "[[1],1]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[[2,1],2]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[[7,7,7],2]",
+          "expected": "7",
+          "isSample": false
+        },
+        {
+          "input": "[[-1,-2,-3],1]",
+          "expected": "-1",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "You repeatedly take the two heaviest stones and smash them together. If they weigh the same both are destroyed; otherwise the lighter is destroyed and the heavier loses its weight. Return the weight of the last remaining stone, or 0 if none remain.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "lastStoneWeight",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def lastStoneWeight(stones):\n    pass\n",
+        "javascript": "function lastStoneWeight(stones) {\n\n}\n",
+        "cpp": "int lastStoneWeight(vector<int>& stones) {\n\n}\n",
+        "java": "public int lastStoneWeight(int[] stones) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[2,7,4,1,8,1]]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[[1]]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[2,2]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[3,7,2]]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[[10,4,2,10]]",
+          "expected": "2",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an array of points on a plane and an integer k, return the k points closest to the origin. Return them sorted in ascending order.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "kClosest",
+      "paramTypes": [
+        "int[][]",
+        "int"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def kClosest(points, k):\n    pass\n",
+        "javascript": "function kClosest(points, k) {\n\n}\n",
+        "cpp": "vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {\n\n}\n",
+        "java": "public int[][] kClosest(int[][] points, int k) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,3],[-2,2]],1]",
+          "expected": "[[-2,2]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[3,3],[5,-1],[-2,4]],2]",
+          "expected": "[[-2,4],[3,3]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[0,1]],1]",
+          "expected": "[[0,1]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,1],[2,2],[3,3]],2]",
+          "expected": "[[1,1],[2,2]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[-5,4],[-6,-5],[4,6]],2]",
+          "expected": "[[-5,4],[4,6]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[0,0],[1,0],[0,1]],3]",
+          "expected": "[[0,0],[0,1],[1,0]]",
+          "isSample": false
+        }
+      ]
+    }
+  }
+]

@@ -4,6 +4,7 @@ import { api, type PointVerdict, type Submission } from "../api";
 import { Breadcrumbs, type Crumb } from "../components/Breadcrumbs";
 import { CATEGORY_LABELS } from "../components/labels";
 import { useFetch } from "../useFetch";
+import { CodingWorkspace } from "./CodingWorkspace";
 
 export function QuestionDetail() {
   const { id = "" } = useParams();
@@ -69,17 +70,18 @@ export function QuestionDetail() {
         <span className={`badge badge-${question.difficulty}`}>
           {question.difficulty}
         </span>
-        <span className="badge">
-          graded against {question.expectedPointCount}{" "}
-          {question.expectedPointCount === 1 ? "point" : "points"}
-        </span>
+        {question.questionType === "coding" ? (
+          <span className="badge">graded by test cases</span>
+        ) : (
+          <span className="badge">
+            graded against {question.expectedPointCount}{" "}
+            {question.expectedPointCount === 1 ? "point" : "points"}
+          </span>
+        )}
       </div>
 
       {question.questionType === "coding" ? (
-        <p className="note">
-          This is a coding question. Writing and running code arrives in a later
-          phase — for now only text questions can be answered.
-        </p>
+        <CodingWorkspace questionId={id} />
       ) : (
         <form onSubmit={onSubmit}>
           <label htmlFor="answer">Your answer</label>

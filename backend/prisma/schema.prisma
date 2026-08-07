@@ -47,6 +47,16 @@ enum Difficulty {
   hard
 }
 
+// Languages a student can solve a coding question in. Each maps to a Judge0
+// language id in src/judge0/languages.ts — kept out of the schema because those
+// ids belong to whichever Judge0 build is deployed, not to our data model.
+enum CodingLanguage {
+  python
+  javascript
+  cpp
+  java
+}
+
 // Mapped to app_user because USER is a reserved word in PostgreSQL: an
 // unquoted `SELECT * FROM user` resolves to the current database user rather
 // than erroring, which is a confusing failure to debug.
@@ -57,7 +67,8 @@ model User {
   name         String?
   createdAt    DateTime @default(now()) @map("created_at")
 
-  submissions Submission[]
+  submissions     Submission[]
+  codeSubmissions CodeSubmission[]
 
   @@map("app_user")
 }
@@ -127,12 +138,23 @@ model Question {
   category QuestionCategory
   // Discrete points, kept separate so Phase 4 can hand the LLM a checklist
   // rather than prose it has to re-parse.
+  //
+  // Empty for coding questions: those are graded by test cases, not by an LLM
+  // against a rubric. Postgres text[] is already allowed to be empty, so this
+  // needed no migration — the "must be non-empty" rule only ever lived in the
+  // Phase 5 ingest script, which now applies it to text questions only.
   expectedAnswerPoints String[]     @map("expected_answer_points")
   difficulty           Difficulty
   questionType         QuestionType @map("question_type")
 
   rounds      RoundQuestion[]
   submissions Submission[]
+
+  // Coding questions only. A question with questionType = coding and no
+  // CodingSpec cannot be attempted — the API returns 409 rather than guessing.
+  codingSpec      CodingSpec?
+  testCases       TestCase[]
+  codeSubmissions CodeSubmission[]
 
   @@map("question")
 }
@@ -149,4 +171,105 @@ model RoundQuestion {
 
   @@id([roundId, questionId])
   @@map("round_question")
+}
+
+// Everything the per-language harness needs to call a student's solution.
+//
+// The student writes only the function; the harness deserialises each test
+// case's arguments, calls it, serialises what comes back, and compares. That is
+// why this is a separate model from Question rather than nullable columns on it
+// — it exists only for coding questions, and every field is required when it does.
+//
+// Supported types (see src/coding/types.ts, which must stay in sync):
+//   int  long  double  bool  string
+//   int[]  long[]  double[]  bool[]  string[]  int[][]
+//   ListNode   — wire format is a JSON array of ints; the harness builds the
+//                linked list and flattens the return value back to an array
+//   TreeNode   — wire format is a level-order JSON array with nulls for absent
+//                children, e.g. [3,9,20,null,null,15,7]
+model CodingSpec {
+  questionId   String   @id @map("question_id")
+  functionName String   @map("function_name")
+  paramTypes   String[] @map("param_types")
+  returnType   String   @map("return_type")
+  // Per-language skeleton shown in the editor, keyed by CodingLanguage:
+  // { "python": "def reverseList(head):\n    ", "cpp": "..." }
+  starterCode  Json     @map("starter_code")
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("coding_spec")
+}
+
+// One input/expected pair. Both are JSON strings: `input` is an array of
+// arguments matching CodingSpec.paramTypes, `expected` is the return value.
+// JSON because the harness approach passes structured values, not stdin text —
+// and it is the one encoding all four languages parse natively.
+model TestCase {
+  id         String  @id @default(uuid())
+  questionId String  @map("question_id")
+  input      String
+  expected   String
+  // Sample cases are shown to the student in full. Hidden ones report pass/fail
+  // and nothing else — `expected` never reaches the client for those.
+  isSample   Boolean @default(false) @map("is_sample")
+  orderIndex Int     @map("order_index")
+
+  question Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  results  TestResult[]
+
+  @@unique([questionId, orderIndex])
+  @@map("test_case")
+}
+
+// A graded attempt at a coding question. Deliberately not folded into
+// Submission: that model requires answerText, gapAnalysis and suggestedAnswer,
+// none of which mean anything here, and reusing it would make all three
+// nullable and force every query to filter on question type.
+model CodeSubmission {
+  id          String         @id @default(uuid())
+  userId      String         @map("user_id")
+  questionId  String         @map("question_id")
+  language    CodingLanguage
+  sourceCode  String         @map("source_code")
+  passedCount Int            @map("passed_count")
+  totalCount  Int            @map("total_count")
+  createdAt   DateTime       @default(now()) @map("created_at")
+  // LLM commentary on approach and quality. Null until the student asks for it:
+  // it is additive to the test results, never part of deciding them, and
+  // generating one on every run would burn model quota for no one's benefit.
+  // Cached once produced — the code cannot change without becoming a new
+  // submission, so a second opinion on the same bytes has no value.
+  review      Json?
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Restrict, matching Submission: a question with attempts against it should
+  // not be deletable out from under that history.
+  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  results  TestResult[]
+
+  @@index([userId, questionId])
+  @@map("code_submission")
+}
+
+// Per-test outcome for one submission. Stored rather than recomputed so a
+// student can reopen an old attempt and see exactly which cases failed.
+model TestResult {
+  id           String  @id @default(uuid())
+  submissionId String  @map("submission_id")
+  testCaseId   String  @map("test_case_id")
+  passed       Boolean
+  // Null when the program never produced output — a compile error, a timeout,
+  // or a crash. `stderr` carries the reason in those cases.
+  actualOutput String? @map("actual_output")
+  stderr       String?
+  timeMs       Int?    @map("time_ms")
+  memoryKb     Int?    @map("memory_kb")
+
+  submission CodeSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  // Restrict: deleting a test case would silently rewrite past results.
+  testCase   TestCase       @relation(fields: [testCaseId], references: [id], onDelete: Restrict)
+
+  @@index([submissionId])
+  @@map("test_result")
 }

@@ -12,6 +12,9 @@
     "db:reset": "prisma migrate reset",
     "db:studio": "prisma studio",
     "ingest": "tsx scripts/ingest-questions.ts",
+    "ingest:coding": "tsx scripts/ingest-coding.ts",
+    "harness": "tsx scripts/preview-harness.ts",
+    "expected": "tsx scripts/compute-expected.ts",
     "attach": "tsx scripts/attach-questions.ts"
   },
   "dependencies": {

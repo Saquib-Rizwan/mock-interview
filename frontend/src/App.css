@@ -398,3 +398,225 @@ code {
   color: var(--muted);
   padding: 2rem;
 }
+
+/* ---------------------------------------------------------------- coding */
+
+.coding {
+  margin-top: 1.25rem;
+}
+
+.coding-signature {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.coding-signature code,
+code.io {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 0.85rem;
+  padding: 0.15rem 0.4rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--card);
+  /* Long arrays should scroll their own row rather than widen the page. */
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.coding-samples ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.coding-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0.6rem;
+}
+
+.coding-toolbar select {
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+.coding-toolbar button {
+  margin: 0;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+
+.coding-editor {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.coding-results {
+  margin-top: 1.25rem;
+}
+
+.score {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.9rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 5px;
+}
+
+.score.pass {
+  color: var(--ok);
+  background: color-mix(in srgb, var(--ok) 14%, transparent);
+}
+
+.score.fail {
+  color: var(--error);
+  background: color-mix(in srgb, var(--error) 14%, transparent);
+}
+
+.test-results {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.test-results li {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 0.9rem;
+}
+
+/* Same treatment as the Phase 4 answer verdicts, so pass/fail reads the same
+   way whichever kind of question the student is on. */
+.test-results .covered {
+  border-color: color-mix(in srgb, var(--ok) 45%, transparent);
+}
+
+.test-results .covered .verdict-mark {
+  color: var(--ok);
+}
+
+.test-results .missed {
+  border-color: color-mix(in srgb, var(--error) 45%, transparent);
+}
+
+.test-results .missed .verdict-mark {
+  color: var(--error);
+}
+
+.test-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+}
+
+.test-detail > div {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.test-detail .muted {
+  min-width: 4.5rem;
+}
+
+.test-error {
+  margin: 0.35rem 0 0;
+  color: var(--error);
+}
+
+.review-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.review-prompt button {
+  margin: 0;
+}
+
+.review {
+  margin-top: 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.review h3 {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.95rem;
+}
+
+.review h3:first-child {
+  margin-top: 0;
+}
+
+.complexity {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin: 0.7rem 0;
+}
+
+.review-points {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.review-points li {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.review-points .covered .verdict-mark {
+  color: var(--ok);
+}
+
+.review-points .verdict-mark {
+  color: var(--accent);
+}
+
+.compile-error {
+  margin: 0.5rem 0 0;
+  padding: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--error) 45%, transparent);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--error);
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}

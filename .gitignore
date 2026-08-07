@@ -19,3 +19,18 @@ backend/prisma/migrations/dev.db
 .idea/
 .DS_Store
 Thumbs.db
+
+# Per-machine tool permissions. Auto-generated, and records host addresses
+# (e.g. the Judge0 VM's public IP) that should not be in a public repo.
+.claude/
+
+# Reference solutions for every coding question — i.e. the answer key.
+# These are the source form the committed question files are generated from
+# (see backend/scripts/compute-expected.ts). Keeping them out of a public repo
+# means a student cannot read a working solution to every problem.
+#
+# NOTE: the generated files under data/questions/ still contain hidden test
+# cases with their expected outputs. That is enough to hardcode answers, so
+# before this platform serves real students the whole bank should move out of
+# the repository. See docs/phase-log/phase-6-coding-rounds.md.
+data/questions/drafts/

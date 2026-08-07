@@ -1,0 +1,757 @@
+[
+  {
+    "text": "Given an integer array, return true if any value appears at least twice, and false if every element is distinct.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "containsDuplicate",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def containsDuplicate(nums):\n    pass\n",
+        "javascript": "function containsDuplicate(nums) {\n\n}\n",
+        "cpp": "bool containsDuplicate(vector<int>& nums) {\n\n}\n",
+        "java": "public boolean containsDuplicate(int[] nums) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,1]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[[1,2,3,4]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[[1,1,1,3,3,4,3,2,4,2]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[[]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[7]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[[-1,-1]]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given two strings s and t, return true if t is an anagram of s. An anagram uses exactly the same characters the same number of times.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isAnagram",
+      "paramTypes": [
+        "string",
+        "string"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isAnagram(s, t):\n    pass\n",
+        "javascript": "function isAnagram(s, t) {\n\n}\n",
+        "cpp": "bool isAnagram(string s, string t) {\n\n}\n",
+        "java": "public boolean isAnagram(String s, String t) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"anagram\", \"nagaram\"]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[\"rat\", \"car\"]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[\"\", \"\"]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[\"a\", \"ab\"]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[\"aacc\", \"ccac\"]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[\"listen\", \"silent\"]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer array and an integer k, return the k most frequent elements. Return them sorted in ascending order.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "topKFrequent",
+      "paramTypes": [
+        "int[]",
+        "int"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def topKFrequent(nums, k):\n    pass\n",
+        "javascript": "function topKFrequent(nums, k) {\n\n}\n",
+        "cpp": "vector<int> topKFrequent(vector<int>& nums, int k) {\n\n}\n",
+        "java": "public int[] topKFrequent(int[] nums, int k) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,1,1,2,2,3], 2]",
+          "expected": "[1,2]",
+          "isSample": true
+        },
+        {
+          "input": "[[1], 1]",
+          "expected": "[1]",
+          "isSample": true
+        },
+        {
+          "input": "[[4,4,4,5,5,6], 2]",
+          "expected": "[4,5]",
+          "isSample": false
+        },
+        {
+          "input": "[[-1,-1,-1,2,2,3], 2]",
+          "expected": "[-1,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,5,5,5], 1]",
+          "expected": "[5]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4], 4]",
+          "expected": "[1,2,3,4]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer array, return an array where each position holds the product of every other element. Solve it without using division.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "productExceptSelf",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def productExceptSelf(nums):\n    pass\n",
+        "javascript": "function productExceptSelf(nums) {\n\n}\n",
+        "cpp": "vector<int> productExceptSelf(vector<int>& nums) {\n\n}\n",
+        "java": "public int[] productExceptSelf(int[] nums) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3,4]]",
+          "expected": "[24,12,8,6]",
+          "isSample": true
+        },
+        {
+          "input": "[[-1,1,0,-3,3]]",
+          "expected": "[0,0,9,0,0]",
+          "isSample": true
+        },
+        {
+          "input": "[[2,3]]",
+          "expected": "[3,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,1,1]]",
+          "expected": "[1,1,1]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,0]]",
+          "expected": "[0,5]",
+          "isSample": false
+        },
+        {
+          "input": "[[3,2,1]]",
+          "expected": "[2,3,6]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an unsorted integer array, return the length of the longest run of consecutive numbers it contains.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "longestConsecutive",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def longestConsecutive(nums):\n    pass\n",
+        "javascript": "function longestConsecutive(nums) {\n\n}\n",
+        "cpp": "int longestConsecutive(vector<int>& nums) {\n\n}\n",
+        "java": "public int longestConsecutive(int[] nums) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[100,4,200,1,3,2]]",
+          "expected": "4",
+          "isSample": true
+        },
+        {
+          "input": "[[0,3,7,2,5,8,4,6,0,1]]",
+          "expected": "9",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,0,1]]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[[9,1,4,7,3,-1,0,5,8,-1,6]]",
+          "expected": "7",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a sorted array of integers and a target, return the 1-based indices of the two numbers that add up to the target. Exactly one solution exists.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "twoSumSorted",
+      "paramTypes": [
+        "int[]",
+        "int"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def twoSumSorted(numbers, target):\n    pass\n",
+        "javascript": "function twoSumSorted(numbers, target) {\n\n}\n",
+        "cpp": "vector<int> twoSumSorted(vector<int>& numbers, int target) {\n\n}\n",
+        "java": "public int[] twoSumSorted(int[] numbers, int target) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[2,7,11,15], 9]",
+          "expected": "[1,2]",
+          "isSample": true
+        },
+        {
+          "input": "[[2,3,4], 6]",
+          "expected": "[1,3]",
+          "isSample": true
+        },
+        {
+          "input": "[[-1,0], -1]",
+          "expected": "[1,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,4,9,56,90], 8]",
+          "expected": "[4,5]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,25,75], 100]",
+          "expected": "[2,3]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,3,4,4], 8]",
+          "expected": "[3,4]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an array where each element is the height of a vertical line, return the largest amount of water any two lines can hold between them.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "maxArea",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def maxArea(heights):\n    pass\n",
+        "javascript": "function maxArea(heights) {\n\n}\n",
+        "cpp": "int maxArea(vector<int>& heights) {\n\n}\n",
+        "java": "public int maxArea(int[] heights) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,8,6,2,5,4,8,3,7]]",
+          "expected": "49",
+          "isSample": true
+        },
+        {
+          "input": "[[1,1]]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[[4,3,2,1,4]]",
+          "expected": "16",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,1]]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[[2,3,4,5,18,17,6]]",
+          "expected": "17",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2]]",
+          "expected": "1",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer array, return all unique triplets that sum to zero. Sort each triplet ascending, and return the triplets in sorted order.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "threeSum",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def threeSum(nums):\n    pass\n",
+        "javascript": "function threeSum(nums) {\n\n}\n",
+        "cpp": "vector<vector<int>> threeSum(vector<int>& nums) {\n\n}\n",
+        "java": "public int[][] threeSum(int[] nums) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[-1,0,1,2,-1,-4]]",
+          "expected": "[[-1,-1,2],[-1,0,1]]",
+          "isSample": true
+        },
+        {
+          "input": "[[0,1,1]]",
+          "expected": "[]",
+          "isSample": true
+        },
+        {
+          "input": "[[0,0,0]]",
+          "expected": "[[0,0,0]]",
+          "isSample": false
+        },
+        {
+          "input": "[[]]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[-2,0,1,1,2]]",
+          "expected": "[[-2,0,2],[-2,1,1]]",
+          "isSample": false
+        },
+        {
+          "input": "[[-4,-2,-2,-2,0,1,2,2,2,3,3,4,4,6,6]]",
+          "expected": "[[-4,-2,6],[-4,0,4],[-4,1,3],[-4,2,2],[-2,-2,4],[-2,0,2]]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an array where each element is a stock price on a given day, return the maximum profit from buying on one day and selling on a later day. Return 0 if no profit is possible.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "maxProfit",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def maxProfit(prices):\n    pass\n",
+        "javascript": "function maxProfit(prices) {\n\n}\n",
+        "cpp": "int maxProfit(vector<int>& prices) {\n\n}\n",
+        "java": "public int maxProfit(int[] prices) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[7,1,5,3,6,4]]",
+          "expected": "5",
+          "isSample": true
+        },
+        {
+          "input": "[[7,6,4,3,1]]",
+          "expected": "0",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[1]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[2,4,1]]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[[3,2,6,5,0,3]]",
+          "expected": "4",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a string, return the length of the longest substring that contains no repeated characters.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "lengthOfLongestSubstring",
+      "paramTypes": [
+        "string"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def lengthOfLongestSubstring(s):\n    pass\n",
+        "javascript": "function lengthOfLongestSubstring(s) {\n\n}\n",
+        "cpp": "int lengthOfLongestSubstring(string s) {\n\n}\n",
+        "java": "public int lengthOfLongestSubstring(String s) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"abcabcbb\"]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[\"bbbbb\"]",
+          "expected": "1",
+          "isSample": true
+        },
+        {
+          "input": "[\"pwwkew\"]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[\"\"]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\" \"]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[\"dvdf\"]",
+          "expected": "3",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a string of uppercase letters and an integer k, you may change at most k characters. Return the length of the longest substring containing a single repeated letter you can produce.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "characterReplacement",
+      "paramTypes": [
+        "string",
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def characterReplacement(s, k):\n    pass\n",
+        "javascript": "function characterReplacement(s, k) {\n\n}\n",
+        "cpp": "int characterReplacement(string s, int k) {\n\n}\n",
+        "java": "public int characterReplacement(String s, int k) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"ABAB\", 2]",
+          "expected": "4",
+          "isSample": true
+        },
+        {
+          "input": "[\"AABABBA\", 1]",
+          "expected": "4",
+          "isSample": true
+        },
+        {
+          "input": "[\"AAAA\", 0]",
+          "expected": "4",
+          "isSample": false
+        },
+        {
+          "input": "[\"\", 0]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\"ABCDE\", 1]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[\"ABBB\", 2]",
+          "expected": "4",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a string containing only the characters ( ) [ ] { }, return true if the brackets are closed in the correct order.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isValid",
+      "paramTypes": [
+        "string"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isValid(s):\n    pass\n",
+        "javascript": "function isValid(s) {\n\n}\n",
+        "cpp": "bool isValid(string s) {\n\n}\n",
+        "java": "public boolean isValid(String s) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"()\"]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[\"([)]\"]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[\"()[]{}\"]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[\"(]\"]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[\"{[]}\"]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[\"\"]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an array of tokens in reverse Polish notation, evaluate the expression and return the result. Division truncates toward zero.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "evalRPN",
+      "paramTypes": [
+        "string[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def evalRPN(tokens):\n    pass\n",
+        "javascript": "function evalRPN(tokens) {\n\n}\n",
+        "cpp": "int evalRPN(vector<string>& tokens) {\n\n}\n",
+        "java": "public int evalRPN(String[] tokens) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[\"2\",\"1\",\"+\",\"3\",\"*\"]]",
+          "expected": "9",
+          "isSample": true
+        },
+        {
+          "input": "[[\"4\",\"13\",\"5\",\"/\",\"+\"]]",
+          "expected": "6",
+          "isSample": true
+        },
+        {
+          "input": "[[\"5\"]]",
+          "expected": "5",
+          "isSample": false
+        },
+        {
+          "input": "[[\"10\",\"6\",\"9\",\"3\",\"+\",\"-11\",\"*\",\"/\",\"*\",\"17\",\"+\",\"5\",\"+\"]]",
+          "expected": "22",
+          "isSample": false
+        },
+        {
+          "input": "[[\"3\",\"-4\",\"+\"]]",
+          "expected": "-1",
+          "isSample": false
+        },
+        {
+          "input": "[[\"7\",\"2\",\"/\"]]",
+          "expected": "3",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an array of daily temperatures, return an array where each position holds how many days you must wait for a warmer temperature. Use 0 where no warmer day follows.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "dailyTemperatures",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def dailyTemperatures(temperatures):\n    pass\n",
+        "javascript": "function dailyTemperatures(temperatures) {\n\n}\n",
+        "cpp": "vector<int> dailyTemperatures(vector<int>& temperatures) {\n\n}\n",
+        "java": "public int[] dailyTemperatures(int[] temperatures) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[73,74,75,71,69,72,76,73]]",
+          "expected": "[1,1,4,2,1,1,0,0]",
+          "isSample": true
+        },
+        {
+          "input": "[[30,40,50,60]]",
+          "expected": "[1,1,1,0]",
+          "isSample": true
+        },
+        {
+          "input": "[[30,60,90]]",
+          "expected": "[1,1,0]",
+          "isSample": false
+        },
+        {
+          "input": "[[]]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[50]]",
+          "expected": "[0]",
+          "isSample": false
+        },
+        {
+          "input": "[[5,4,3,2,1]]",
+          "expected": "[0,0,0,0,0]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a sorted array of distinct integers and a target, return the index of the target using binary search, or -1 if it is absent.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "search",
+      "paramTypes": [
+        "int[]",
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def search(nums, target):\n    pass\n",
+        "javascript": "function search(nums, target) {\n\n}\n",
+        "cpp": "int search(vector<int>& nums, int target) {\n\n}\n",
+        "java": "public int search(int[] nums, int target) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[-1,0,3,5,9,12], 9]",
+          "expected": "4",
+          "isSample": true
+        },
+        {
+          "input": "[[-1,0,3,5,9,12], 2]",
+          "expected": "-1",
+          "isSample": true
+        },
+        {
+          "input": "[[5], 5]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[], 1]",
+          "expected": "-1",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5], 1]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[1,2,3,4,5], 5]",
+          "expected": "4",
+          "isSample": false
+        }
+      ]
+    }
+  }
+]

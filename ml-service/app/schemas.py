@@ -20,3 +20,24 @@ class AnalyzeResponse(BaseModel):
     points: list[PointVerdict]
     gap_analysis: str
     suggested_answer: str
+
+
+class ReviewCodeRequest(BaseModel):
+    question: str = Field(min_length=1)
+    language: str = Field(min_length=1)
+    source_code: str = Field(min_length=1)
+    # Correctness is already settled by the test cases before this is ever
+    # called. It is passed in so the model can be told the verdict and forbidden
+    # from contradicting it — never so the model can re-decide it.
+    passed_count: int
+    total_count: int
+
+
+class ReviewCodeResponse(BaseModel):
+    summary: str
+    strengths: list[str]
+    improvements: list[str]
+    # Best-effort commentary, not a measurement. Labelled as an estimate in the
+    # UI for that reason.
+    time_complexity: str
+    space_complexity: str

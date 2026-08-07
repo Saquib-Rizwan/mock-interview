@@ -81,6 +81,77 @@ export type QuestionDetail = {
 
 export type PointVerdict = { point: string; covered: boolean; comment: string };
 
+// Must stay in sync with the CodingLanguage enum in prisma/schema.prisma.
+export type CodingLanguage = "python" | "javascript" | "cpp" | "java";
+
+export type LanguageOption = {
+  id: CodingLanguage;
+  label: string;
+  // Monaco's own identifier, which differs from ours for some languages.
+  monacoId: string;
+};
+
+export type SampleTest = { id: string; input: string; expected: string };
+
+// Hidden test cases contribute only to hiddenTestCount — their inputs and
+// expected values never leave the server.
+export type CodingQuestionDetail = {
+  id: string;
+  text: string;
+  difficulty: Difficulty;
+  category: QuestionCategory;
+  functionName: string;
+  paramTypes: string[];
+  returnType: string;
+  starterCode: Record<CodingLanguage, string>;
+  sampleTests: SampleTest[];
+  hiddenTestCount: number;
+  languages: LanguageOption[];
+};
+
+// input/expected/actual are present for sample cases only.
+export type TestOutcome = {
+  testCaseId: string;
+  orderIndex: number;
+  isSample: boolean;
+  passed: boolean;
+  error: string | null;
+  input?: string;
+  expected?: string;
+  actual?: string | null;
+};
+
+// Commentary on approach and quality only. Correctness is decided by the test
+// cases before this is ever requested, and the model is forbidden from
+// contradicting that verdict.
+export type CodeReview = {
+  summary: string;
+  strengths: string[];
+  improvements: string[];
+  // Snake_case because these come straight through from ml-service.
+  time_complexity: string;
+  space_complexity: string;
+};
+
+export type CodeSubmission = {
+  id: string;
+  questionId?: string;
+  language: CodingLanguage;
+  sourceCode?: string;
+  passedCount: number;
+  totalCount: number;
+  createdAt: string;
+  // Null until the student asks for a review.
+  review?: CodeReview | null;
+};
+
+export type RunResult = {
+  compileError: string | null;
+  submission: CodeSubmission | null;
+  timedOut?: boolean;
+  results: TestOutcome[];
+};
+
 export type Submission = {
   id: string;
   questionId?: string;
@@ -164,6 +235,26 @@ export const api = {
   submissionsFor: (questionId: string) =>
     request<{ submissions: Submission[] }>(
       `/submissions?questionId=${encodeURIComponent(questionId)}`
+    ),
+
+  codingQuestion: (id: string) =>
+    request<{ question: CodingQuestionDetail }>(`/coding/questions/${id}`),
+
+  runCode: (questionId: string, language: CodingLanguage, sourceCode: string) =>
+    request<RunResult>("/coding/submissions", {
+      method: "POST",
+      body: JSON.stringify({ questionId, language, sourceCode }),
+    }),
+
+  codeSubmissionsFor: (questionId: string) =>
+    request<{ submissions: CodeSubmission[] }>(
+      `/coding/submissions?questionId=${encodeURIComponent(questionId)}`
+    ),
+
+  reviewCode: (submissionId: string) =>
+    request<{ review: CodeReview; cached: boolean }>(
+      `/coding/submissions/${submissionId}/review`,
+      { method: "POST" }
     ),
 
   healthFull: () =>
