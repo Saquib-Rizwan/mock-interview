@@ -3,6 +3,7 @@ import { Router } from "express";
 import { asyncHandler } from "../asyncHandler";
 import { Prisma } from "../generated/prisma/client";
 import { prisma } from "../prisma";
+import { authLimiter } from "../rateLimits";
 import { signToken } from "./jwt";
 import { requireAuth } from "./middleware";
 
@@ -42,7 +43,7 @@ function validate(body: unknown): { data: Credentials } | { error: string } {
   };
 }
 
-authRouter.post("/signup", asyncHandler(async (req, res) => {
+authRouter.post("/signup", authLimiter, asyncHandler(async (req, res) => {
   const result = validate(req.body);
   if ("error" in result) return res.status(400).json({ error: result.error });
 
@@ -51,10 +52,15 @@ authRouter.post("/signup", asyncHandler(async (req, res) => {
   try {
     const user = await prisma.user.create({
       data: { email, name, passwordHash: await bcrypt.hash(password, BCRYPT_ROUNDS) },
-      select: { id: true, email: true, name: true, createdAt: true },
+      select: { id: true, email: true, name: true, createdAt: true, tokenVersion: true },
     });
 
-    return res.status(201).json({ token: signToken({ userId: user.id }), user });
+    // tokenVersion is read rather than assumed to be 0, so the default living
+    // in the schema stays the single source of truth.
+    const { tokenVersion, ...publicUser } = user;
+    return res
+      .status(201)
+      .json({ token: signToken({ userId: user.id, tv: tokenVersion }), user: publicUser });
   } catch (err) {
     // P2002 is Prisma's unique-constraint violation, i.e. the email is taken.
     // Relying on the constraint rather than a pre-check avoids a race where two
@@ -66,7 +72,7 @@ authRouter.post("/signup", asyncHandler(async (req, res) => {
   }
 }));
 
-authRouter.post("/login", asyncHandler(async (req, res) => {
+authRouter.post("/login", authLimiter, asyncHandler(async (req, res) => {
   const result = validate(req.body);
   if ("error" in result) return res.status(400).json({ error: result.error });
 
@@ -85,9 +91,26 @@ authRouter.post("/login", asyncHandler(async (req, res) => {
   }
 
   return res.json({
-    token: signToken({ userId: user.id }),
+    token: signToken({ userId: user.id, tv: user.tokenVersion }),
     user: { id: user.id, email: user.email, name: user.name, createdAt: user.createdAt },
   });
+}));
+
+/**
+ * Signs the user out everywhere by incrementing their token version, which
+ * invalidates every token already issued to them.
+ *
+ * Requires auth: an unauthenticated caller must not be able to sign someone
+ * else out by guessing their id.
+ */
+authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
+  await prisma.user.update({
+    where: { id: req.userId },
+    data: { tokenVersion: { increment: 1 } },
+  });
+
+  // 204: nothing useful to return, and the client's own token is now dead.
+  return res.status(204).end();
 }));
 
 authRouter.get("/me", requireAuth, asyncHandler(async (req, res) => {

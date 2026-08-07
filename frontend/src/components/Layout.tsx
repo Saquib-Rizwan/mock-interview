@@ -1,9 +1,22 @@
 import { Link } from "react-router-dom";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { useAuth } from "../auth/useAuth";
 
 export function Layout({ children }: { children: ReactNode }) {
   const { user, logout } = useAuth();
+  // Logging out now makes a network call to revoke the token, so the button is
+  // disabled while it is in flight — otherwise a double click fires two
+  // revocations, the second of which arrives with an already-dead token.
+  const [signingOut, setSigningOut] = useState(false);
+
+  async function onLogout() {
+    setSigningOut(true);
+    try {
+      await logout();
+    } finally {
+      setSigningOut(false);
+    }
+  }
 
   return (
     <>
@@ -13,8 +26,8 @@ export function Layout({ children }: { children: ReactNode }) {
         </Link>
         <div className="topbar-right">
           <span className="muted small">{user?.name ?? user?.email}</span>
-          <button className="link-button" onClick={logout}>
-            Log out
+          <button className="link-button" onClick={onLogout} disabled={signingOut}>
+            {signingOut ? "Signing out…" : "Log out"}
           </button>
         </div>
       </header>

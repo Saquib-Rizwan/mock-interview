@@ -8,7 +8,8 @@ export type AuthState = {
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, name?: string) => Promise<void>;
-  logout: () => void;
+  // Async now: it tells the server to revoke the token before discarding it.
+  logout: () => Promise<void>;
 };
 
 // Kept apart from the provider component so AuthContext.tsx exports only

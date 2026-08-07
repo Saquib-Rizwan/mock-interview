@@ -219,6 +219,9 @@ export const api = {
 
   me: () => request<{ user: User }>("/auth/me"),
 
+  // Revokes every token issued to this user. Returns 204, hence the void body.
+  logout: () => request<void>("/auth/logout", { method: "POST" }),
+
   companies: () => request<{ companies: CompanySummary[] }>("/catalog/companies"),
   company: (id: string) => request<{ company: CompanyDetail }>(`/catalog/companies/${id}`),
   role: (id: string) => request<{ role: RoleDetail }>(`/catalog/roles/${id}`),

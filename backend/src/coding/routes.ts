@@ -2,6 +2,7 @@ import { Router } from "express";
 import { asyncHandler } from "../asyncHandler";
 import { requireAuth } from "../auth/middleware";
 import { prisma } from "../prisma";
+import { executionLimiter, llmLimiter } from "../rateLimits";
 import { CodingLanguage } from "../generated/prisma/enums";
 import { Judge0Error, JUDGE0_STATUS, runProgram } from "../judge0/client";
 import { LANGUAGE_LABELS, MONACO_LANGUAGE_IDS } from "../judge0/languages";
@@ -104,6 +105,7 @@ codingRouter.get(
 
 codingRouter.post(
   "/submissions",
+  executionLimiter,
   asyncHandler(async (req, res) => {
     const { questionId, language, sourceCode } = (req.body ?? {}) as Record<string, unknown>;
 
@@ -276,6 +278,7 @@ codingRouter.post(
  */
 codingRouter.post(
   "/submissions/:id/review",
+  llmLimiter,
   asyncHandler(async (req, res) => {
     // Scoped by userId as well as id: without it, any student could request a
     // review of another student's code and read it back.

@@ -2,6 +2,7 @@ import { Router } from "express";
 import { asyncHandler } from "../asyncHandler";
 import { requireAuth } from "../auth/middleware";
 import { prisma } from "../prisma";
+import { llmLimiter } from "../rateLimits";
 
 export const submissionsRouter = Router();
 
@@ -22,6 +23,7 @@ type AnalyzeResult = {
 
 submissionsRouter.post(
   "/",
+  llmLimiter,
   asyncHandler(async (req, res) => {
     const { questionId, answerText } = (req.body ?? {}) as Record<string, unknown>;
 

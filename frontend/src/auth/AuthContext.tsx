@@ -30,9 +30,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     loading,
     login: async (email, password) => store(await api.login(email, password)),
     signup: async (email, password, name) => store(await api.signup(email, password, name)),
-    logout: () => {
-      // Client-side only: JWTs are stateless, so the token stays technically
-      // valid until it expires. See the phase doc's limitations.
+    logout: async () => {
+      // Tell the server first: it increments the user's token version, which
+      // makes every token already issued to them stop verifying. Discarding
+      // the token locally alone would leave it usable for the rest of its life
+      // by anyone who had copied it.
+      try {
+        await api.logout();
+      } catch {
+        // A failed call must never trap someone in a signed-in state. The
+        // server-side revocation is the belt; clearing local state is the
+        // braces, and the braces always go on.
+      }
       localStorage.removeItem(TOKEN_KEY);
       setUser(null);
     },

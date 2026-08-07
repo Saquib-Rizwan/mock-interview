@@ -66,6 +66,15 @@ model User {
   passwordHash String   @map("password_hash")
   name         String?
   createdAt    DateTime @default(now()) @map("created_at")
+  // Every token carries the version it was signed with. Logging out increments
+  // this, so all of that user's existing tokens stop verifying immediately.
+  //
+  // Without it a leaked token stays valid for its full 7 days and nothing can
+  // stop it. A per-token revocation table would allow logging out one device
+  // while leaving others signed in, but needs its own table and a job to prune
+  // expired rows; for this application, killing every session on logout is the
+  // safer default and costs one integer.
+  tokenVersion Int      @default(0) @map("token_version")
 
   submissions     Submission[]
   codeSubmissions CodeSubmission[]
