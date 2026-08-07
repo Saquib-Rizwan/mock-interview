@@ -399,6 +399,144 @@ code {
   padding: 2rem;
 }
 
+/* -------------------------------------------------------------- progress */
+
+.nav-link {
+  font-size: 0.9rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin: 1.25rem 0;
+}
+
+.stat-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+}
+
+.stat-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+}
+
+.bars {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+/* Label, bar, value, note. The bar is the flexible column so the numbers stay
+   aligned down the page regardless of label length. */
+.bars li {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr 3.5rem auto;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.bar-label {
+  overflow-wrap: anywhere;
+}
+
+.bar-track {
+  height: 9px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--border) 60%, transparent);
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.bar-fill.low {
+  background: var(--error);
+}
+
+.bar-fill.mid {
+  background: #d18b1f;
+}
+
+.bar-fill.high {
+  background: var(--ok);
+}
+
+.bar-fill.neutral {
+  background: var(--accent);
+}
+
+.bar-value {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.gaps {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gaps li {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--error) 35%, var(--border));
+  border-radius: 8px;
+  background: var(--card);
+  font-size: 0.9rem;
+}
+
+.gap-count {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--error);
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  /* The four-column grid collapses badly on a phone; stack it instead. */
+  .bars li {
+    grid-template-columns: 1fr auto;
+  }
+
+  .bar-track {
+    grid-column: 1 / -1;
+  }
+
+  .bar-note {
+    grid-column: 1 / -1;
+  }
+}
+
 /* ---------------------------------------------------------------- coding */
 
 .coding {

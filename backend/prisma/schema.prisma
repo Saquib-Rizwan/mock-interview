@@ -93,6 +93,16 @@ model Submission {
   gapAnalysis     String   @map("gap_analysis")
   suggestedAnswer String   @map("suggested_answer")
   createdAt       DateTime @default(now()) @map("created_at")
+  // Per-point verdicts: [{ point, covered, comment }].
+  //
+  // Phase 4 returned these to the browser and discarded them, which left no way
+  // to score a text answer at all. Storing them gives both a percentage and the
+  // more useful signal — which specific expected points a student misses again
+  // and again across attempts.
+  //
+  // Nullable because submissions made before this existed have none. Those show
+  // as attempted-but-unscored rather than being given invented numbers.
+  points          Json?
 
   user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   // Restrict, not Cascade: a question still referenced by submitted work should

@@ -6,6 +6,7 @@ import { authRouter } from "./auth/routes";
 import { catalogRouter } from "./catalog/routes";
 import { codingRouter } from "./coding/routes";
 import { judge0Health } from "./judge0/client";
+import { progressRouter } from "./progress/routes";
 import { submissionsRouter } from "./submissions/routes";
 
 const app = express();
@@ -90,6 +91,7 @@ app.use("/auth", authRouter);
 app.use("/catalog", catalogRouter);
 app.use("/submissions", submissionsRouter);
 app.use("/coding", codingRouter);
+app.use("/progress", progressRouter);
 
 // Last-resort handler. Async routes reach it via the asyncHandler wrapper,
 // which forwards promise rejections to next(). Errors are logged in full but

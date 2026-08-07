@@ -25,6 +25,9 @@ export function Layout({ children }: { children: ReactNode }) {
           Mock Interview Prep
         </Link>
         <div className="topbar-right">
+          <Link to="/progress" className="nav-link">
+            Progress
+          </Link>
           <span className="muted small">{user?.name ?? user?.email}</span>
           <button className="link-button" onClick={onLogout} disabled={signingOut}>
             {signingOut ? "Signing out…" : "Log out"}

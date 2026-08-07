@@ -106,6 +106,10 @@ submissionsRouter.post(
         answerText,
         gapAnalysis: analysis.gap_analysis,
         suggestedAnswer: analysis.suggested_answer,
+        // Persisted as of Phase 7. Previously these were shown once and thrown
+        // away, which meant a text answer could never be scored after the fact
+        // — no progress view, no sense of which points a student keeps missing.
+        points: analysis.points,
       },
       select: {
         id: true,
@@ -116,9 +120,6 @@ submissionsRouter.post(
       },
     });
 
-    // Per-point verdicts are returned for immediate display but not persisted:
-    // the brief's Submission shape does not include them, and they can be
-    // re-derived by resubmitting. Noted in the phase doc.
     res.status(201).json({ submission, points: analysis.points });
   })
 );

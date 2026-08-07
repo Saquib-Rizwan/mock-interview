@@ -145,6 +145,65 @@ export type CodeSubmission = {
   review?: CodeReview | null;
 };
 
+// coveragePct is null when nothing in that subject has been scored yet — which
+// must render differently from a genuine 0%.
+export type SubjectProgress = {
+  category: QuestionCategory;
+  attempts: number;
+  scoredAttempts: number;
+  coveragePct: number | null;
+};
+
+export type LanguageProgress = {
+  language: CodingLanguage;
+  attempts: number;
+  solved: number;
+  testPassRatePct: number | null;
+};
+
+export type RecurringGap = {
+  point: string;
+  missed: number;
+  seen: number;
+  category: QuestionCategory;
+};
+
+export type RoleReadiness = {
+  companyId: string;
+  companyName: string;
+  roleId: string;
+  roleName: string;
+  totalQuestions: number;
+  attempted: number;
+  pct: number;
+};
+
+export type RecentActivity = {
+  kind: "text" | "coding";
+  id: string;
+  questionId: string;
+  questionText: string;
+  category: QuestionCategory;
+  createdAt: string;
+  covered: number | null;
+  total: number | null;
+};
+
+export type Progress = {
+  totals: {
+    textQuestions: number;
+    textAttempts: number;
+    codingQuestions: number;
+    codingSolved: number;
+    codingAttempts: number;
+  };
+  subjects: SubjectProgress[];
+  languages: LanguageProgress[];
+  recurringGaps: RecurringGap[];
+  readiness: RoleReadiness[];
+  recent: RecentActivity[];
+};
+
 export type RunResult = {
   compileError: string | null;
   submission: CodeSubmission | null;
@@ -259,6 +318,9 @@ export const api = {
       `/coding/submissions/${submissionId}/review`,
       { method: "POST" }
     ),
+
+  // Takes a key it ignores, to satisfy useFetch's stable-fetcher contract.
+  progress: (_key: string) => request<{ progress: Progress }>("/progress"),
 
   healthFull: () =>
     request<{ backend: string; mlService: { status: string; error?: string } }>(
