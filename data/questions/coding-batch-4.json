@@ -1,0 +1,758 @@
+[
+  {
+    "text": "A robot starts at the top-left of an m x n grid and can only move right or down. Return the number of distinct paths to the bottom-right corner.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "uniquePaths",
+      "paramTypes": [
+        "int",
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def uniquePaths(m, n):\n    pass\n",
+        "javascript": "function uniquePaths(m, n) {\n\n}\n",
+        "cpp": "int uniquePaths(int m, int n) {\n\n}\n",
+        "java": "public int uniquePaths(int m, int n) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[3,7]",
+          "expected": "28",
+          "isSample": true
+        },
+        {
+          "input": "[3,2]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[1,1]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[1,10]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[10,1]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[5,5]",
+          "expected": "70",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given two strings, return the length of their longest common subsequence. A subsequence keeps relative order but need not be contiguous.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "longestCommonSubsequence",
+      "paramTypes": [
+        "string",
+        "string"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def longestCommonSubsequence(text1, text2):\n    pass\n",
+        "javascript": "function longestCommonSubsequence(text1, text2) {\n\n}\n",
+        "cpp": "int longestCommonSubsequence(string text1, string text2) {\n\n}\n",
+        "java": "public int longestCommonSubsequence(String text1, String text2) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"abcde\",\"ace\"]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[\"abc\",\"def\"]",
+          "expected": "0",
+          "isSample": true
+        },
+        {
+          "input": "[\"abc\",\"abc\"]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[\"\",\"\"]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\"a\",\"\"]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\"bsbininm\",\"jmjkbkjkv\"]",
+          "expected": "1",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a grid of non-negative numbers, return the smallest possible sum of a path from the top-left to the bottom-right, moving only right or down.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "minPathSum",
+      "paramTypes": [
+        "int[][]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def minPathSum(grid):\n    pass\n",
+        "javascript": "function minPathSum(grid) {\n\n}\n",
+        "cpp": "int minPathSum(vector<vector<int>>& grid) {\n\n}\n",
+        "java": "public int minPathSum(int[][] grid) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,3,1],[1,5,1],[4,2,1]]]",
+          "expected": "7",
+          "isSample": true
+        },
+        {
+          "input": "[[[1,2,3],[4,5,6]]]",
+          "expected": "12",
+          "isSample": true
+        },
+        {
+          "input": "[[[5]]]",
+          "expected": "5",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,2],[1,1]]]",
+          "expected": "3",
+          "isSample": false
+        },
+        {
+          "input": "[[[9,1,4,8]]]",
+          "expected": "22",
+          "isSample": false
+        },
+        {
+          "input": "[[[1],[2],[3]]]",
+          "expected": "6",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given two strings, return the minimum number of single-character insertions, deletions or replacements needed to turn the first into the second.",
+    "category": "dsa",
+    "difficulty": "hard",
+    "coding": {
+      "functionName": "minDistance",
+      "paramTypes": [
+        "string",
+        "string"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def minDistance(word1, word2):\n    pass\n",
+        "javascript": "function minDistance(word1, word2) {\n\n}\n",
+        "cpp": "int minDistance(string word1, string word2) {\n\n}\n",
+        "java": "public int minDistance(String word1, String word2) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"horse\",\"ros\"]",
+          "expected": "3",
+          "isSample": true
+        },
+        {
+          "input": "[\"intention\",\"execution\"]",
+          "expected": "5",
+          "isSample": true
+        },
+        {
+          "input": "[\"\",\"\"]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\"a\",\"\"]",
+          "expected": "1",
+          "isSample": false
+        },
+        {
+          "input": "[\"abc\",\"abc\"]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[\"sunday\",\"saturday\"]",
+          "expected": "3",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a matrix, return all its elements in spiral order, starting at the top-left and moving clockwise.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "spiralOrder",
+      "paramTypes": [
+        "int[][]"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def spiralOrder(matrix):\n    pass\n",
+        "javascript": "function spiralOrder(matrix) {\n\n}\n",
+        "cpp": "vector<int> spiralOrder(vector<vector<int>>& matrix) {\n\n}\n",
+        "java": "public int[] spiralOrder(int[][] matrix) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,2,3],[4,5,6],[7,8,9]]]",
+          "expected": "[1,2,3,6,9,8,7,4,5]",
+          "isSample": true
+        },
+        {
+          "input": "[[[1,2,3,4],[5,6,7,8],[9,10,11,12]]]",
+          "expected": "[1,2,3,4,8,12,11,10,9,5,6,7]",
+          "isSample": true
+        },
+        {
+          "input": "[[[1]]]",
+          "expected": "[1]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,2]]]",
+          "expected": "[1,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1],[2],[3]]]",
+          "expected": "[1,2,3]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,2],[3,4]]]",
+          "expected": "[1,2,4,3]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a matrix, if any element is 0 set its entire row and column to 0. Return the modified matrix.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "setZeroes",
+      "paramTypes": [
+        "int[][]"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def setZeroes(matrix):\n    pass\n",
+        "javascript": "function setZeroes(matrix) {\n\n}\n",
+        "cpp": "vector<vector<int>> setZeroes(vector<vector<int>>& matrix) {\n\n}\n",
+        "java": "public int[][] setZeroes(int[][] matrix) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,1,1],[1,0,1],[1,1,1]]]",
+          "expected": "[[1,0,1],[0,0,0],[1,0,1]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[0,1,2,0],[3,4,5,2],[1,3,1,5]]]",
+          "expected": "[[0,0,0,0],[0,4,5,0],[0,3,1,0]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[1]]]",
+          "expected": "[[1]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[0]]]",
+          "expected": "[[0]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,2],[3,4]]]",
+          "expected": "[[1,2],[3,4]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,0],[1,1]]]",
+          "expected": "[[0,0],[1,0]]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "You must take numCourses courses, some with prerequisites given as pairs [a, b] meaning b must be taken before a. Return true if it is possible to finish them all.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "canFinish",
+      "paramTypes": [
+        "int",
+        "int[][]"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def canFinish(numCourses, prerequisites):\n    pass\n",
+        "javascript": "function canFinish(numCourses, prerequisites) {\n\n}\n",
+        "cpp": "bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {\n\n}\n",
+        "java": "public boolean canFinish(int numCourses, int[][] prerequisites) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[2,[[1,0]]]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[2,[[1,0],[0,1]]]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[1,[]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[4,[[1,0],[2,1],[3,2]]]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[3,[[0,1],[1,2],[2,0]]]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[5,[[1,0],[2,0],[3,1],[4,2]]]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer, return true if it reads the same forwards and backwards. Negative numbers are never palindromes.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isPalindromeNumber",
+      "paramTypes": [
+        "int"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isPalindromeNumber(x):\n    pass\n",
+        "javascript": "function isPalindromeNumber(x) {\n\n}\n",
+        "cpp": "bool isPalindromeNumber(int x) {\n\n}\n",
+        "java": "public boolean isPalindromeNumber(int x) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[121]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[-121]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[10]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[0]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[12321]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[1000021]",
+          "expected": "false",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a signed 32-bit integer, reverse its digits. If reversing causes the value to fall outside the signed 32-bit range, return 0.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "reverseInteger",
+      "paramTypes": [
+        "int"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def reverseInteger(x):\n    pass\n",
+        "javascript": "function reverseInteger(x) {\n\n}\n",
+        "cpp": "int reverseInteger(int x) {\n\n}\n",
+        "java": "public int reverseInteger(int x) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[123]",
+          "expected": "321",
+          "isSample": true
+        },
+        {
+          "input": "[-123]",
+          "expected": "-321",
+          "isSample": true
+        },
+        {
+          "input": "[120]",
+          "expected": "21",
+          "isSample": false
+        },
+        {
+          "input": "[0]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[1534236469]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[-2147483648]",
+          "expected": "0",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a number represented as an array of digits, most significant digit first, add one to it and return the resulting digits.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "plusOne",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int[]",
+      "starterCode": {
+        "python": "def plusOne(digits):\n    pass\n",
+        "javascript": "function plusOne(digits) {\n\n}\n",
+        "cpp": "vector<int> plusOne(vector<int>& digits) {\n\n}\n",
+        "java": "public int[] plusOne(int[] digits) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[1,2,3]]",
+          "expected": "[1,2,4]",
+          "isSample": true
+        },
+        {
+          "input": "[[9,9]]",
+          "expected": "[1,0,0]",
+          "isSample": true
+        },
+        {
+          "input": "[[4,3,2,1]]",
+          "expected": "[4,3,2,2]",
+          "isSample": false
+        },
+        {
+          "input": "[[9]]",
+          "expected": "[1,0]",
+          "isSample": false
+        },
+        {
+          "input": "[[0]]",
+          "expected": "[1]",
+          "isSample": false
+        },
+        {
+          "input": "[[1,9,9]]",
+          "expected": "[2,0,0]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a list of intervals, merge every set that overlaps and return the result sorted by start.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "mergeIntervals",
+      "paramTypes": [
+        "int[][]"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def mergeIntervals(intervals):\n    pass\n",
+        "javascript": "function mergeIntervals(intervals) {\n\n}\n",
+        "cpp": "vector<vector<int>> mergeIntervals(vector<vector<int>>& intervals) {\n\n}\n",
+        "java": "public int[][] mergeIntervals(int[][] intervals) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,3],[2,6],[8,10],[15,18]]]",
+          "expected": "[[1,6],[8,10],[15,18]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[1,4],[4,5]]]",
+          "expected": "[[1,5]]",
+          "isSample": true
+        },
+        {
+          "input": "[[]]",
+          "expected": "[]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,4],[0,4]]]",
+          "expected": "[[0,4]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,4],[2,3]]]",
+          "expected": "[[1,4]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,4],[5,6]]]",
+          "expected": "[[1,4],[5,6]]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a list of non-overlapping intervals sorted by start, insert a new interval and merge where necessary. Return the resulting list.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "insertInterval",
+      "paramTypes": [
+        "int[][]",
+        "int[]"
+      ],
+      "returnType": "int[][]",
+      "starterCode": {
+        "python": "def insertInterval(intervals, newInterval):\n    pass\n",
+        "javascript": "function insertInterval(intervals, newInterval) {\n\n}\n",
+        "cpp": "vector<vector<int>> insertInterval(vector<vector<int>>& intervals, vector<int>& newInterval) {\n\n}\n",
+        "java": "public int[][] insertInterval(int[][] intervals, int[] newInterval) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[[1,3],[6,9]],[2,5]]",
+          "expected": "[[1,5],[6,9]]",
+          "isSample": true
+        },
+        {
+          "input": "[[[1,2],[3,5],[6,7],[8,10],[12,16]],[4,8]]",
+          "expected": "[[1,2],[3,10],[12,16]]",
+          "isSample": true
+        },
+        {
+          "input": "[[],[5,7]]",
+          "expected": "[[5,7]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,5]],[2,3]]",
+          "expected": "[[1,5]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[1,5]],[6,8]]",
+          "expected": "[[1,5],[6,8]]",
+          "isSample": false
+        },
+        {
+          "input": "[[[3,5],[12,15]],[6,6]]",
+          "expected": "[[3,5],[6,6],[12,15]]",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given a string, return its longest palindromic substring. If several are equally long, return the one that starts earliest.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "longestPalindrome",
+      "paramTypes": [
+        "string"
+      ],
+      "returnType": "string",
+      "starterCode": {
+        "python": "def longestPalindrome(s):\n    pass\n",
+        "javascript": "function longestPalindrome(s) {\n\n}\n",
+        "cpp": "string longestPalindrome(string s) {\n\n}\n",
+        "java": "public String longestPalindrome(String s) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"babad\"]",
+          "expected": "\"bab\"",
+          "isSample": true
+        },
+        {
+          "input": "[\"cbbd\"]",
+          "expected": "\"bb\"",
+          "isSample": true
+        },
+        {
+          "input": "[\"\"]",
+          "expected": "\"\"",
+          "isSample": false
+        },
+        {
+          "input": "[\"a\"]",
+          "expected": "\"a\"",
+          "isSample": false
+        },
+        {
+          "input": "[\"ac\"]",
+          "expected": "\"a\"",
+          "isSample": false
+        },
+        {
+          "input": "[\"forgeeksskeegfor\"]",
+          "expected": "\"geeksskeeg\"",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given two strings s and t, return true if s is a subsequence of t — that is, s can be formed by deleting some characters of t without reordering the rest.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "coding": {
+      "functionName": "isSubsequence",
+      "paramTypes": [
+        "string",
+        "string"
+      ],
+      "returnType": "bool",
+      "starterCode": {
+        "python": "def isSubsequence(s, t):\n    pass\n",
+        "javascript": "function isSubsequence(s, t) {\n\n}\n",
+        "cpp": "bool isSubsequence(string s, string t) {\n\n}\n",
+        "java": "public boolean isSubsequence(String s, String t) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[\"abc\",\"ahbgdc\"]",
+          "expected": "true",
+          "isSample": true
+        },
+        {
+          "input": "[\"axc\",\"ahbgdc\"]",
+          "expected": "false",
+          "isSample": true
+        },
+        {
+          "input": "[\"\",\"\"]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[\"\",\"abc\"]",
+          "expected": "true",
+          "isSample": false
+        },
+        {
+          "input": "[\"abc\",\"\"]",
+          "expected": "false",
+          "isSample": false
+        },
+        {
+          "input": "[\"ace\",\"abcde\"]",
+          "expected": "true",
+          "isSample": false
+        }
+      ]
+    }
+  },
+  {
+    "text": "Given an integer array, return the largest product obtainable from a contiguous subarray.",
+    "category": "dsa",
+    "difficulty": "medium",
+    "coding": {
+      "functionName": "maxProduct",
+      "paramTypes": [
+        "int[]"
+      ],
+      "returnType": "int",
+      "starterCode": {
+        "python": "def maxProduct(nums):\n    pass\n",
+        "javascript": "function maxProduct(nums) {\n\n}\n",
+        "cpp": "int maxProduct(vector<int>& nums) {\n\n}\n",
+        "java": "public int maxProduct(int[] nums) {\n\n}\n"
+      },
+      "testCases": [
+        {
+          "input": "[[2,3,-2,4]]",
+          "expected": "6",
+          "isSample": true
+        },
+        {
+          "input": "[[-2,0,-1]]",
+          "expected": "0",
+          "isSample": true
+        },
+        {
+          "input": "[[-2]]",
+          "expected": "-2",
+          "isSample": false
+        },
+        {
+          "input": "[[]]",
+          "expected": "0",
+          "isSample": false
+        },
+        {
+          "input": "[[0,2]]",
+          "expected": "2",
+          "isSample": false
+        },
+        {
+          "input": "[[-2,3,-4]]",
+          "expected": "24",
+          "isSample": false
+        }
+      ]
+    }
+  }
+]

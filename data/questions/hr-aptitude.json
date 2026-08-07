@@ -1,0 +1,301 @@
+[
+  {
+    "text": "Tell me about yourself.",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Opens with current status — degree, branch, college, year",
+      "Names two or three concrete things built or worked on, not a list of adjectives",
+      "Connects those to the role being interviewed for",
+      "Stays under about ninety seconds and does not recite the whole CV",
+      "Ends by handing the conversation back rather than trailing off"
+    ]
+  },
+  {
+    "text": "Why do you want to join this company?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names something specific about the company — a product, a technology, a training programme",
+      "Explains why that matters to this candidate in particular",
+      "Links it to what the candidate wants to learn or build next",
+      "Avoids generic flattery that would apply to any employer",
+      "Shows evidence of having actually researched the company"
+    ]
+  },
+  {
+    "text": "What are your strengths and weaknesses?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a strength backed by a specific example rather than an assertion",
+      "Names a genuine weakness, not a disguised strength like 'I work too hard'",
+      "Describes concrete action being taken about the weakness",
+      "Shows self-awareness without excessive self-criticism",
+      "Keeps the strength relevant to the role"
+    ]
+  },
+  {
+    "text": "Where do you see yourself in five years?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a direction of growth rather than a specific job title",
+      "Mentions skills or depth the candidate wants to build",
+      "Is realistic about the timeframe",
+      "Connects the answer to staying and growing at this company",
+      "Does not suggest plans that conflict with the role, such as leaving to study"
+    ]
+  },
+  {
+    "text": "Describe a conflict you faced while working in a team and how you resolved it.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a real, specific situation with enough context to follow",
+      "Explains the other person's position fairly rather than as the villain",
+      "Describes what the candidate actually did, not what the team did",
+      "States the outcome honestly, including if it was imperfect",
+      "Names something learned that changed later behaviour"
+    ]
+  },
+  {
+    "text": "Why should we hire you?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Matches specific skills to specific needs of the role",
+      "Backs claims with evidence — a project, a result, a responsibility held",
+      "Mentions something differentiating rather than generic reliability",
+      "Shows understanding of what the role actually involves",
+      "Is confident without dismissing other candidates"
+    ]
+  },
+  {
+    "text": "Tell me about a project you are proud of. What was your role in it?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the problem the project solved before describing the technology",
+      "Clearly separates what the candidate did from what teammates did",
+      "Names a specific technical difficulty and how it was handled",
+      "Mentions the outcome — whether it shipped, who used it, what it achieved",
+      "Reflects on what would be done differently next time"
+    ]
+  },
+  {
+    "text": "How do you handle pressure and tight deadlines?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a concrete method — prioritising, breaking work down, communicating early",
+      "Gives a real example of a deadline actually faced",
+      "Mentions raising problems early rather than hiding them",
+      "Acknowledges pressure honestly instead of claiming never to feel it",
+      "Shows the approach produced a workable outcome"
+    ]
+  },
+  {
+    "text": "Describe a time you failed at something. What did you learn?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names a genuine failure, not a trivial or disguised success",
+      "Takes responsibility rather than blaming circumstances or others",
+      "Explains the specific cause the candidate identified",
+      "Describes a concrete change made as a result",
+      "Shows the lesson was actually applied later"
+    ]
+  },
+  {
+    "text": "Are you willing to relocate, and are you comfortable with the company's bond or service agreement?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a clear and honest answer rather than hedging",
+      "Shows awareness of what the commitment actually involves",
+      "Mentions any genuine constraints upfront rather than concealing them",
+      "Frames flexibility positively where it exists",
+      "Asks a sensible clarifying question if the terms are unclear"
+    ]
+  },
+  {
+    "text": "What do you know about our company and the work we do?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names the company's main business lines or products accurately",
+      "Mentions something recent — a launch, an acquisition, a stated direction",
+      "Shows understanding of where the applied-for role sits within that",
+      "Goes beyond facts that could be read off the homepage in ten seconds",
+      "Connects the company's work to the candidate's own interest"
+    ]
+  },
+  {
+    "text": "Do you prefer working independently or as part of a team?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Acknowledges both modes rather than picking one absolutely",
+      "Gives an example of working well in each",
+      "Shows awareness that most real work requires both",
+      "Explains when the candidate seeks help versus works through alone",
+      "Answers honestly rather than saying what sounds employable"
+    ]
+  },
+  {
+    "text": "What are your salary expectations?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Shows the candidate has researched a realistic market range for the role",
+      "Gives a range rather than a single figure",
+      "Mentions flexibility for the right opportunity without appearing desperate",
+      "Considers the whole package, not only base pay",
+      "Redirects politely if it is genuinely too early to answer"
+    ]
+  },
+  {
+    "text": "Do you have any questions for us?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Asks at least one substantive question rather than declining",
+      "Question shows genuine interest in the work, the team or how success is measured",
+      "Avoids asking only about leave, pay and perks at a first round",
+      "Question could not have been answered by reading the careers page",
+      "Listens and follows up rather than reciting a prepared list"
+    ]
+  },
+  {
+    "text": "Why did you choose your engineering branch, and would you choose it again?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a real reason rather than 'my parents chose it' left unexplained",
+      "Mentions something specific that sustained the interest",
+      "Answers the second half honestly, including if the answer is no",
+      "Connects the branch to the role being applied for",
+      "Shows reflection rather than a rehearsed line"
+    ]
+  },
+  {
+    "text": "A train 150 metres long is running at 90 km/h. How long does it take to completely pass a platform 350 metres long? Explain your approach.",
+    "category": "other",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises the total distance is train length plus platform length, 500 metres",
+      "Converts 90 km/h to 25 m/s by multiplying by 5/18",
+      "Divides distance by speed to get the time",
+      "States the answer as 20 seconds",
+      "Explains why the train's own length must be included"
+    ]
+  },
+  {
+    "text": "A can finish a piece of work in 12 days and B in 18 days. Working together, how long will they take? Explain your approach.",
+    "category": "other",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Expresses each person's rate as work per day — 1/12 and 1/18",
+      "Adds the rates to get the combined rate of 5/36 per day",
+      "Takes the reciprocal to get the time",
+      "States the answer as 7.2 days, or 36/5 days",
+      "Explains why rates add but times do not"
+    ]
+  },
+  {
+    "text": "A shopkeeper marks an item 40% above cost price and then offers a 25% discount. What is the profit or loss percentage? Explain your approach.",
+    "category": "other",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Assumes a convenient cost price such as 100 to simplify the arithmetic",
+      "Computes the marked price as 140",
+      "Applies the 25% discount to the marked price, not the cost price, giving 105",
+      "Concludes a 5% profit",
+      "Explains why the discount and markup percentages cannot simply be subtracted"
+    ]
+  },
+  {
+    "text": "In a bag there are 5 red and 3 blue balls. Two balls are drawn at random without replacement. What is the probability that both are red? Explain your approach.",
+    "category": "other",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies the probability of the first ball being red as 5/8",
+      "Recognises that after one red is removed, 4 red remain out of 7 balls",
+      "Multiplies the two probabilities because the draws are dependent",
+      "States the answer as 20/56, which simplifies to 5/14",
+      "Explains why 'without replacement' changes the second probability"
+    ]
+  },
+  {
+    "text": "Find the next number in the series: 2, 6, 12, 20, 30, ... Explain the pattern.",
+    "category": "other",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Computes the differences between consecutive terms: 4, 6, 8, 10",
+      "Notices the differences increase by 2 each time",
+      "Concludes the next difference is 12",
+      "States the answer as 42",
+      "Recognises the general form n(n+1) as an alternative explanation"
+    ]
+  },
+  {
+    "text": "Pointing to a photograph, a man said, 'She is the daughter of my grandfather's only son.' How is the woman related to him? Explain your reasoning.",
+    "category": "other",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies that the grandfather's only son must be the speaker's father",
+      "Concludes the woman is the daughter of the speaker's father",
+      "States the relation as sister",
+      "Explains why 'only son' is the key detail that fixes the answer",
+      "Works the relation outward step by step rather than guessing"
+    ]
+  },
+  {
+    "text": "If the day before yesterday was Thursday, what day will it be the day after tomorrow? Explain your reasoning.",
+    "category": "other",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Establishes that if the day before yesterday was Thursday, today is Saturday",
+      "Counts forward two days from today",
+      "States the answer as Monday",
+      "Shows the intermediate steps rather than only the answer",
+      "Avoids the common error of counting from the wrong anchor day"
+    ]
+  },
+  {
+    "text": "In how many ways can the letters of the word 'LEVEL' be arranged? Explain your approach.",
+    "category": "other",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Counts 5 letters in total",
+      "Identifies the repeats: L appears twice and E appears twice",
+      "Uses the formula 5! divided by (2! x 2!)",
+      "States the answer as 30",
+      "Explains why dividing by the factorials of the repeats removes duplicate arrangements"
+    ]
+  }
+]

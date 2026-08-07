@@ -26,7 +26,15 @@ A student opens a coding question, picks a language, writes a solution in a Mona
 - `src/coding/routes.ts` — `GET /coding/questions/:id`, `POST /coding/submissions`, `GET /coding/submissions`
 - `/health/full` now also reports Judge0
 
+**Catalogue restructure** (requested during this phase — data, not schema). The bank had outgrown the seed: 51 coding questions had accumulated in a single TCS round, and there were only two companies. Replaced with a declarative catalogue:
+- `data/catalog.json` — 10 companies, 13 roles, 45 rounds, each round declaring what it should contain
+- `backend/scripts/seed-catalog.ts` — reconciles the database to match the file
+- `data/questions/hr-aptitude.json` — 15 HR and 8 aptitude questions, since one HR question could not fill a dozen HR rounds
+
+Result: **149 questions across 45 rounds, largest round 9 questions, no round empty.**
+
 **Scripts**
+- `npm run seed:catalog -- <file>` — builds companies, roles and rounds, and fills them
 - `npm run ingest:coding -- <file>` — loads coding questions with signatures and test cases
 - `npm run harness -- --question <text> --language <lang> [--solution <file>]` — prints the exact program that would be sent to Judge0
 - `npm run expected -- <draft file>` — computes every test case's expected output by running a reference solution, rather than having one written by hand
@@ -39,11 +47,13 @@ A student opens a coding question, picks a language, writes a solution in a Mona
 - `POST /review-code` on ml-service, `POST /coding/submissions/:id/review` on the backend
 - `CodeSubmission.review` (`Json?`), migration `20260807073106_add_code_review`
 
-**Data** — 36 coding questions, 216 test cases, all attached to the TCS coding round:
+**Data** — 51 coding questions, 306 test cases, all attached to the TCS coding round:
 - `coding-dsa.json` — reverse a linked list, two sum, valid palindrome, maximum subarray
 - `coding-trees.json` — invert a binary tree, maximum depth
-- `coding-batch-1.json` — 15 covering arrays & hashing, two pointers, sliding window, stack, binary search
-- `coding-batch-2.json` — 15 covering linked lists, binary trees, BSTs and heap-style problems
+- `coding-batch-1.json` — 15: arrays & hashing, two pointers, sliding window, stack, binary search
+- `coding-batch-2.json` — 15: linked lists, binary trees, BSTs, heap-style problems
+- `coding-batch-3.json` — 15: backtracking, graphs, dynamic programming, greedy, intervals, bit manipulation
+- `coding-batch-4.json` — 15: 2D dynamic programming, matrix traversal, topological sort, maths, intervals, strings
 - `drafts/` — the source form of each batch: reference solutions plus test *inputs*, with no expected values. **Gitignored**, since it is a working solution to every question
 
 **New dependency** — `@monaco-editor/react`. Chosen over CodeMirror because this project gets demonstrated, and Monaco is the editor VS Code is built on, so it looks like a real IDE without configuration. See limitations for the cost of that choice.
@@ -133,7 +143,10 @@ CodeSubmission + TestResult rows  ──►  results panel
 - **Compile errors are not persisted.** They return immediately and create no `CodeSubmission`, on the grounds that a program which never compiled is not a graded attempt. It does mean the history under-counts how many times a student actually pressed Run.
 - **Test cases cannot be edited or replaced once results exist.** `TestResult` restricts deletion of a `TestCase` deliberately — an old attempt must keep meaning what it meant when graded. Re-running `ingest:coding` therefore skips test cases for any question that already has them, and only updates the signature.
 - **⚠️ Every hidden test case and its expected value is committed to the repository.** The API correctly withholds them from students, but `data/questions/*.json` contains all of it in plain text, and `data/questions/drafts/` additionally contains a working solution to every question. On a public GitHub repo that is the entire answer key. Acceptable for a college project; **not acceptable for a real deployment**, where the question bank would need to move out of the repo or the repo would need to be private. Flagged and undecided.
-- **Ingesting does not attach.** A newly ingested question belongs to a category but to no round, so it is invisible until `npm run attach` puts it in one. This is Phase 5's deliberate design, and it is also the single easiest thing to forget — 20 questions were loaded and none appeared until they were attached.
+- **Ingesting does not attach.** A newly ingested question belongs to a category but to no round, so it is invisible until it is attached. This is Phase 5's deliberate design, and it is also the single easiest thing to forget — 20 questions were loaded and none appeared until they were attached. `seed-catalog` largely removes the trap by declaring round contents up front, but `ingest:coding` still leaves new questions unattached until the catalogue is re-seeded.
+- **Re-seeding after adding questions reshuffles which round a question lands in.** The pool is ordered by `id`, and ids are UUIDs, so a newly ingested question inserts at an arbitrary position and shifts everything after it. Re-running `seed:catalog` with an unchanged bank is stable; re-running it after an ingest is not. Harmless during development, but a student mid-way through a round would see its contents change. Ordering the pool by `createdAt` instead would fix it and is deferred.
+- **A question can appear in several companies' rounds.** The bank is shared, and with 45 rounds drawing on 16 HR questions the same ones necessarily recur. The rolling cursor spreads them so consecutive rounds differ, but it cannot manufacture variety that isn't in the bank. More HR and company-specific questions is the fix, not more code.
+- **Company-specific questions are only linked by attachment.** `Question` has no company foreign key — a `company_specific` question belongs to a company purely by which round it sits in. That was Phase 1's design and it holds up, but it means nothing stops a company-specific question being attached to the wrong company's round. `seed-catalog` avoids it by declaring those questions inline under the round that owns them.
 - **No graphs, matrices beyond `int[][]`, or custom classes.** Design problems (LRU Cache, Min Stack, Trie) need a class-with-operation-log harness, which does not exist — the current harness calls one function once per test case and structurally cannot express them.
 - **No "run against my own input" mode.** Students can only run the stored test cases.
 - **Code review complexity estimates are commentary, not measurement.** The model reads the code and reports its best guess at big-O. It is usually right and occasionally will not be, so the panel labels the whole thing as model commentary and states plainly that the score above is unaffected by it.
@@ -229,7 +242,19 @@ This covers what local testing could not: base64 encoding in both directions, Ju
 
 **`TreeNode`**, added after the above: generated and ran the invert-a-binary-tree harness in all four languages locally, and again through Judge0 for C++. All four produce byte-identical output including the `null` positions (`[1,null,2]`, `[1,2,null,3]`), which is what confirms the C++/Java sentinel encoding matches Python and JavaScript's native nulls. Also ran `TreeNode → int` (maximum depth) in Java to check the other direction.
 
-**Question bank**: 15 drafts run through `compute-expected` — 90 test cases, all outputs generated by executing the reference solutions, none typed by hand. Cross-checked two of them by writing *independent* C++ and Java solutions and confirming they agree with the Python-derived values; this also exercised `int[][]` returns and `string[]` parameters, which nothing else had covered.
+**Question bank**: 45 drafts run through `compute-expected` — 270 test cases, every expected output generated by executing a reference solution, none typed by hand.
+
+Each batch was then cross-checked by writing an *independent* solution in another language and confirming it agrees with the Python-derived values. Between them these covered every supported type shape:
+
+| Batch | Cross-check | Type shape it proved |
+|---|---|---|
+| 1 | C++ `threeSum` | `int[]` → `int[][]` |
+| 1 | Java `evalRPN` | `string[]` parameter, and integer division truncating toward zero identically in both languages |
+| 2 | C++ `isSameTree` | two `TreeNode` parameters in one signature |
+| 2 | Java `kClosest` | `int[][]` in *and* out |
+| 3 | C++ `letterCombinations` | `string[]` return, including JSON string escaping |
+| 3 | Java `numIslands` **through Judge0** | `int[][]` parameter on the real executor |
+| 4 | C++ `longestPalindrome` **through Judge0** | `string` **return**, including the empty-string case |
 
 **Hidden test cases confirmed hidden**: fetched `/coding/questions/:id` as a freshly created user and compared the response against all four hidden cases straight from the database. Zero of their inputs or expected values appear anywhere in the payload — only `hiddenTestCount: 4`. (The temporary account was deleted afterwards.)
 

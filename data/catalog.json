@@ -1,0 +1,513 @@
+[
+  {
+    "name": "TCS",
+    "roles": [
+      {
+        "name": "Systems Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "NQT Aptitude",
+            "notes": "Numerical, reasoning and verbal ability. Sectional cut-offs apply.",
+            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Fundamentals across OS, DBMS and networks, plus your final-year project.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "dbms", "type": "text", "count": 3 },
+              { "category": "cn", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "TCS works largely on client projects with long-running legacy systems. How would you approach joining a codebase that is fifteen years old and poorly documented?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Start by reading the code paths that handle the most common user journey rather than reading everything",
+                  "Use tests, logs and version history to learn intent where documentation is missing",
+                  "Change small things first and verify, rather than attempting a redesign",
+                  "Ask colleagues targeted questions after doing the reading, not instead of it",
+                  "Document what you learn as you go so the next joiner has more than you did"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "coding",
+            "roundName": "Coding Round",
+            "notes": "Two problems, any language. Partial marks for passing some test cases.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 6 }]
+          },
+          {
+            "order": 4,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "notes": "Fit, relocation and the service agreement.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 4 }]
+          }
+        ]
+      },
+      {
+        "name": "Digital Specialist",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Advanced Aptitude",
+            "notes": "Harder quantitative section than the standard NQT.",
+            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Advanced Coding",
+            "notes": "Two problems at medium to hard difficulty.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 6 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Deeper systems questions than the Systems Engineer track.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "oops", "type": "text", "count": 3 }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Infosys",
+    "roles": [
+      {
+        "name": "Systems Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "InfyTQ Assessment",
+            "notes": "Aptitude plus basic programming logic.",
+            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Database and OOP fundamentals, plus one coding problem on paper.",
+            "picks": [
+              { "category": "dbms", "type": "text", "count": 4 },
+              { "category": "oops", "type": "text", "count": 3 },
+              { "category": "dsa", "type": "coding", "count": 2 }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 4 }]
+          }
+        ]
+      },
+      {
+        "name": "Power Programmer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "coding",
+            "roundName": "Online Coding Assessment",
+            "notes": "Three problems in 90 minutes. This round decides most of the shortlist.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 7 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Deep Dive",
+            "notes": "Design discussion and complexity analysis of your assessment solutions.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "cn", "type": "text", "count": 3 }
+            ],
+            "specific": [
+              {
+                "text": "The Power Programmer role is deliberately kept away from routine maintenance work. What would you want to be building two years in, and how would you keep your fundamentals sharp while doing it?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Names a specific area of interest rather than 'anything challenging'",
+                  "Explains why that area is interesting beyond it being fashionable",
+                  "Describes a concrete habit for staying sharp — reading, side projects, teaching",
+                  "Acknowledges that depth requires sustained work on hard problems",
+                  "Connects the ambition back to what the company actually builds"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "HR Discussion",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Wipro",
+    "roles": [
+      {
+        "name": "Project Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Aptitude Test",
+            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+          },
+          {
+            "order": 2,
+            "roundType": "other",
+            "roundName": "Written Communication",
+            "notes": "Essay round. Assessed on structure and clarity, not vocabulary.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 2 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "picks": [
+              { "category": "cn", "type": "text", "count": 4 },
+              { "category": "dbms", "type": "text", "count": 3 },
+              { "category": "dsa", "type": "coding", "count": 2 }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Accenture",
+    "roles": [
+      {
+        "name": "Associate Software Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Cognitive Assessment",
+            "notes": "Adaptive test — questions get harder as you answer correctly.",
+            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Coding Assessment",
+            "notes": "Two problems, 45 minutes.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 5 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "picks": [
+              { "category": "oops", "type": "text", "count": 4 },
+              { "category": "dbms", "type": "text", "count": 3 }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cognizant",
+    "roles": [
+      {
+        "name": "Programmer Analyst",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "GenC Aptitude",
+            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "dbms", "type": "text", "count": 3 },
+              { "category": "dsa", "type": "coding", "count": 3 }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 4 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Capgemini",
+    "roles": [
+      {
+        "name": "Senior Software Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Game-Based Aptitude",
+            "notes": "Puzzle-style assessment rather than a conventional paper.",
+            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "picks": [
+              { "category": "cn", "type": "text", "count": 3 },
+              { "category": "oops", "type": "text", "count": 3 },
+              { "category": "dsa", "type": "coding", "count": 3 }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Zoho",
+    "roles": [
+      {
+        "name": "Member Technical Staff",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Written Aptitude",
+            "notes": "Pen and paper. Reasoning heavy.",
+            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Basic Programming",
+            "notes": "Implement without an IDE. Correctness over cleverness.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 5 }]
+          },
+          {
+            "order": 3,
+            "roundType": "coding",
+            "roundName": "Advanced Programming",
+            "notes": "A single larger problem built up over several hours.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 5 }]
+          },
+          {
+            "order": 4,
+            "roundType": "technical",
+            "roundName": "Technical HR",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "general_hr", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "Zoho interviews are known for long programming rounds without internet access or an IDE. How do you debug when you cannot search for the error message?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Reads the error or symptom carefully rather than immediately changing code",
+                  "Narrows the problem by isolating the smallest failing case",
+                  "Uses print statements or manual tracing to check assumptions",
+                  "Explains reasoning from first principles about what the code actually does",
+                  "Acknowledges checking the simplest explanations before the complicated ones"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Amazon",
+    "roles": [
+      {
+        "name": "SDE I",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "coding",
+            "roundName": "Online Assessment",
+            "notes": "Two problems plus a work-styles survey. Auto-graded.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 6 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Technical Round 1",
+            "notes": "Live coding with an engineer. Expect follow-ups on complexity.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 5 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Round 2",
+            "notes": "Data structures plus system fundamentals.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "dbms", "type": "text", "count": 3 }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "managerial",
+            "roundName": "Bar Raiser",
+            "notes": "Leadership Principles. Answers are expected in STAR format with real examples.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }],
+            "specific": [
+              {
+                "text": "Amazon interviews heavily on its Leadership Principles, one of which is Customer Obsession. Describe a time you changed what you were building because of feedback from the people using it.",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Describes a specific situation with real users, not a hypothetical",
+                  "States clearly what the original plan was and what the feedback revealed",
+                  "Explains the decision to change and what it cost",
+                  "Gives the outcome with some measure of whether it worked",
+                  "Structures the answer as situation, task, action, result",
+                  "Uses 'I' for the candidate's own actions rather than 'we' throughout"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Microsoft",
+    "roles": [
+      {
+        "name": "Software Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "coding",
+            "roundName": "Online Assessment",
+            "notes": "Codility-style. Three problems, 90 minutes.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 6 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Technical Screen",
+            "notes": "One problem, discussed aloud. Communication is assessed alongside the code.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 5 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Onsite Technical",
+            "notes": "Multiple back-to-back rounds covering DS, OS and design.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 3 },
+              { "category": "cn", "type": "text", "count": 3 },
+              { "category": "oops", "type": "text", "count": 2 }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "managerial",
+            "roundName": "Hiring Manager Round",
+            "notes": "Fit, ways of working, and depth on one past project.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Deloitte",
+    "roles": [
+      {
+        "name": "Business Analyst",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "group_discussion",
+            "roundName": "Group Discussion",
+            "notes": "Case-based. Assessed on structure and listening as much as speaking.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 2 }]
+          },
+          {
+            "order": 2,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "picks": [
+              { "category": "general_hr", "type": "text", "count": 3 },
+              { "category": "dbms", "type": "text", "count": 2 }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Technology Analyst",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Assessment",
+            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "picks": [
+              { "category": "dbms", "type": "text", "count": 4 },
+              { "category": "dsa", "type": "coding", "count": 3 }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "Partner Round",
+            "notes": "Senior stakeholder conversation. Consulting fit and client presence.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }]
+          }
+        ]
+      }
+    ]
+  }
+]
