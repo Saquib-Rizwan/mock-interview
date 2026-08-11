@@ -173,9 +173,17 @@ export function Progress() {
 }
 
 function Tile({ value, label, sub }: { value: string | number; label: string; sub: string }) {
+  // "7/12" is split so the total can be set small and muted beside the score.
+  // At one size the reader has to work out which of the two numbers is the
+  // answer; this says it in the type instead.
+  const [score, total] = String(value).split("/");
+
   return (
     <div className="stat-tile">
-      <span className="stat-value">{value}</span>
+      <span className="stat-value">
+        {score}
+        {total !== undefined && <span className="stat-den">/{total}</span>}
+      </span>
       <span className="stat-label">{label}</span>
       <span className="muted small">{sub}</span>
     </div>

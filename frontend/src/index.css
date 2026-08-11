@@ -1,82 +1,81 @@
 /**
- * Design tokens.
+ * Design tokens — "Vermilion".
  *
- * Every colour, radius and shadow in the app resolves to something here, so a
- * palette change is one file rather than a search across components. Both
- * themes define the same token names — nothing may be declared only inside the
- * dark block, or it would be undefined in light mode.
+ * A two-colour poster system: deep ink, cream, and one loud vermilion. The
+ * register is Indian print and film-poster work — heavy display type stacked
+ * tight, solid blocks of colour, thick rules — rather than the restrained
+ * dark-mode minimalism this replaced.
+ *
+ * WHAT THIS DELIBERATELY IS NOT, and why:
+ *
+ * - **No Inter.** It is the single most common typeface in generated
+ *   interfaces; a serif paired with Inter is effectively a fingerprint. Body
+ *   text is Chivo, display is Syne.
+ * - **No gold or brass on brown.** That palette reads as "premium" precisely
+ *   because every model reaches for it. The previous build used it and was
+ *   rejected for looking generated.
+ * - **Nothing is desaturated into tastefulness.** The accent is used loudly and
+ *   often. A restrained accent was tried first and read as timid.
+ *
+ * Dark-only, on instruction — a light variant was built earlier and rejected as
+ * too bright, and leaving one in would hand it back to anyone whose OS prefers
+ * light.
  */
 :root {
-  color-scheme: light dark;
+  /* Forces dark form controls, scrollbars and caret. Without this the browser
+     paints native widgets from the OS preference and they arrive white. */
+  color-scheme: dark;
 
-  /* Surfaces, lightest to most raised. --card is the raised one components sit
-     on; --surface-2 is for things nested *inside* a card, which need to recede
-     rather than stack another shadow. */
-  --bg: #f6f7f9;
-  --card: #ffffff;
-  --surface-2: #f2f4f7;
+  /* Deep ink with a faint violet cast rather than a neutral or warm black. It
+     is what makes the vermilion read as ink-on-poster instead of as a warning. */
+  --bg: #14131a;
+  /* The rail sits behind the page, so it goes darker rather than lighter. */
+  --rail: #0e0d13;
+  --card: #1d1b24;
+  --surface-2: #26242e;
 
-  /* Text, in descending emphasis. Three levels rather than two: headings,
-     body, and the supporting text that would otherwise all collapse to grey. */
-  --text: #101828;
-  --text-2: #475467;
-  --muted: #667085;
+  /* Cream, not white. On this ground pure #FFF is glaring and kills the
+     printed quality the whole system depends on. */
+  --text: #f5ede0;
+  --text-2: #b8b0a6;
+  --muted: #857e77;
 
-  --border: #e4e7ec;
-  --border-strong: #d0d5dd;
+  --border: #302e39;
+  --border-strong: #474453;
 
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  /* Tinted background for selected/active states. Deliberately very light —
-     it sits behind text and must not fight it. */
-  --accent-soft: #eef2ff;
+  /* Vermilion. Used in blocks and thick rules, not as a hint. */
+  --accent: #ff4a1c;
+  --accent-hover: #ff6136;
+  --accent-soft: rgba(255, 74, 28, 0.14);
 
-  --error: #d92d20;
-  --warn: #dc6803;
-  --ok: #12b76a;
+  /**
+   * Semantics.
+   *
+   * `--error` is the accent itself, which is unusual and deliberate: with a
+   * red-orange accent, a separate red for failure would be a near-miss, and two
+   * almost-identical reds meaning different things is worse than one red
+   * meaning "look here". A missed point IS the thing to look at.
+   *
+   * That leaves green as the only other semantic hue, and "medium" difficulty
+   * takes a neutral so the scale still reads green → neutral → vermilion.
+   */
+  --ok: #46c08a;
+  --error: #ff4a1c;
+  --warn: #b8b0a6;
 
-  /* Elevation. Layered shadows rather than one blur, so edges stay crisp while
-     the spread still reads as depth. */
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
-  --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
-  --shadow-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+  /* Near-square. Poster work does not have soft corners. */
+  --radius: 2px;
+  --radius-lg: 3px;
 
-  --radius: 10px;
-  --radius-lg: 14px;
+  --font-display: "Syne Variable", Impact, "Arial Black", sans-serif;
+  --font-sans: "Chivo Variable", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, Consolas, monospace;
 
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Consolas, monospace;
+  /* The reading measure. Prose longer than this is one of the loudest tells of
+     an undesigned page. */
+  --measure: 66ch;
 
-  font: 16px/1.6 var(--font-sans);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0d0f14;
-    --card: #161a22;
-    --surface-2: #1d222c;
-
-    --text: #e7e9ee;
-    --text-2: #a7aeba;
-    --muted: #8b93a1;
-
-    --border: #262c38;
-    --border-strong: #333a48;
-
-    --accent: #818cf8;
-    --accent-hover: #a5b4fc;
-    --accent-soft: #1e1b4b;
-
-    --error: #f97066;
-    --warn: #f79009;
-    --ok: #47cd89;
-
-    /* Shadows carry far less of the work in dark mode — the border does it.
-       Kept subtle so cards do not turn into dark smudges. */
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45);
-    --shadow-lg: 0 14px 24px -6px rgba(0, 0, 0, 0.5);
-  }
+  font: 17px/1.6 var(--font-sans);
 }
 
 * {
@@ -91,8 +90,37 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Respect a user's reduced-motion preference: every transition in the app is
-   decorative, so removing them costs nothing. */
+/**
+ * Print grain.
+ *
+ * A fixed, non-interactive noise wash. Slightly stronger here than a purely
+ * digital design would want, because the reference is ink on stock — it wants
+ * to look very slightly misregistered rather than perfectly flat. Generated by
+ * an inline SVG turbulence filter, so it costs no request and cannot 404.
+ */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Everything real sits above the grain. */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Vermilion on ink, which is the system's whole thesis in one rule. */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* Every transition in the app is decorative, so removing them costs nothing. */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

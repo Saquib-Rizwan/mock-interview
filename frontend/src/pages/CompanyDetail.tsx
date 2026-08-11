@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { api } from "../api";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import { CompanyMark } from "../components/CompanyMark";
 import { useFetch } from "../useFetch";
 
 export function CompanyDetail() {
@@ -18,7 +19,15 @@ export function CompanyDetail() {
       <Breadcrumbs
         items={[{ label: "Companies", to: "/" }, { label: company.name }]}
       />
-      <h1>{company.name}</h1>
+      {/* The monogram at page scale, so arriving at a company feels like
+          arriving somewhere specific rather than at another list. */}
+      <div className="page-head">
+        <CompanyMark name={company.name} size="lg" />
+        <div>
+          <p className="eyebrow">Company</p>
+          <h1>{company.name}</h1>
+        </div>
+      </div>
       <p className="muted">Roles this company recruits for.</p>
 
       <ul className="tiles">

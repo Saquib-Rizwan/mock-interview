@@ -54,6 +54,11 @@ export function QuestionDetail() {
   const { question } = data;
   const latest = history[0];
 
+  // Shown under the answer box. Interview answers are judged partly on whether
+  // you said enough, so a live count is genuinely useful rather than decorative.
+  const wordCount = answer.trim() ? answer.trim().split(/\s+/).length : 0;
+  const coveredCount = points?.filter((p) => p.covered).length ?? 0;
+
   const crumbs: Crumb[] = [
     { label: "Companies", to: "/" },
     ...(fromRound ? [{ label: "Round", to: `/rounds/${fromRound}` }] : []),
@@ -64,8 +69,11 @@ export function QuestionDetail() {
     <>
       <Breadcrumbs items={crumbs} />
 
-      <h1>{CATEGORY_LABELS[question.category]}</h1>
-      <p className="question-text lead">{question.text}</p>
+      {/* The question is the headline, not the subject. The subject is an
+          eyebrow above it — the arrangement of an article, and the thing that
+          makes the page read as something to concentrate on. */}
+      <p className="eyebrow">{CATEGORY_LABELS[question.category]}</p>
+      <h1 className="lead">{question.text}</h1>
       <div className="tags">
         <span className={`badge badge-${question.difficulty}`}>
           {question.difficulty}
@@ -85,18 +93,27 @@ export function QuestionDetail() {
       ) : (
         <form onSubmit={onSubmit}>
           <label htmlFor="answer">Your answer</label>
-          <textarea
-            id="answer"
-            rows={8}
-            value={answer}
-            onChange={(e) => setAnswer(e.target.value)}
-            placeholder="Answer as you would in the interview…"
-            required
-          />
+          {/* The wrapper exists to carry the registration marks — a textarea
+              cannot host pseudo-elements of its own. */}
+          <div className="field">
+            <textarea
+              id="answer"
+              rows={8}
+              value={answer}
+              onChange={(e) => setAnswer(e.target.value)}
+              placeholder="Answer as you would in the interview…"
+              required
+            />
+          </div>
           {submitError && <p className="error">{submitError}</p>}
-          <button type="submit" disabled={busy || !answer.trim()}>
-            {busy ? "Analysing…" : "Submit answer"}
-          </button>
+          <div className="answer-actions">
+            <span className="wordcount">
+              {wordCount} {wordCount === 1 ? "word" : "words"}
+            </span>
+            <button type="submit" disabled={busy || !answer.trim()}>
+              {busy ? "Analysing…" : "Submit answer"}
+            </button>
+          </div>
           {busy && (
             <p className="muted small">
               Comparing your answer against the expected points. This can take a
@@ -111,20 +128,31 @@ export function QuestionDetail() {
           <h2>Feedback</h2>
 
           {points && (
-            <ul className="verdicts">
-              {points.map((p, i) => (
-                <li key={i} className={p.covered ? "covered" : "missed"}>
-                  <span className="verdict-mark" aria-hidden="true">
-                    {p.covered ? "✓" : "✗"}
-                  </span>
-                  <span>
-                    <strong>{p.point}</strong>
-                    <br />
-                    <span className="muted small">{p.comment}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <>
+              {/* The score as a plain sentence. A ring or a percentage would
+                  make this a scorecard; the useful information is which points
+                  were missed, and that is the list underneath. */}
+              <p className="verdict-summary">
+                You covered {coveredCount} of {points.length}{" "}
+                {points.length === 1 ? "point" : "points"}.
+              </p>
+              <ul className="verdicts">
+                {points.map((p, i) => (
+                  <li key={i} className={p.covered ? "covered" : "missed"}>
+                    {/* Typographic marks in the mono face rather than an icon
+                        font — nothing here should need a network request. */}
+                    <span className="verdict-mark" aria-hidden="true">
+                      {p.covered ? "+" : "–"}
+                    </span>
+                    <span>
+                      {p.point}
+                      <br />
+                      <span className="muted small">{p.comment}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
 
           <h3>What was missing</h3>

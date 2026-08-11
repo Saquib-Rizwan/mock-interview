@@ -9,6 +9,7 @@ import {
   type TestOutcome,
 } from "../api";
 import { useFetch } from "../useFetch";
+import { VERMILION_THEME_NAME, defineVermilionTheme } from "./monacoTheme";
 
 /**
  * Draft code is kept per question *and* per language, so switching from Python
@@ -177,13 +178,20 @@ export function CodingWorkspace({ questionId }: { questionId: string }) {
         <Editor
           height="440px"
           language={question.languages.find((l) => l.id === language)?.monacoId ?? language}
-          theme="vs-dark"
+          // Registered before mount: naming a theme Monaco has not been given
+          // yet renders the editor with no highlighting at all on first paint.
+          beforeMount={defineVermilionTheme}
+          theme={VERMILION_THEME_NAME}
           value={code}
           onChange={onCodeChange}
           options={{
             minimap: { enabled: false },
-            fontSize: 14,
+            fontSize: 13,
+            // The same face the rest of the app sets code and data in, so the
+            // editor is not the one place with a different monospace.
+            fontFamily: '"JetBrains Mono Variable", ui-monospace, Consolas, monospace',
             scrollBeyondLastLine: false,
+            padding: { top: 16, bottom: 16 },
             tabSize: 4,
             automaticLayout: true,
           }}
@@ -290,7 +298,7 @@ function ReviewPanel({ review }: { review: CodeReview }) {
             {review.strengths.map((s, i) => (
               <li key={i} className="covered">
                 <span className="verdict-mark" aria-hidden="true">
-                  ✓
+                  +
                 </span>
                 <span>{s}</span>
               </li>
@@ -326,8 +334,10 @@ function ReviewPanel({ review }: { review: CodeReview }) {
 function TestRow({ test }: { test: TestOutcome }) {
   return (
     <li className={test.passed ? "covered" : "missed"}>
+      {/* Same marks as the written-answer verdicts, so pass/fail reads
+          identically whichever kind of question the student is on. */}
       <span className="verdict-mark" aria-hidden="true">
-        {test.passed ? "✓" : "✗"}
+        {test.passed ? "+" : "–"}
       </span>
       <div>
         <strong>

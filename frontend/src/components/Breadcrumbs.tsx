@@ -9,7 +9,9 @@ export function Breadcrumbs({ items }: { items: Crumb[] }) {
     <nav aria-label="Breadcrumb" className="crumbs">
       {items.map((item, i) => (
         <span key={`${item.label}-${i}`}>
-          {i > 0 && <span aria-hidden="true"> › </span>}
+          {/* A slash rather than a chevron: the folio line of a printed page,
+              and one less glyph that needs an icon font behind it. */}
+          {i > 0 && <span aria-hidden="true"> / </span>}
           {item.to ? <Link to={item.to}>{item.label}</Link> : <span>{item.label}</span>}
         </span>
       ))}

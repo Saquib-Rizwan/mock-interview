@@ -74,7 +74,9 @@ Phases 0–7 complete and committed, plus a security hardening pass that wasn't 
 - 10 companies, 13 roles, 45 rounds, 164 questions, 396 test cases
 - Progress view: subject coverage, recurring gaps, coding pass rates, company readiness
 
-**In flight:** an editorial UI redesign. See `docs/design-brief.md` — it carries the direction, typography, palette and an anti-patterns list. The user's words: the current UI looks like "AI slop" and needs to look genuinely designed.
+**In flight:** the UI redesign — **"Vermilion"**, a two-colour poster system (deep ink `#14131A`, cream `#F5EDE0`, vermilion `#FF4A1C`; Syne + Chivo + JetBrains Mono). Built and approved by eye against a static preview, **not yet run against the real app**. See `docs/phase-log/phase-8-ui-redesign.md`, which records the three directions that were rejected first and why — do not re-propose them. `docs/design-brief.md` is historical.
+
+Load-bearing rules from that redesign: the display face **never** sets numbers (mono does, with `lining-nums`); the accent appears only in solid blocks and thick rules; every list has a deliberately different device, because uniform rows read as generated.
 
 **Open, not started:** deployment to a live URL on the Azure VM (Caddy + auto-HTTPS, everything same-origin), voice-based answering, more company data, ~184 remaining NeetCode questions, and a class-based harness for design problems (LRU Cache, Trie, Min Stack).
 

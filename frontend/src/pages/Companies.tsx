@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { api } from "../api";
 import { Breadcrumbs } from "../components/Breadcrumbs";
+import { CompanyMark } from "../components/CompanyMark";
 import { useFetch } from "../useFetch";
 
 export function Companies() {
@@ -14,6 +15,7 @@ export function Companies() {
   return (
     <>
       <Breadcrumbs items={[{ label: "Companies" }]} />
+      <p className="eyebrow">The catalogue</p>
       <h1>Companies</h1>
       <p className="muted">Pick a company to see its roles and interview rounds.</p>
 
@@ -26,6 +28,7 @@ export function Companies() {
           {companies.map((c) => (
             <li key={c.id}>
               <Link to={`/companies/${c.id}`} className="tile">
+                <CompanyMark name={c.name} />
                 <span className="tile-title">{c.name}</span>
                 <span className="muted small">
                   {c.roleCount} {c.roleCount === 1 ? "role" : "roles"}

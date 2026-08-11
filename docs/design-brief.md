@@ -1,5 +1,21 @@
 # Design Brief — Editorial Direction
 
+> **Historical — superseded. Read `docs/phase-log/phase-8-ui-redesign.md`
+> instead.** This brief's editorial direction was built twice and rejected
+> twice: first as light warm paper ("too bright and plain"), then as a warm dark
+> with a brass accent ("still screams AI"). What shipped is **"Vermilion"** — a
+> two-colour poster system in deep ink, cream and vermilion, with Syne and
+> Chivo. Not a serif in sight, and the accent arrives in solid blocks rather
+> than as a restrained highlight.
+>
+> What survived from this file: the 68-character measure, no cards, small radii,
+> no shadows, the anti-patterns list, and the tone of the words. What did not:
+> the palette, the typography, the light/dark decision, and the "restrained
+> accent" rule, which turned out to be exactly what made it look timid.
+>
+> Kept because the phase doc's record of *why* each direction failed only makes
+> sense next to what was originally asked for.
+
 Written to be pasted into Stitch (or handed to any designer). The point of writing it down is that vague prompts produce generic output, which is the exact problem this redesign exists to fix.
 
 ---
@@ -140,3 +156,49 @@ Plain, direct, adult. The product tells students honestly where they fell short 
 > Screen: **[one screen from the list above, described specifically]**
 
 Generate **one screen at a time** and iterate. A prompt asking for the whole app at once produces an average of everything and looks it.
+
+---
+
+## Stitch project record
+
+So a later session can find this rather than regenerating it.
+
+| | |
+|---|---|
+| Project | `projects/7538972130520113598` — "Mock Interview Prep — Editorial" |
+| Design system — light (rejected) | `assets/1922439591846235967` |
+| Design system — **Night Edition (shipped)** | `assets/13902397192617134148` |
+| Screen 1 | `projects/7538972130520113598/screens/c9ef0f7ba5d449f8bf9fb49796899858` — Question / written answer, desktop, light |
+
+The Night Edition system's `designMd` holds the complete specification of the
+palette, type scale, texture and anti-patterns that the code implements. Any
+further screen generated against `assets/13902397192617134148` inherits all of
+it. **No screen has been generated against it yet** — that request timed out
+server-side and never returned a design.
+
+The design system carries the palette, the type scale, the spacing units and the
+anti-patterns list as its `designMd`, so any further screen generated against it
+inherits all of it without the prompt having to repeat it.
+
+**Font substitution.** Stitch's font list has no Fraunces and no Instrument Serif.
+The display serif is therefore **Newsreader** — a modern longform serif in the
+same editorial register, and available on `@fontsource`, so the implementation
+can match the mockup exactly rather than approximating it.
+
+### Deviations to make when implementing
+
+The generated HTML is a Tailwind-CDN page and cannot be used as-is. Four things
+must change on the way into React:
+
+1. **Material Symbols icon font** — the mockup pulls Google's icon font for the
+   ✓, ✗ and chevron marks. That is an external runtime request, which this brief
+   forbids, and the brief asked for typographic marks in the first place. Use
+   real characters or inline SVG.
+2. **Google Fonts `<link>`** — replace with bundled `@fontsource` imports.
+3. **`bg-red-50/20`** on missed rows is Tailwind's stock blue-red and sits
+   outside the warm palette. Drop the tint; the left rule already carries it.
+4. **No dark mode** — Stitch emitted light only. The dark palette has to be
+   derived by hand, keeping the warmth (brown-black, not blue-black).
+
+Also dropped: the mockup's "~6 min" metadata, which is data this product does
+not have and the brief forbids inventing.
