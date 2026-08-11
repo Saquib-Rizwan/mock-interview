@@ -1,4 +1,4 @@
-import rateLimit from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 import type { Request } from "express";
 
 /**
@@ -19,9 +19,18 @@ import type { Request } from "express";
  * current deployment is a single instance.
  */
 
-/** Authenticated routes key by user, so one user cannot spend another's budget. */
+/**
+ * Authenticated routes key by user, so one user cannot spend another's budget.
+ *
+ * The IP fallback goes through `ipKeyGenerator` rather than using `req.ip`
+ * directly. An IPv6 client is typically handed a whole /64 — billions of
+ * addresses — so keying on the raw address would let it present a fresh one per
+ * request and never hit a limit at all. The helper collapses the address to its
+ * subnet, which is the unit that actually corresponds to one user.
+ */
 function keyByUser(req: Request): string {
-  return req.userId ?? req.ip ?? "unknown";
+  if (req.userId) return req.userId;
+  return ipKeyGenerator(req.ip ?? "unknown");
 }
 
 const jsonMessage = (error: string) => ({ error });

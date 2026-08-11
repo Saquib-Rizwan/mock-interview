@@ -1,32 +1,104 @@
+/**
+ * Design tokens.
+ *
+ * Every colour, radius and shadow in the app resolves to something here, so a
+ * palette change is one file rather than a search across components. Both
+ * themes define the same token names — nothing may be declared only inside the
+ * dark block, or it would be undefined in light mode.
+ */
 :root {
+  color-scheme: light dark;
+
+  /* Surfaces, lightest to most raised. --card is the raised one components sit
+     on; --surface-2 is for things nested *inside* a card, which need to recede
+     rather than stack another shadow. */
   --bg: #f6f7f9;
   --card: #ffffff;
-  --text: #1a1d23;
-  --muted: #6b7280;
-  --border: #d8dce3;
-  --accent: #2f5fe0;
-  --error: #b42318;
-  --ok: #1a7f4b;
+  --surface-2: #f2f4f7;
 
-  color-scheme: light dark;
-  font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Text, in descending emphasis. Three levels rather than two: headings,
+     body, and the supporting text that would otherwise all collapse to grey. */
+  --text: #101828;
+  --text-2: #475467;
+  --muted: #667085;
+
+  --border: #e4e7ec;
+  --border-strong: #d0d5dd;
+
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  /* Tinted background for selected/active states. Deliberately very light —
+     it sits behind text and must not fight it. */
+  --accent-soft: #eef2ff;
+
+  --error: #d92d20;
+  --warn: #dc6803;
+  --ok: #12b76a;
+
+  /* Elevation. Layered shadows rather than one blur, so edges stay crisp while
+     the spread still reads as depth. */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-md: 0 4px 8px -2px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
+  --shadow-lg: 0 12px 16px -4px rgba(16, 24, 40, 0.08), 0 4px 6px -2px rgba(16, 24, 40, 0.03);
+
+  --radius: 10px;
+  --radius-lg: 14px;
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "JetBrains Mono", Consolas, monospace;
+
+  font: 16px/1.6 var(--font-sans);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #14171c;
-    --card: #1c2027;
-    --text: #e8eaed;
-    --muted: #9aa3af;
-    --border: #333944;
-    --accent: #6f95f5;
-    --error: #f28b82;
-    --ok: #6cc48c;
+    --bg: #0d0f14;
+    --card: #161a22;
+    --surface-2: #1d222c;
+
+    --text: #e7e9ee;
+    --text-2: #a7aeba;
+    --muted: #8b93a1;
+
+    --border: #262c38;
+    --border-strong: #333a48;
+
+    --accent: #818cf8;
+    --accent-hover: #a5b4fc;
+    --accent-soft: #1e1b4b;
+
+    --error: #f97066;
+    --warn: #f79009;
+    --ok: #47cd89;
+
+    /* Shadows carry far less of the work in dark mode — the border does it.
+       Kept subtle so cards do not turn into dark smudges. */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 14px 24px -6px rgba(0, 0, 0, 0.5);
   }
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Respect a user's reduced-motion preference: every transition in the app is
+   decorative, so removing them costs nothing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

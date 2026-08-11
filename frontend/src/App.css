@@ -1,17 +1,26 @@
 /* ---------------------------------------------------------------- chrome */
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 1.25rem;
-  background: var(--card);
+  padding: 0.8rem 1.5rem;
+  /* Translucent so content shows through as it scrolls under, which reads as
+     depth without needing a heavy shadow. Falls back to the solid colour where
+     backdrop-filter is unsupported. */
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
   border-bottom: 1px solid var(--border);
 }
 
 .brand {
   font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: -0.01em;
   text-decoration: none;
   color: var(--text);
 }
@@ -19,13 +28,13 @@
 .topbar-right {
   display: flex;
   align-items: center;
-  gap: 0.85rem;
+  gap: 1rem;
 }
 
 .page {
-  max-width: 46rem;
+  max-width: 52rem;
   margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding: 2.5rem 1.5rem 5rem;
 }
 
 /* Login and signup center a single card instead of a content column. */
@@ -38,21 +47,29 @@
 .card {
   width: 100%;
   max-width: 26rem;
-  box-sizing: border-box;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 1.75rem;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-lg);
 }
 
+/* A wider scale than before: h1 and h2 were 1.5rem and 1.05rem, close enough
+   that the page read as one flat level. Negative tracking on the large sizes
+   stops them looking loose. */
 h1 {
-  margin: 0 0 0.4rem;
-  font-size: 1.5rem;
+  margin: 0 0 0.5rem;
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  line-height: 1.25;
 }
 
 h2 {
-  margin: 2rem 0 0.75rem;
-  font-size: 1.05rem;
+  margin: 2.5rem 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 650;
+  letter-spacing: -0.012em;
 }
 
 form {
@@ -68,34 +85,63 @@ label {
 }
 
 input {
-  padding: 0.6rem 0.7rem;
+  padding: 0.65rem 0.8rem;
   margin-bottom: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
   background: var(--bg);
   color: var(--text);
   font: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-input:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 1px;
+/* A tinted ring rather than a hard outline: it marks focus clearly without the
+   jump in layout weight a 2px outline gives. */
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 button {
-  padding: 0.65rem 1rem;
-  border: none;
-  border-radius: 6px;
+  padding: 0.65rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
   background: var(--accent);
   color: #fff;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s ease, transform 0.06s ease, box-shadow 0.15s ease;
+}
+
+button:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+/* A press should feel like one. One pixel is enough to register. */
+button:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.55;
   cursor: not-allowed;
+  box-shadow: none;
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--surface-2);
+  color: var(--text);
 }
 
 .link-button {
@@ -141,25 +187,33 @@ a {
   display: flex;
   align-items: center;
   gap: 0.9rem;
-  padding: 0.9rem 1rem;
+  padding: 1rem 1.1rem;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
   text-decoration: none;
   color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
+/* Lifting on hover is what makes a list of links feel like a set of cards
+   rather than a table. Kept to 1px — more starts to feel bouncy. */
 .tile:hover {
-  border-color: var(--accent);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 .tile:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .tile-title {
   font-weight: 600;
+  letter-spacing: -0.008em;
 }
 
 /* Company/role tiles: title left, count right. */
@@ -191,10 +245,11 @@ a {
 /* -------------------------------------------------------------- questions */
 
 .question {
-  padding: 0.9rem 1rem;
+  padding: 1rem 1.1rem;
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
 }
 
 .question-text {
@@ -209,24 +264,43 @@ a {
 
 .badge {
   display: inline-block;
-  padding: 0.1rem 0.5rem;
+  padding: 0.15rem 0.6rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--surface-2);
   font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.01em;
   color: var(--muted);
   white-space: nowrap;
 }
 
-.badge-coding,
+/* Difficulty reads green → amber → red, the ordering everyone already knows
+   from every other coding site. Previously `easy` was accent-blue and `medium`
+   had no style at all, so the three levels did not form a scale. */
+.badge-easy {
+  border-color: color-mix(in srgb, var(--ok) 40%, transparent);
+  background: color-mix(in srgb, var(--ok) 10%, transparent);
+  color: var(--ok);
+}
+
+.badge-medium {
+  border-color: color-mix(in srgb, var(--warn) 40%, transparent);
+  background: color-mix(in srgb, var(--warn) 10%, transparent);
+  color: var(--warn);
+}
+
 .badge-hard {
-  border-color: color-mix(in srgb, var(--error) 45%, transparent);
+  border-color: color-mix(in srgb, var(--error) 40%, transparent);
+  background: color-mix(in srgb, var(--error) 10%, transparent);
   color: var(--error);
 }
 
-.badge-easy {
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+/* Not a difficulty — marks the round type, so it takes the brand colour rather
+   than a place on the red-to-green scale. */
+.badge-coding {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--accent-soft);
   color: var(--accent);
 }
 
@@ -236,20 +310,28 @@ a.question {
   display: block;
   text-decoration: none;
   color: var(--text);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 a.question:hover {
-  border-color: var(--accent);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
 }
 
 a.question:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
+/* The question itself, on a question page. Larger and looser than body text
+   because it is the thing being read and thought about. */
 .lead {
-  font-size: 1.05rem;
-  margin: 0.5rem 0 0.75rem;
+  font-size: 1.12rem;
+  line-height: 1.55;
+  color: var(--text);
+  margin: 0.6rem 0 1rem;
 }
 
 textarea {
