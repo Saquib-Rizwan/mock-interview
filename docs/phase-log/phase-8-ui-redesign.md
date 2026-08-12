@@ -209,9 +209,12 @@ This is a restyle plus a shell change — no page's data flow was altered.
   coding question has been opened with it. Judge0's VM is deallocated.
 - **Mobile is unproven.** The rail has a stacking fallback and type uses
   `clamp()`, but nothing has been opened at 375px.
-- **Contrast ratios were designed, not measured.** `--muted` (`#857E77`) on the
-  ground is the value most likely to fail WCAG AA at small sizes, and it carries
-  breadcrumbs and section labels.
+- ~~**Contrast ratios were designed, not measured.**~~ **Now measured.** Every
+  pair clears WCAG AA except one, which was fixed: `--muted` cleared AA against
+  the page (4.61) but failed against `--card` at 4.25, where placeholder text
+  sits. Raised `#857E77` → `#8B8478`, the smallest step clearing 4.5 on both
+  surfaces (4.59 on card, 4.98 on page). For the record: body text 15.88,
+  secondary 8.61, accent on ground 5.49, ink on accent 5.49, pass mark 8.06.
 - **The rail fetches the company list on every navigation.** Deliberately
   failure-tolerant — if it errors the strip does not render, because chrome must
   never be why a page fails to appear. No cache; that would remove the repeat.

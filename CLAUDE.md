@@ -66,7 +66,7 @@ The VM is normally **deallocated** to save credit. Wake it with `az vm start -g 
 
 ## Current state
 
-Phases 0–7 complete and committed, plus a security hardening pass that wasn't in the original brief.
+Phases 0–8 complete and committed, plus a security hardening pass that wasn't in the original brief.
 
 - Auth with real token revocation (`User.tokenVersion`), CORS allowlist, rate limiting on auth/execution/LLM
 - LLM-graded written answers with per-point verdicts, now persisted
@@ -74,10 +74,39 @@ Phases 0–7 complete and committed, plus a security hardening pass that wasn't 
 - 10 companies, 13 roles, 45 rounds, 164 questions, 396 test cases
 - Progress view: subject coverage, recurring gaps, coding pass rates, company readiness
 
-**In flight:** the UI redesign — **"Vermilion"**, a two-colour poster system (deep ink `#14131A`, cream `#F5EDE0`, vermilion `#FF4A1C`; Syne + Chivo + JetBrains Mono). Built and approved by eye against a static preview, **not yet run against the real app**. See `docs/phase-log/phase-8-ui-redesign.md`, which records the three directions that were rejected first and why — do not re-propose them. `docs/design-brief.md` is historical.
+Phase 8 was the UI redesign — **"Vermilion"**, a two-colour poster system (deep ink `#14131A`, cream `#F5EDE0`, vermilion `#FF4A1C`; Syne + Chivo + JetBrains Mono). Committed as `29ffdf6`. `docs/phase-log/phase-8-ui-redesign.md` records the **three directions that were rejected first and exactly why** — read it before proposing any design change, and do not re-propose them. `docs/design-brief.md` is historical only.
 
 Load-bearing rules from that redesign: the display face **never** sets numbers (mono does, with `lining-nums`); the accent appears only in solid blocks and thick rules; every list has a deliberately different device, because uniform rows read as generated.
 
-**Open, not started:** deployment to a live URL on the Azure VM (Caddy + auto-HTTPS, everything same-origin), voice-based answering, more company data, ~184 remaining NeetCode questions, and a class-based harness for design problems (LRU Cache, Trie, Min Stack).
+---
+
+## Pick up here
+
+**Next: Phase 9 — catalogue expansion.** Agreed in advance; the plan below was stated and accepted, so it does not need re-deciding, only starting.
+
+The insight that shapes it: **company breadth multiplies against pool depth.** The pools are thin — 15 questions each in `os`, `dbms`, `cn`, `oops`, `general_hr`, and only **8** in `other`, which is where aptitude rounds draw from. Ten companies and 13 roles already pull from those same 15, so adding companies alone would show every student the same questions. Companies and questions grow together or not at all.
+
+**The working loop, per batch of 1–3 companies:**
+
+1. User supplies raw material — pasted text, or paths to PDFs/screenshots on disk (both are readable directly).
+2. Produce catalogue entries for `data/catalog.json` plus any new pool questions in `data/questions/*.json`.
+3. User runs `npm run ingest` then `npm run seed:catalog` from `backend/`. Ingestion is **idempotent** — it skips questions already in the DB and duplicates within a file, so re-running is safe.
+4. User checks in the browser; iterate.
+
+Small batches deliberately, so judgement calls arrive with a correction loop attached.
+
+**Integrity line, agreed:** encode only the process details the user's material actually contains. Where it is silent — how many technical rounds a company runs, whether there is a cut-off — leave it out or mark it uncertain. Never invent a plausible-looking round; a student preparing for a round that does not exist is worse than a thin catalogue. Writing CS questions and their marking schemes is different, and is normal authoring work.
+
+**Three decisions still open, flagged but not settled:**
+
+- **Pool depth target.** Proposed 15 → ~40 per core category (~125 new questions with marking schemes). Not confirmed.
+- **Company-specific questions** stay inline as `specific` in `catalog.json`; generic CS goes to the shared pool. This is the existing pattern and the recommendation.
+- **Aptitude may deserve its own category** rather than living in `other`. This *is* a schema change — `QuestionCategory` is duplicated between the Prisma schema and `frontend/src/api.ts`, so it is two files plus a migration. Flagged, not decided.
+
+`expectedAnswerPoints` is the marking scheme and is load-bearing: the LLM grades only against those points and cannot invent criteria. Writing five sharp, non-overlapping points is the real work of this phase, not the JSON.
+
+**Still unverified from Phase 8** (committed, but these were never checked with real data): mobile at 375px, contrast on `--muted` `#857E77`, and the Monaco theme in `pages/monacoTheme.ts`, which was written but never seen — it needs a coding question, which needs the Judge0 VM started. Five companies (Amazon, Microsoft, Deloitte, Cognizant, Capgemini) still fall back to letter monograms; adding a logo is one line in `components/companyLogos.ts`, format documented at the top of that file.
+
+**Open, not started:** deployment to a live URL on the Azure VM (Caddy + auto-HTTPS, everything same-origin), voice-based answering, ~184 remaining NeetCode questions, a class-based harness for design problems (LRU Cache, Trie, Min Stack), and round state on the round spine (needs the catalogue endpoint to return per-user progress).
 
 **Known rough edges** are listed honestly at the end of each phase doc. The sharpest: the hidden test-case answer key is committed to a public repo, and `QuestionCategory` is duplicated between the Prisma schema and `frontend/src/api.ts`.

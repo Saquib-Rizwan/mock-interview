@@ -38,7 +38,13 @@
      printed quality the whole system depends on. */
   --text: #f5ede0;
   --text-2: #b8b0a6;
-  --muted: #857e77;
+  /**
+   * Measured, not chosen. The original #857E77 cleared WCAG AA against the page
+   * (4.61) but failed against `--card` at 4.25, which is where placeholder text
+   * sits. #8B8478 is the smallest step that clears 4.5 on both surfaces — 4.59
+   * on the card, 4.98 on the page — so the fix costs nothing visually.
+   */
+  --muted: #8b8478;
 
   --border: #302e39;
   --border-strong: #474453;

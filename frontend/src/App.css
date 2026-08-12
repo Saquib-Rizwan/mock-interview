@@ -146,8 +146,17 @@
   padding: 4rem clamp(1.25rem, 4vw, 3.5rem) 10rem;
 }
 
+/**
+ * Login and signup render `.page` with no rail beside it, so the card is the
+ * only thing on screen and has to centre itself.
+ *
+ * `.page` is a centred 56rem column; the card is 24rem. With only a top margin
+ * it sat against that column's left edge, which reads as slightly-left-of-
+ * centre rather than as a deliberate offset — the worst of both. `auto` on the
+ * sides fixes it.
+ */
 .page > .card {
-  margin-top: 3rem;
+  margin: 3rem auto 0;
 }
 
 @media (max-width: 900px) {
