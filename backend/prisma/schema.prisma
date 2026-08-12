@@ -33,6 +33,12 @@ enum QuestionCategory {
   // category. Filing it under `other` would have made it unfilterable.
   oops
   general_hr
+  // Split out of `other` in Phase 9. Aptitude rounds were drawing from the same
+  // pool as genuine miscellany, which made the thinnest pool in the catalogue
+  // (8 questions) look deeper than it was and left aptitude unfilterable.
+  // Existing `other` rows that are really aptitude are reassigned by the
+  // migration that introduced this value.
+  aptitude
   other
 }
 
@@ -214,6 +220,18 @@ model CodingSpec {
   // Per-language skeleton shown in the editor, keyed by CodingLanguage:
   // { "python": "def reverseList(head):\n    ", "cpp": "..." }
   starterCode  Json     @map("starter_code")
+
+  /// Algorithmic patterns, e.g. ["sliding-window", "hash-table"].
+  ///
+  /// This is what makes "give me more questions like this one" a filter rather
+  /// than a similarity model. The taxonomy is small (~18 named patterns) and
+  /// well known, so tags are deterministic, reviewable and debuggable in a way
+  /// an embedding score is not — and the tags come free from LeetCode's own
+  /// topicTags, so they are not hand-assigned either.
+  ///
+  /// Plural because a question genuinely belongs to several: "longest substring
+  /// without repeating characters" is sliding-window AND hash-table.
+  patterns     String[] @default([])
 
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 

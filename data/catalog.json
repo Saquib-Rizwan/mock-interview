@@ -10,7 +10,7 @@
             "roundType": "aptitude",
             "roundName": "NQT Aptitude",
             "notes": "Numerical, reasoning and verbal ability. Sectional cut-offs apply.",
-            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 4 }]
           },
           {
             "order": 2,
@@ -60,7 +60,7 @@
             "roundType": "aptitude",
             "roundName": "Advanced Aptitude",
             "notes": "Harder quantitative section than the standard NQT.",
-            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 3 }]
           },
           {
             "order": 2,
@@ -100,7 +100,7 @@
             "roundType": "aptitude",
             "roundName": "InfyTQ Assessment",
             "notes": "Aptitude plus basic programming logic.",
-            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 4 }]
           },
           {
             "order": 2,
@@ -174,7 +174,7 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "Aptitude Test",
-            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 4 }]
           },
           {
             "order": 2,
@@ -214,7 +214,7 @@
             "roundType": "aptitude",
             "roundName": "Cognitive Assessment",
             "notes": "Adaptive test — questions get harder as you answer correctly.",
-            "picks": [{ "category": "other", "type": "text", "count": 4 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 4 }]
           },
           {
             "order": 2,
@@ -252,7 +252,7 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "GenC Aptitude",
-            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 3 }]
           },
           {
             "order": 2,
@@ -285,7 +285,7 @@
             "roundType": "aptitude",
             "roundName": "Game-Based Aptitude",
             "notes": "Puzzle-style assessment rather than a conventional paper.",
-            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 3 }]
           },
           {
             "order": 2,
@@ -318,7 +318,7 @@
             "roundType": "aptitude",
             "roundName": "Written Aptitude",
             "notes": "Pen and paper. Reasoning heavy.",
-            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 3 }]
           },
           {
             "order": 2,
@@ -488,7 +488,7 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "Assessment",
-            "picks": [{ "category": "other", "type": "text", "count": 3 }]
+            "picks": [{ "category": "aptitude", "type": "text", "count": 3 }]
           },
           {
             "order": 2,

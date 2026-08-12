@@ -37,6 +37,13 @@ type CodingInput = {
     paramTypes: string[];
     returnType: string;
     starterCode: Record<string, string>;
+    /**
+     * Algorithmic patterns, e.g. ["sliding-window"]. Optional: the questions
+     * authored before this field existed have none, and an untagged question is
+     * still a perfectly good question — it just cannot be reached by "show me
+     * more like this one".
+     */
+    patterns?: string[];
     testCases: TestCaseInput[];
   };
 };
@@ -203,12 +210,14 @@ async function main() {
         paramTypes: record.coding.paramTypes,
         returnType: record.coding.returnType,
         starterCode: record.coding.starterCode,
+        patterns: record.coding.patterns ?? [],
       },
       update: {
         functionName: record.coding.functionName,
         paramTypes: record.coding.paramTypes,
         returnType: record.coding.returnType,
         starterCode: record.coding.starterCode,
+        patterns: record.coding.patterns ?? [],
       },
     });
     specsWritten++;

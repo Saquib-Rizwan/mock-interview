@@ -30,6 +30,7 @@ export type QuestionCategory =
   | "dsa"
   | "oops"
   | "general_hr"
+  | "aptitude"
   | "other";
 
 export type Difficulty = "easy" | "medium" | "hard";

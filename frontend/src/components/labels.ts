@@ -19,5 +19,6 @@ export const CATEGORY_LABELS: Record<QuestionCategory, string> = {
   dsa: "DSA",
   oops: "OOPS",
   general_hr: "General HR",
+  aptitude: "Aptitude",
   other: "Other",
 };

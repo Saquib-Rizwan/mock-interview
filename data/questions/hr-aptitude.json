@@ -196,7 +196,7 @@
   },
   {
     "text": "A train 150 metres long is running at 90 km/h. How long does it take to completely pass a platform 350 metres long? Explain your approach.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "easy",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -209,7 +209,7 @@
   },
   {
     "text": "A can finish a piece of work in 12 days and B in 18 days. Working together, how long will they take? Explain your approach.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "easy",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -222,7 +222,7 @@
   },
   {
     "text": "A shopkeeper marks an item 40% above cost price and then offers a 25% discount. What is the profit or loss percentage? Explain your approach.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "medium",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -235,7 +235,7 @@
   },
   {
     "text": "In a bag there are 5 red and 3 blue balls. Two balls are drawn at random without replacement. What is the probability that both are red? Explain your approach.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "medium",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -248,7 +248,7 @@
   },
   {
     "text": "Find the next number in the series: 2, 6, 12, 20, 30, ... Explain the pattern.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "easy",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -261,7 +261,7 @@
   },
   {
     "text": "Pointing to a photograph, a man said, 'She is the daughter of my grandfather's only son.' How is the woman related to him? Explain your reasoning.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "medium",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -274,7 +274,7 @@
   },
   {
     "text": "If the day before yesterday was Thursday, what day will it be the day after tomorrow? Explain your reasoning.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "easy",
     "questionType": "text",
     "expectedAnswerPoints": [
@@ -287,7 +287,7 @@
   },
   {
     "text": "In how many ways can the letters of the word 'LEVEL' be arranged? Explain your approach.",
-    "category": "other",
+    "category": "aptitude",
     "difficulty": "medium",
     "questionType": "text",
     "expectedAnswerPoints": [

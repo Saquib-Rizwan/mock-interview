@@ -82,7 +82,11 @@ Load-bearing rules from that redesign: the display face **never** sets numbers (
 
 ## Pick up here
 
-**Next: Phase 9 — catalogue expansion.** Agreed in advance; the plan below was stated and accepted, so it does not need re-deciding, only starting.
+**Phase 9 — catalogue expansion. Groundwork done, authoring not started.** See `docs/phase-log/phase-9-catalogue-expansion.md`.
+
+Already landed: **aptitude is its own `QuestionCategory`** (two migrations — Postgres forbids using a new enum value in the transaction that adds it), **`CodingSpec.patterns String[]`** for "more questions like this one", and **`npm run import:leetcode <slug>`**, which drafts a coding question from LeetCode's public GraphQL — signature, param/return types, generated starter code for all four languages, pattern tags and sample inputs. It refuses unsupported types and class-based design problems rather than importing something broken, never runs at request time, and never produces expected outputs (those stay computed by `npm run expected`).
+
+`other` legitimately still holds exactly one row — a group-discussion question the migration deliberately excludes. Two questions exist in the DB but in no file under `data/`; re-ingestion will not recreate them.
 
 The insight that shapes it: **company breadth multiplies against pool depth.** The pools are thin — 15 questions each in `os`, `dbms`, `cn`, `oops`, `general_hr`, and only **8** in `other`, which is where aptitude rounds draw from. Ten companies and 13 roles already pull from those same 15, so adding companies alone would show every student the same questions. Companies and questions grow together or not at all.
 
