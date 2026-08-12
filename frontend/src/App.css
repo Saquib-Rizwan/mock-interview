@@ -169,10 +169,29 @@
     height: auto;
     flex-direction: row;
     align-items: center;
-    gap: 1.25rem;
-    padding: 1rem 1.25rem;
+    /* Wraps to a second line rather than pushing items off the edge. */
+    flex-wrap: wrap;
+    gap: 0.6rem 1.25rem;
+    padding: 0.9rem 1.25rem;
     border-right: none;
     border-bottom: 2px solid var(--accent);
+    /**
+     * The desktop rail sets `overflow-y: auto` so a long company strip can
+     * scroll. That has to be undone here: once either axis is non-visible the
+     * other computes to `auto` too, so the horizontal bar quietly became a
+     * scroll container and clipped its own contents off the right-hand edge.
+     */
+    overflow: visible;
+  }
+
+  /* Stacked over two lines the wordmark doubles the bar's height for no gain,
+     so it sets on one line at a smaller size. */
+  .brand-text {
+    font-size: 0.8rem;
+  }
+
+  .brand-text em {
+    display: inline;
   }
 
   .rail-nav {
@@ -199,6 +218,38 @@
 
   .page {
     padding-top: 2.5rem;
+  }
+}
+
+/**
+ * Phone widths. The wide letter-spacing that makes the navigation read as
+ * printed small caps is exactly what overflows a 375px bar, so it tightens —
+ * the labels stay small caps, they just stop being generously tracked.
+ */
+@media (max-width: 460px) {
+  .rail {
+    gap: 0.5rem 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .rail-link {
+    padding: 0.35rem 0.45rem;
+    margin-left: -0.45rem;
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+  }
+
+  .link-button {
+    font-size: 0.64rem;
+    letter-spacing: 0.1em;
+  }
+
+  .brand-text {
+    font-size: 0.72rem;
+  }
+
+  .brand {
+    gap: 0.5rem;
   }
 }
 

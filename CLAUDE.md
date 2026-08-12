@@ -99,9 +99,9 @@ Small batches deliberately, so judgement calls arrive with a correction loop att
 
 **Three decisions still open, flagged but not settled:**
 
-- **Pool depth target.** Proposed 15 → ~40 per core category (~125 new questions with marking schemes). Not confirmed.
+- ~~**Pool depth target.**~~ **Decided: ~40 per core category** (from 15), i.e. roughly 125 new questions with marking schemes. Enough that a student working two companies rarely sees a repeat. This is several batches of authoring, not one — the marking schemes are the labour, not the JSON.
 - **Company-specific questions** stay inline as `specific` in `catalog.json`; generic CS goes to the shared pool. This is the existing pattern and the recommendation.
-- **Aptitude may deserve its own category** rather than living in `other`. This *is* a schema change — `QuestionCategory` is duplicated between the Prisma schema and `frontend/src/api.ts`, so it is two files plus a migration. Flagged, not decided.
+- ~~**Aptitude may deserve its own category.**~~ **Decided: yes, split it out of `other`.** This is a real schema change and must be done before authoring aptitude questions, or they land in the wrong category and need migrating later. Touches three things that must move together: the `QuestionCategory` enum in the Prisma schema, the duplicate of that union in `frontend/src/api.ts`, and a migration that reassigns existing `other` rows that are actually aptitude. `CATEGORY_LABELS` in `frontend/src/components/labels.ts` needs the new key too, or the label lookup returns undefined.
 
 `expectedAnswerPoints` is the marking scheme and is load-bearing: the LLM grades only against those points and cannot invent criteria. Writing five sharp, non-overlapping points is the real work of this phase, not the JSON.
 

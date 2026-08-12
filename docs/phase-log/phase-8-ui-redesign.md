@@ -207,8 +207,14 @@ This is a restyle plus a shell change — no page's data flow was altered.
   role, an empty round — are unproven.
 - **Monaco's theme has not been seen.** It is written and typechecks, but no
   coding question has been opened with it. Judge0's VM is deallocated.
-- **Mobile is unproven.** The rail has a stacking fallback and type uses
-  `clamp()`, but nothing has been opened at 375px.
+- ~~**Mobile is unproven.**~~ **Checked at phone width by the user.** Pages
+  render correctly; one bug found and fixed. The collapsed rail was clipping its
+  own contents off the right-hand edge: the desktop rule sets `overflow-y: auto`
+  so a long company strip can scroll, and once either axis is non-`visible` the
+  other computes to `auto` too — so the horizontal bar silently became a scroll
+  container. Fixed with `overflow: visible`, `flex-wrap`, a single-line wordmark
+  and a 460px breakpoint that tightens the navigation's letter-spacing, which
+  was what actually overflowed 375px.
 - ~~**Contrast ratios were designed, not measured.**~~ **Now measured.** Every
   pair clears WCAG AA except one, which was fixed: `--muted` cleared AA against
   the page (4.61) but failed against `--card` at 4.25, where placeholder text
