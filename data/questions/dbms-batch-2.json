@@ -1,0 +1,132 @@
+[
+  {
+    "text": "What is a DBMS, and what problems does it solve that keeping data in ordinary files does not?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A DBMS is software that lets users create, store, query and administer databases under controlled access, rather than manipulating raw files directly",
+      "It removes uncontrolled redundancy: one authoritative copy of a fact, instead of the same field duplicated in every department spreadsheet and drifting out of step",
+      "It enforces integrity constraints and transactional consistency, so a failed or partial update cannot leave contradictory data behind",
+      "It manages concurrent access by many users safely, and provides backup and recovery so committed work survives a crash",
+      "It provides security through per-role access control and speed through indexing, so a lookup jumps straight to the row instead of scanning every record"
+    ]
+  },
+  {
+    "text": "Explain one-tier, two-tier and three-tier DBMS architecture, and what you gain by adding a tier.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "One-tier: the application and the database engine run in the same process on one machine, for example a script using SQLite; instant to set up but effectively single-user",
+      "Two-tier: a client application talks directly to a dedicated database server, usually through a driver such as ODBC or JDBC; supports many users but every client holds its own connection and its own copy of the business logic",
+      "Three-tier: the client talks to an application server, which is the only component that queries the database, for example a mobile app calling a REST API that queries PostgreSQL",
+      "The gain from three tiers is that business logic and security live in one place in the middle tier, the database is never exposed directly to clients, and the clients stay thin",
+      "The cost is more moving parts and an extra network hop, paid back in scalability because the stateless middle tier can be replicated behind a load balancer"
+    ]
+  },
+  {
+    "text": "State the CAP theorem and explain what it forces you to choose between in practice.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Consistency: every node returns the same, most recent committed data at any given moment",
+      "Availability: every request receives a timely response, though not necessarily the freshest data",
+      "Partition tolerance: the system keeps operating even when nodes cannot communicate with each other",
+      "In any real distributed system network partitions will happen, so partition tolerance is not optional; the genuine choice is between consistency and availability during a partition",
+      "Applies the trade-off to an example: a payment or wallet system chooses consistency and tolerates brief unavailability rather than allow double-spending, whereas a notice board or content feed chooses availability and serves slightly stale data"
+    ]
+  },
+  {
+    "text": "Explain the core terminology of the ER model: entity, attribute, relationship, and weak entity.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "An entity is a distinguishable real-world object being modelled, and an entity set is the collection of all entities of that kind, such as all students",
+      "An attribute is a property describing an entity, and may be simple, composite, multivalued or derived, with one or more marked as the key",
+      "A relationship is a logical association between entities, and a relationship set is the collection of all instances of that association",
+      "A strong entity has a key attribute of its own; a weak entity does not, and is identified only by its owning entity together with a partial key",
+      "Names the diagram notation: rectangles for entity sets and double rectangles for weak ones, ellipses for attributes with double for multivalued and dashed for derived, diamonds for relationships and double diamonds for identifying relationships"
+    ]
+  },
+  {
+    "text": "What is cardinality in an ER diagram, and how does it differ from participation?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Cardinality states how many entities on one side may be associated with entities on the other: one-to-one, one-to-many, or many-to-many",
+      "Gives an example of each, for example a student and a library card as one-to-one, a department and its students as one-to-many, and students and courses as many-to-many",
+      "Participation is a separate question: total participation means every entity in the set must take part in the relationship, partial means some may not",
+      "A many-to-many relationship cannot be stored directly in a table and must become an associative table whose primary key is the pair of foreign keys",
+      "Connects the notation to the resulting schema: total participation becomes a NOT NULL foreign key, and cardinality decides which side carries the foreign key at all"
+    ]
+  },
+  {
+    "text": "What are the integrity constraints in the relational model, and what does each one prevent?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Key constraint: every relation must have at least one candidate key whose values uniquely identify a row and never repeat, so duplicate insertions are refused",
+      "Entity integrity: no attribute forming part of the primary key may be NULL, otherwise there would be no way to identify the row the data belongs to",
+      "Referential integrity: a foreign key value must match an existing primary key value in the referenced relation, or be NULL when the relationship is genuinely optional",
+      "Domain constraint: every value in a column must come from that column declared domain, which data types and CHECK conditions enforce",
+      "Gives the practical consequence: inserting a marks row for a roll number that does not exist in the student table is rejected, which is what stops orphaned rows accumulating"
+    ]
+  },
+  {
+    "text": "Take an unnormalised table through first, second and third normal form. What anomaly does each step remove?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "First normal form requires every cell to hold a single atomic value with no repeating groups, so a comma-separated list of courses in one cell becomes one row per course",
+      "Second normal form requires 1NF plus no partial dependency: with a composite key such as roll number and course code, an attribute like student name depends on roll number alone and must move to its own table",
+      "Third normal form requires 2NF plus no transitive dependency: if course code determines instructor id and instructor id determines instructor name, the instructor details belong in a separate table",
+      "Explains that the point is eliminating insert, update and delete anomalies rather than tidiness, for example that without 3NF changing an instructor name means updating every course row that mentions them",
+      "Notes that each step is a decomposition, and the decomposition must be lossless so that rejoining the pieces reproduces exactly the original rows"
+    ]
+  },
+  {
+    "text": "What is a lossless join decomposition, and how does it differ from dependency preservation?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A lossless or non-additive join decomposition is one where joining the resulting relations returns exactly the original rows, inventing no spurious tuples and losing none",
+      "It is guaranteed when the attributes common to the two decomposed relations form a superkey of at least one of them",
+      "Dependency preservation is a different property: every original functional dependency can still be checked within a single relation, without having to join tables back together to validate an update",
+      "A decomposition into 3NF can always achieve both properties, whereas BCNF guarantees a lossless join but may sacrifice dependency preservation",
+      "Draws the practical conclusion: that trade-off is exactly why a schema is sometimes deliberately left in 3NF, because an unenforceable dependency has to be checked in application code or by an expensive join on every write"
+    ]
+  },
+  {
+    "text": "What are the families of SQL commands, and which statements belong to each?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "DDL, data definition language, defines and changes structure: CREATE, ALTER, DROP, TRUNCATE and RENAME",
+      "DML, data manipulation language, changes the rows themselves: INSERT, UPDATE, DELETE and MERGE, with SELECT sometimes separated out as DQL",
+      "DCL, data control language, manages privileges: GRANT and REVOKE",
+      "TCL, transaction control language, manages transaction boundaries: COMMIT, ROLLBACK, SAVEPOINT and SET TRANSACTION",
+      "Distinguishes the three that look similar: DELETE removes selected rows and can be rolled back, TRUNCATE empties the whole table quickly as a DDL operation, and DROP removes the table definition itself"
+    ]
+  },
+  {
+    "text": "What does it mean for a schedule to be conflict-serializable, and how would you test for it?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Serializability means an interleaved schedule produces the same final result as some serial execution of the same transactions, which is what makes concurrency safe",
+      "Two operations conflict when they belong to different transactions, act on the same data item, and at least one of them is a write",
+      "The precedence graph test draws one node per transaction and an edge from Ti to Tj whenever an operation of Ti conflicts with and precedes an operation of Tj; the schedule is conflict-serializable exactly when this graph is acyclic",
+      "Any topological ordering of an acyclic precedence graph gives an equivalent serial schedule, which is the order the concurrent execution is provably equivalent to",
+      "Notes that view serializability is strictly weaker and accepts some schedules conflict-serializability rejects, particularly ones involving blind writes, but testing it is NP-hard, which is why real systems enforce the conflict version"
+    ]
+  }
+]

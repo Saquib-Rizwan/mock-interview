@@ -1,0 +1,132 @@
+[
+  {
+    "text": "What is the difference between a program and a process?",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A program is passive: a set of instructions sitting on disk, such as an .exe or a .py file",
+      "A process is active: an instance of that program loaded into main memory and currently executing",
+      "A process carries runtime state a program does not have, including the program counter, CPU registers, stack, heap and data section",
+      "One program can give rise to many processes at once, each with its own memory and its own independent state",
+      "Gives a concrete illustration of the distinction, for example a film reel versus a particular screening of it"
+    ]
+  },
+  {
+    "text": "What is the difference between a process and a thread? Why is a thread called a lightweight process?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A process owns its own address space, whereas the threads of one process share code, data and open files",
+      "Each thread still keeps its own thread ID, program counter, register set and stack, which is what lets it run independently",
+      "Switching between threads is cheaper than switching between processes because the address space does not change, so page tables and TLB entries stay valid",
+      "Threads communicate directly through shared memory, while separate processes need inter-process communication, which is slower and more complex to set up",
+      "States the isolation trade-off: one process crashing rarely affects others, but one thread crashing can bring down the whole process"
+    ]
+  },
+  {
+    "text": "Describe the three types of scheduler in an operating system, and explain how a dispatcher differs from a scheduler.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The long-term or job scheduler admits processes from the job queue into main memory, which is what controls the degree of multiprogramming",
+      "The short-term or CPU scheduler picks which ready process runs next and executes very frequently, on the order of every few milliseconds",
+      "The medium-term scheduler swaps processes out to disk and back in again, relieving memory pressure without killing the process",
+      "The long-term scheduler also balances the mix of CPU-bound and I/O-bound processes so that neither the CPU nor the I/O devices sit idle",
+      "The dispatcher is not a scheduler: it carries out the short-term scheduler decision by performing the context switch, switching to user mode and jumping to the right instruction, and the time this takes is called dispatch latency"
+    ]
+  },
+  {
+    "text": "What are the four necessary conditions for a deadlock to occur?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Mutual exclusion: at least one resource is held in a non-shareable mode, so only one process can use it at a time",
+      "Hold and wait: a process is holding at least one resource while waiting to acquire others",
+      "No preemption: a resource cannot be forcibly taken away from the process holding it, only released voluntarily",
+      "Circular wait: there is a set of processes each waiting for a resource held by the next, closing a cycle",
+      "States that all four must hold simultaneously, which is precisely why breaking any single one of them is enough to prevent deadlock"
+    ]
+  },
+  {
+    "text": "What are the different strategies an operating system can use to handle deadlock, and what does each one cost?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Prevention: structure the system so one of the four necessary conditions can never hold, for example by requiring all resources to be requested up front or imposing a global ordering on acquisition",
+      "Avoidance: grant a request only if the resulting state is still safe, using an algorithm such as the Banker algorithm; this requires knowing each process maximum demand in advance",
+      "Detection and recovery: allow deadlock to happen, run a detection algorithm periodically, then recover by terminating processes or preempting their resources",
+      "Ignoring the problem, sometimes called the ostrich algorithm: accept the risk because deadlocks are rare and the overhead of prevention or detection is not worth paying, which is broadly what Windows and Linux do",
+      "Names the trade-off: prevention and avoidance cost resource utilisation and concurrency, while detection and ignoring buy utilisation at the cost of whatever damage a real deadlock does"
+    ]
+  },
+  {
+    "text": "Explain the Banker algorithm. What does it mean for a system to be in a safe state?",
+    "category": "os",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "It is a deadlock avoidance algorithm for resources with multiple instances, whose goal is to never let the system enter an unsafe state",
+      "It maintains four structures: Available, Max, Allocation and Need, where Need equals Max minus Allocation",
+      "The safety check repeatedly looks for a process whose Need is less than or equal to the current Work, pretends it finishes and adds its Allocation back to Work; the state is safe if every process can be completed this way",
+      "On a request it rejects anything exceeding Need as an error, makes the process wait if the request exceeds Available, otherwise tentatively allocates, re-runs the safety check, and rolls back if the result is unsafe",
+      "Notes the limitations: maximum demand must be declared in advance, the check is expensive for many processes and resource types, and an unsafe state is not the same as a deadlock, only a state from which deadlock becomes possible"
+    ]
+  },
+  {
+    "text": "What three conditions must any correct solution to the critical section problem satisfy?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Mutual exclusion: at most one process may be executing inside its critical section at any moment",
+      "Progress: if no process is in its critical section, the decision about who enters next cannot be postponed indefinitely, and processes that do not want to enter must not take part in that decision",
+      "Bounded waiting: there must be a limit on how many times other processes can enter before a waiting process gets its turn, which is what rules out starvation",
+      "The solution must not depend on any assumption about relative process speeds or the number of available CPUs",
+      "Notes that avoiding busy waiting is desirable but is not one of the three requirements, since a spinlock satisfies all three while still burning CPU cycles"
+    ]
+  },
+  {
+    "text": "Explain the producer-consumer problem and how semaphores solve it.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A producer adds items to a bounded buffer and a consumer removes them; the producer must block when the buffer is full and the consumer must block when it is empty",
+      "Three semaphores are used: mutex initialised to 1 to protect access to the buffer, empty initialised to N counting free slots, and full initialised to 0 counting occupied slots",
+      "The producer performs wait(empty), wait(mutex), inserts the item, then signal(mutex), signal(full); the consumer mirrors this with full and empty exchanged",
+      "The order of the two waits is load-bearing: acquiring mutex before the counting semaphore deadlocks the system, because a blocked process would still be holding the lock the other side needs",
+      "wait and signal must be atomic operations, and a real implementation blocks the process rather than busy-waiting in a loop"
+    ]
+  },
+  {
+    "text": "What is the difference between a logical address and a physical address? Explain the roles of the MMU and the TLB.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The CPU generates logical or virtual addresses during execution; physical addresses are the actual locations in RAM, and only hardware ever sees them",
+      "The MMU is the hardware unit that translates logical to physical at run time, so a program never knows or depends on where it has actually been placed in memory",
+      "The same translation enforces protection: each process gets its own address space, and an access outside its permitted range traps to the operating system",
+      "Under paging every memory access would first need a page table lookup, which effectively doubles the cost of each access",
+      "The TLB is a small fast cache of recent translations inside the MMU: a hit yields the physical address immediately, a miss falls back to the page table and then loads that result into the TLB"
+    ]
+  },
+  {
+    "text": "Compare the main disk scheduling algorithms. Which problem is each one trying to fix?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The objective is minimising seek time, which is the dominant term in access time, itself the sum of seek time, rotational latency and transfer time",
+      "FCFS serves requests in arrival order: simple and perfectly fair, but total head movement is high because consecutive requests may sit at opposite ends of the disk",
+      "SSTF always picks the closest pending request, which lowers average seek time but can starve requests far from wherever the head happens to be sitting",
+      "SCAN, the elevator algorithm, sweeps to one end servicing requests then reverses; C-SCAN sweeps in one direction only and jumps back to the start without servicing, which makes waiting times more uniform",
+      "LOOK and C-LOOK are the practical versions of those two: identical in behaviour except that the head turns around at the last pending request rather than travelling all the way to the physical end of the disk"
+    ]
+  }
+]

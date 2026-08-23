@@ -1,0 +1,132 @@
+[
+  {
+    "text": "What is a friend class in C++? Does it break encapsulation?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A friend class is granted access to the private and protected members of another class, declared with the friend keyword inside the class that is granting access",
+      "Friendship is granted, never taken: only the class that owns the data can name a friend, so it is a deliberate controlled exception rather than a hole in encapsulation",
+      "Friendship is neither symmetric nor inherited: if A declares B a friend, that gives A no access to B, and gives B derived classes no access to A",
+      "Names a legitimate use, for example a Mechanic class that must read the private engine number of a Car, or an overloaded operator that needs access to both operands",
+      "States the real cost: it couples the two classes tightly, so changing the private layout of one can break the other, and public accessors are preferable unless that coupling is genuinely intended"
+    ]
+  },
+  {
+    "text": "What does the this keyword refer to, and when do you actually need it?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "It refers to the object whose member function or constructor is currently executing",
+      "In C++ it is a pointer, used as this->member; in Java it is a reference, used as this.member",
+      "Its most common necessary use is disambiguation when a parameter name shadows a member name, as in this->name = name",
+      "It is available only inside non-static member functions, because a static member belongs to the class and has no object context to refer to",
+      "Mentions a further use, such as returning the current object to allow method chaining, or in Java calling another constructor of the same class with this(...)"
+    ]
+  },
+  {
+    "text": "What is a static data member and a static member function? What can a static function not do?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A static data member belongs to the class rather than to any object: exactly one copy exists and every instance sees the same value, so a change made through one object is visible to all",
+      "It exists before any object has been created and is accessed through the class itself, as ClassName::member in C++ or ClassName.member in Java",
+      "A static member function can be called without an object at all, and precisely for that reason cannot access non-static members directly, because it has no this to work from",
+      "Gives realistic uses, such as counting how many instances have been created, holding configuration shared by every instance, or a pure utility class like Math in Java",
+      "Notes a practical detail, for example that in C++ a static data member normally needs a single definition outside the class to give it storage, unless it is declared inline or constexpr"
+    ]
+  },
+  {
+    "text": "What are the modes of inheritance in C++, and how does each affect the visibility of inherited members?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "C++ lets the derived class choose how inherited members are exposed, written as class D : public B, protected B or private B",
+      "Public inheritance keeps public members public and protected members protected, and is the mode that expresses a genuine is-a relationship",
+      "Protected inheritance demotes public members to protected, while private inheritance demotes both public and protected members to private, so nothing remains visible to any further derived class",
+      "Private members of the base are never directly accessible in a derived class under any mode, though they still exist inside the object and can be reached through the base public or protected functions",
+      "Notes the defaults and the contrast with Java: the default is private for class and public for struct, whereas Java has no such modes because extends is always effectively public"
+    ]
+  },
+  {
+    "text": "What is operator overloading? Why does Java not support it?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Operator overloading redefines what a built-in operator means for a user-defined type, so that adding two Complex objects with the plus sign adds them component by component",
+      "It is syntactic sugar over an ordinary function call: the compiler rewrites the expression into a call to operator+, which may be a member function or a free function",
+      "It is a form of compile-time or static polymorphism, because the correct version is chosen from the operand types at compile time",
+      "Java deliberately omits it, with the single exception of plus for String concatenation, which is built into the language rather than something a programmer can define",
+      "Notes the design judgement involved: overloading an operator to mean something unrelated to its conventional meaning makes code harder to read rather than easier, which is the argument Java accepted"
+    ]
+  },
+  {
+    "text": "What goes wrong if you delete a derived class object through a base class pointer without a virtual destructor?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "It is undefined behaviour in C++, and in practice what happens is that only the base class destructor runs",
+      "The consequence is that whatever the derived class allocated is never released, producing a memory or resource leak that grows with every such deletion",
+      "Marking the base destructor virtual makes destruction dispatch through the vtable, so the derived destructor runs first and then the base destructor, as it should",
+      "States the general rule: any class intended to be used polymorphically, which in practice means any class that already has virtual functions, should declare a virtual destructor",
+      "Explains why Java has no equivalent problem: it has no destructors at all, and the garbage collector reclaims the object regardless of which reference type was used to hold it"
+    ]
+  },
+  {
+    "text": "Why can a constructor not be virtual in C++, when a destructor can?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A virtual call is dispatched through the vtable, but the vtable pointer is itself set up by the constructor, so while a constructor is running there is nothing to dispatch through yet",
+      "Conceptually, virtual dispatch answers the question of what type the object really is, and during construction the object does not yet have its final type",
+      "It follows that calling a virtual function from inside a constructor resolves to the current class version rather than any derived override, which is a well-known source of bugs",
+      "Destructors can be virtual because at destruction time the object still has its complete type and the vtable is still intact, and destruction proceeds from the most derived class downward",
+      "Names the usual workaround when polymorphic creation is genuinely needed: a factory function, or a virtual clone method on the base class"
+    ]
+  },
+  {
+    "text": "What is object slicing in C++, and how do you avoid it?",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Slicing happens when a derived object is assigned or copied into a base class object by value, so the derived portion is cut away and only the base subobject is copied",
+      "The result is an object whose type is genuinely the base class, so calls on it use the base implementation even if the derived class had overrides",
+      "Gives a concrete example, such as declaring a Base object, assigning a Derived object to it, and finding that a virtual function call prints the base version",
+      "Notes that it is silent: the compiler accepts the assignment without any warning, which is what makes it dangerous rather than merely wrong",
+      "Gives the fix: work through base class pointers or references, which preserve the dynamic type and keep virtual dispatch working, and notes that Java cannot slice because its variables are always references, never objects held by value"
+    ]
+  },
+  {
+    "text": "How does garbage collection work in Java, and why is finalize() deprecated?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Java has no destructors; the garbage collector automatically reclaims objects that are no longer reachable from any live reference, so the programmer never frees memory explicitly",
+      "The benefit is that whole categories of bug disappear: no dangling pointers, no double frees, and no memory freed while still in use",
+      "Reachability rather than scope is the criterion, which is why an object still referenced from a forgotten entry in a long-lived collection is never collected and behaves as a leak",
+      "Collection is non-deterministic: there is no guarantee of when an object will be reclaimed, and calling System.gc() is only a suggestion the JVM may ignore",
+      "finalize() was the old cleanup hook and is deprecated exactly because of that unpredictability and its performance cost, with try-with-resources and AutoCloseable being the correct modern way to release non-memory resources"
+    ]
+  },
+  {
+    "text": "Does a class occupy memory? Explain how memory is allocated for classes and objects.",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A class is a blueprint: it describes layout and behaviour but occupies no per-instance memory until an object is actually created",
+      "Memory is allocated per object, sized by its data members plus any padding needed for alignment, and plus a vtable pointer if the class has virtual functions",
+      "Static data members are the exception to this, because they belong to the class and are allocated once whether or not any object ever exists",
+      "Member function code is not stored per object either: one copy is shared by all instances, which is why adding methods to a class does not make its objects larger",
+      "Notes the classic detail that an empty class in C++ has a size of one byte rather than zero, so that two distinct objects are guaranteed to have distinct addresses"
+    ]
+  }
+]

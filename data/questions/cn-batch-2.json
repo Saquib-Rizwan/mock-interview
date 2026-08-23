@@ -1,0 +1,132 @@
+[
+  {
+    "text": "Compare bus, star, ring and mesh network topologies. Why do modern LANs almost always use star?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Bus: every node shares one backbone cable, which is the cheapest to lay, but a single break takes the whole network down and contention limits how many nodes it supports",
+      "Star: every node connects to a central hub or switch, so a failed node is isolated and faults are easy to locate, at the cost of more cable and a central single point of failure",
+      "Ring: nodes form a closed loop and usually pass a token, giving orderly predictable access, but one broken link or node breaks the ring and troubleshooting is harder",
+      "Mesh: every node links directly to every other, giving maximum fault tolerance and privacy, but cabling and port count grow as n(n-1)/2 so it is only used where availability justifies the cost",
+      "Explains why star dominates: switches are cheap, fault isolation and per-port collision domains matter more in practice than saving cable, and tree and hybrid layouts are just stars combined for larger networks"
+    ]
+  },
+  {
+    "text": "What is the difference between a client-server model and a peer-to-peer model?",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Client-server is centralised around one or more dedicated servers that own the resources; peer-to-peer is decentralised, with every node acting as both client and server",
+      "Client-server centralises authentication and access control in one place, which makes it far easier to secure; peer-to-peer has no central authority to enforce policy",
+      "Client-server scales predictably by upgrading or replicating the server, whereas peer-to-peer gains capacity with each new peer but becomes harder to coordinate and less stable as peer count grows",
+      "Cost differs: client-server needs server hardware and ongoing administration, while peer-to-peer needs no dedicated infrastructure at all",
+      "Gives representative uses: web applications, email and databases are client-server, while file sharing, blockchain and small home networks are peer-to-peer"
+    ]
+  },
+  {
+    "text": "Explain the TCP three-way handshake. What happens if the final ACK is lost?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The client sends a SYN carrying its own randomly chosen initial sequence number, and advertises its window size and maximum segment size",
+      "The server replies with a single SYN+ACK segment: its own initial sequence number, plus an acknowledgement number of the client sequence number plus one",
+      "The client sends a final ACK acknowledging the server sequence number plus one, after which the connection is established and data may flow",
+      "Explains why it is three segments rather than four: the server acknowledgement and its own synchronisation request are combined into one segment",
+      "If the final ACK is lost the server does not assume the connection is up; its SYN+ACK times out and is retransmitted, and initial sequence numbers are randomised rather than starting at zero to make old or forged segments harder to inject"
+    ]
+  },
+  {
+    "text": "Compare TCP and UDP. When would you deliberately choose UDP?",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "TCP is connection-oriented and establishes a connection with a handshake before any data flows; UDP is connectionless and simply sends datagrams",
+      "TCP guarantees delivery and ordering using sequence numbers, acknowledgements and retransmission; UDP guarantees neither, so datagrams may arrive out of order, duplicated or not at all",
+      "TCP provides flow control and congestion control; UDP provides neither, so it will happily overrun a slow receiver or worsen a congested link",
+      "Overhead differs sharply: a TCP header is 20 to 60 bytes and the protocol keeps per-connection state, while a UDP header is a fixed 8 bytes with no state at all",
+      "Chooses correctly: TCP for web, email and file transfer where correctness matters, and UDP for live video, voice, gaming and DNS, where a late packet is worth less than a lost one and retransmission would arrive too late to help"
+    ]
+  },
+  {
+    "text": "Compare distance vector and link state routing. What is the count-to-infinity problem?",
+    "category": "cn",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "In distance vector routing, such as RIP, each router knows only its direct neighbours, periodically sends them its whole distance vector, and updates its own table by picking the lowest advertised metric, which for RIP is hop count",
+      "In link state routing, such as OSPF, each router discovers neighbours using Hello messages, floods link-state information so every router builds an identical map of the topology, then computes shortest paths independently",
+      "The update patterns are opposites: distance vector sends everything it knows to a few neighbours on a timer, while link state sends only what changed but sends it to everyone, and only when something actually changes",
+      "Count-to-infinity: when a route fails, distance-vector routers can learn the dead route back from each other with a slightly larger metric and keep incrementing it, believing an unreachable network is still reachable, which causes routing loops and very slow convergence",
+      "Names the trade-off and the third family: link state converges faster and scales further but costs more memory and CPU per router, and both are interior protocols, while BGP is a path-vector protocol used for routing between autonomous systems"
+    ]
+  },
+  {
+    "text": "What is classful IP addressing, and why was it replaced by CIDR?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Classful addressing divides the IPv4 space into fixed classes identified by the leading bits: A, B and C for host addressing, D for multicast, and E reserved",
+      "The class fixes where the network portion ends, and therefore fixes the block size: roughly sixteen million addresses for a class A, sixty-five thousand for a class B and two hundred and fifty-four usable for a class C",
+      "That rigidity is the problem: an organisation needing five hundred addresses is too large for a class C and so receives a class B, stranding tens of thousands of unusable addresses",
+      "CIDR abandons classes and writes the prefix length explicitly, as in 192.168.1.0/28, so a block can be sized to roughly what is actually needed",
+      "States the rules for a valid CIDR block: the addresses must be contiguous, the block size must be a power of two, and the first address must be divisible by the block size, with two addresses per block always lost to the network ID and the broadcast address"
+    ]
+  },
+  {
+    "text": "How does DNS resolve a domain name? Explain the difference between a recursive and an iterative query.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "DNS maps human-readable domain names to IP addresses, which is what lets a site move to a different server or host without users noticing anything",
+      "The namespace is hierarchical: a root server points to the top-level domain server for the extension, that TLD server points to the domain authoritative server, and the authoritative server holds the actual record",
+      "Resolution starts at the local cache, and only a miss goes out to the resolver; answers are cached with a time-to-live, which is what keeps the load off the root and TLD tiers",
+      "In a recursive query the server being asked takes responsibility for producing the final answer, chasing the chain itself and returning only the resolved address",
+      "In an iterative query each server responds with a referral to the next server to ask rather than the answer, so the querying party walks the hierarchy itself; a stub resolver typically queries recursively while the resolver queries the hierarchy iteratively"
+    ]
+  },
+  {
+    "text": "What does it mean that HTTP is stateless, and what is the difference between persistent and non-persistent HTTP?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "HTTP is the request-response protocol of the web, running over TCP on port 80, or 443 for HTTPS, because HTTP itself provides no reliability of its own",
+      "Stateless means the server retains no memory of previous requests from the same client, so each request must carry everything needed to serve it",
+      "That is precisely why cookies, session identifiers and tokens exist: state has to be layered on top, since the protocol will not keep it",
+      "Non-persistent HTTP, as in HTTP/1.0, closes the TCP connection after each object, so every image costs a fresh handshake, roughly two round trips per object",
+      "Persistent HTTP, the HTTP/1.1 default, keeps the connection open and reuses it for subsequent objects, cutting the cost to roughly one round trip per object and removing repeated slow-start penalties"
+    ]
+  },
+  {
+    "text": "What is the difference between SMTP, POP and IMAP?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "SMTP pushes mail outward: from a client to its mail server, and between mail servers; it is the sending protocol and has no way to browse a mailbox",
+      "POP pulls mail down to a single client and by default deletes it from the server, so the messages then live on that device",
+      "IMAP leaves messages on the server and synchronises state such as read, flagged and folder placement, so several devices all see the same mailbox",
+      "Draws the practical consequence: POP suits one device and offline reading, whereas IMAP suits a phone and a laptop reading the same account without them diverging",
+      "Explains why sending and receiving need separate protocols at all: pushing a message toward a destination and browsing or fetching from a stored mailbox are genuinely different operations"
+    ]
+  },
+  {
+    "text": "Compare pure ALOHA, slotted ALOHA and CSMA. Why do collisions still happen under CSMA?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Pure ALOHA transmits whenever a station has data, infers a collision from the absence of an acknowledgement, then waits a random backoff and retries; its vulnerable period is two frame times",
+      "Slotted ALOHA allows transmission only at the start of a fixed time slot, which halves the vulnerable period to one frame time and roughly doubles the achievable throughput",
+      "CSMA adds carrier sensing: a station listens before transmitting and defers while the medium is busy, which removes most of the collisions ALOHA suffers",
+      "Collisions still occur because of propagation delay: two stations can each sense an idle medium before the other signal has reached them, so the vulnerable period is one propagation delay",
+      "Describes the persistence strategies: 1-persistent transmits the instant the channel frees and so collides badly under load, p-persistent transmits with probability p and defers otherwise, and non-persistent waits a random interval before sensing again"
+    ]
+  }
+]
