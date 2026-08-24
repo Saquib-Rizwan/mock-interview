@@ -1,0 +1,41 @@
+[
+  {
+    "text": "What is a window function in SQL? Explain RANK(), DENSE_RANK() and ROW_NUMBER(), and give a query that uses one.",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A window function computes a value across a set of rows related to the current row, but unlike GROUP BY it does not collapse them: every input row is still returned alongside its computed value",
+      "The OVER clause defines the window, where PARTITION BY splits rows into independent groups and ORDER BY sets the ordering within each group; omitting PARTITION BY treats the whole result set as one window",
+      "ROW_NUMBER() assigns a unique sequential number and breaks ties arbitrarily; RANK() gives tied rows the same rank and then skips the numbers they consumed; DENSE_RANK() gives tied rows the same rank and does not skip",
+      "Gives a working query, such as SELECT name, dept, salary, RANK() OVER (PARTITION BY dept ORDER BY salary DESC) AS r FROM employee, which ranks salaries independently within each department",
+      "Notes the practical trap that a window function cannot appear in WHERE, because windows are evaluated after filtering, so selecting the top n per group means wrapping the query in a subquery or CTE and filtering on the alias outside"
+    ]
+  },
+  {
+    "text": "A SQL query that used to be fast has become slow in production. How do you diagnose and fix it?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Reads the execution plan first with EXPLAIN or EXPLAIN ANALYZE rather than guessing, looking for sequential scans over large tables, nested loops over large row counts, and estimated row counts that differ wildly from actual ones",
+      "Checks whether an index exists on the columns used in WHERE, JOIN and ORDER BY, and separately whether the query is written in a way that lets an existing index actually be used",
+      "Identifies non-sargable predicates as a common cause: wrapping an indexed column in a function or arithmetic, as in WHERE YEAR(created_at) = 2024, defeats the index and should be rewritten as a range over the raw column",
+      "Reduces the work the query does: selects only the needed columns rather than SELECT *, filters as early as possible, removes a DISTINCT that is masking a join fanning out rows, and rewrites correlated subqueries as joins where possible",
+      "Considers the data rather than only the SQL: stale statistics give the planner wrong estimates and the table may need analysing, data volume may simply have grown past what the plan suited, and the real fix may be a covering index, a materialised view or denormalisation, each paid for in write throughput"
+    ]
+  },
+  {
+    "text": "What is a composite index, and how does the order of its columns affect whether a query can use it?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A composite index is built on two or more columns together, and its entries are sorted by the first column, then by the second within equal values of the first, and so on",
+      "Because of that ordering only a leftmost prefix is usable: an index on (a, b, c) serves queries filtering on a, on a and b, or on all three, but not one filtering on b alone, which is why column order is a design decision rather than a detail",
+      "The usual guidance is to place equality predicates before range predicates, since once a range scan starts on one column the columns after it are no longer in a useful order for further filtering",
+      "A composite index can make a query covering, meaning every column the query needs is present in the index itself so the engine never reads the table rows at all, which is a substantial saving on a wide table",
+      "States the cost honestly: every index must be maintained on each insert, update and delete and occupies storage, so composite indexes are added for query patterns that actually run rather than speculatively, and adding one often makes a separate single-column index on its leading column redundant"
+    ]
+  }
+]

@@ -1,9 +1,10 @@
 # Phase 9 — Catalogue expansion
 
-Status: **groundwork done and five pools authored to target.**
-`os`, `dbms`, `cn`, `oops` and `general_hr` are at **40 questions each**, up
-from 15. Only `aptitude` (8) is still thin, and it is blocked on a design
-decision rather than on effort. No new companies have been added yet.
+Status: **groundwork done, five pools authored to target, first company added.**
+`os`, `cn`, `oops` and `general_hr` are at **40 questions each** and `dbms` at
+**43**, up from 15. Only `aptitude` (8) is still thin, and it is blocked on a
+design decision rather than on effort. **Aays** is the first company written from
+the placement-cell material (section 5); the rest await screenshots.
 
 The insight that shapes the phase: **company breadth multiplies against pool
 depth.** The pools were 15 questions each in `os`, `dbms`, `cn`, `oops`,
@@ -204,6 +205,149 @@ Both were replaced rather than trimmed. Highest remaining similarity is 0.40,
 between *what an interface is* and *when to choose one over an abstract class*,
 which are different questions.
 
+## 5. First company from the placement material — Aays
+
+Source: the college training-cell document (PRABANDHA), four pages on **Aays**,
+*Associate Data Engineer*, all branches eligible, 2 students placed. The first
+catalogue entry written from real material rather than from general knowledge of
+a company's process, and it is unusually complete — it names the four rounds,
+the attrition at each stage, a difficulty rating per round, and thirteen
+questions actually asked.
+
+### The rounds, and one judgement call
+
+| # | Type in the schema | Round | Questions |
+|---|---|---|---|
+| 1 | `other` | Resume Shortlisting | 0 |
+| 2 | `technical` | AI Evaluation Interview | 4 picks |
+| 3 | `technical` | Technical Interview | 4 `dbms` + 2 `dsa` coding + 4 specific |
+| 4 | `managerial` | Managerial Round | 3 specific |
+
+Round 1 is the judgement call. It is a real round — around 11 of the applicant
+pool survive it — but it is a resume screen, so there is nothing to answer. The
+options were to omit it, or to carry it with zero questions. Omitting it loses
+the most actionable fact in the document, which is that generic resumes are
+filtered out before any test. So it is carried, with the substance in `notes`.
+
+That exposed a copy bug: `RoundDetail` said *"No questions attached to this
+round yet"* for an empty round, which reads as a seeding failure rather than as
+a round that legitimately has none. Now reads *"No practice questions for this
+round — what to prepare is in the note above."*
+
+Round 2 is an **AI-driven interview that replaces the aptitude test**. Worth
+recording because it breaks an assumption the catalogue was carrying: that a
+first round is a written test. It is mapped to `technical`, not `aptitude`,
+because the document is explicit that it is not an aptitude test.
+
+### Where each documented question went
+
+The document lists thirteen questions. They did not all belong in the same
+place, and deciding that was most of the work.
+
+Six are generic SQL and databases. Three of those were **already in the `dbms`
+pool** — second-highest salary, the join types, and normalisation through 3NF —
+so Aays' rounds draw them from the pool rather than duplicating them inline. The
+other three were genuine holes and went **into the shared pool**, where every
+company benefits, as `dbms-batch-4.json`:
+
+- window functions — `RANK()`, `DENSE_RANK()`, `ROW_NUMBER()`, `PARTITION BY`
+- diagnosing a query that has become slow in production
+- composite indexes and the leftmost-prefix rule
+
+That takes `dbms` to 43.
+
+Four are **data pipeline** questions — end-to-end walkthrough, mid-run failure
+recovery, fault tolerance and idempotency, duplicate handling. These have no
+pool category. `dbms` would be wrong; they are data engineering, not databases.
+They stay inline as `specific`, which is the agreed pattern and needs no schema
+change. **If a second data role arrives, this becomes the argument for a
+`data_engineering` category** — one company does not justify one.
+
+Three are managerial, and are inline for a different reason: see below.
+
+### The duplicate scan changed the design
+
+Running the Jaccard scan over the ten new questions against all 277 pool rows
+surfaced one real defect. All three of Round 4's documented questions are near
+restatements of questions already in `general_hr`:
+
+| Documented (Aays) | In the pool | Overlap |
+|---|---|---|
+| Why do you want to work at Aays specifically? | Why do you want to join this company? | 0.42 |
+| Tell me about yourself and your interest in data engineering. | Tell me about yourself. | 0.40 |
+| How do you handle working under pressure or with ambiguous requirements? | How do you handle pressure and tight deadlines? | 0.36 |
+
+Round 4 was also drawing three `general_hr` picks, so a student could have been
+shown both halves of a pair in the same round. **The picks were removed.** The
+document states exactly what this round asks; three documented questions beat
+three random draws that might restate them. Generic HR practice is available
+from nine other companies.
+
+This is the first time the duplicate scan changed a structural decision rather
+than replacing a question, and it is the argument for running it on every batch:
+the collision was invisible in the JSON and would only have shown up in the
+browser, in one round out of forty-nine.
+
+The remaining hits were all in the 0.25–0.31 band and all stopword-driven —
+*"what is a X, and how does it differ from Y"* matches itself across every
+subject. The threshold is tuned to over-report; that is the correct direction
+for it to be wrong in.
+
+### The logo is traced from the source, and the mark turned out to be exact
+
+Aays is not in simple-icons, where the other five logos came from. The first
+attempt approximated their dot-ring mark geometrically and got the structure
+**backwards** — largest dots outward, filled centre. The real mark is the
+opposite.
+
+So it was traced instead. The logo was isolated from the placement-document
+screenshot (63x64 px), thresholded on luminance, and every dot recovered as a
+connected component with a sub-pixel, ink-weighted centroid and an area-derived
+radius. Converting those 64 centroids to polar coordinates about the centre of
+mass showed the mark is perfectly regular:
+
+| Ring | Dots | Radius | Dot radius | Phase |
+|---|---|---|---|---|
+| 1 | 16 | 15.82 | 1.99 | 0.0° |
+| 2 | 16 | 20.18 | 1.31 | 11.7° |
+| 3 | 16 | 24.20 | 0.83 | 1.9° |
+| 4 | 16 | 28.27 | 0.55 | 12.3° |
+
+**Four rings of sixteen, every dot on a 22.5° step, alternate rings offset by
+half a step, dot radius falling outward** — 1.00 / 0.66 / 0.42 / 0.27 of the
+innermost. Maximum angular residual within any ring was 0.7°, which is the
+source raster at 63 px, not the design. Because the mark is built from circles,
+emitting it as 64 circular subpaths is not an approximation of it — it *is* it,
+and it is now resolution-independent in a way the screenshot never was.
+
+Rendered back at 64 px against the original, it matches.
+
+### It mushes at list size, and that is worth knowing
+
+`.cmark svg` is 55% of the block, so logos actually render at **19–26 px**.
+Sixty-four dots do not resolve at that size; the mark reads as a soft dotted
+ring with a halo rather than as discrete dots, and the outer ring (0.22 units,
+about a third of a pixel) effectively disappears.
+
+A variant with the dot-size falloff compressed was rendered and compared, and it
+was **worse** — lifting the small dots closed the gaps and turned the ring into a
+smudge. The faithful version was kept.
+
+This is not specific to Aays; Wipro and Zoho carry comparable detail and lose it
+at the same size. The design system already accepted that trade. If it reads
+badly in the browser the cheap fix is dropping rings 3 and 4 and rescaling — a
+32-dot mark that keeps the character and resolves at 20 px — but that is a
+deliberate simplification and should only be done after looking at the real
+thing.
+
+### What the document did not say, and so is not encoded
+
+No cut-off marks, no time limits, no section structure, no eligibility CGPA. The
+document is silent on all of it, so the catalogue is too. Round 2's difficulty
+rating (7/10) and Round 3's (8/10) are recorded in `notes` as prose because
+`Difficulty` is a three-value enum and mapping 7/10 onto it would be inventing
+precision the source does not have.
+
 ## What I verified
 
 - Both migrations applied; category counts confirmed by querying the database
@@ -243,8 +387,11 @@ which are different questions.
 1. ~~Take `os`, `dbms`, `cn` and `oops` from 15 to 40~~ — **done**
 2. ~~`general_hr` 15 → 40~~ — **done**
 3. `aptitude` 8 → 40 — deferred until Phase 10 lands, see below
-4. Add companies from the user's placement-cell material, batch by batch
-5. Company logos as each is added — one line in `components/companyLogos.ts`
+4. Add companies from the user's placement-cell material, batch by batch —
+   **Aays done**, see section 5; the rest await screenshots
+5. Company logos as each is added — one line in `components/companyLogos.ts`.
+   Amazon, Microsoft, Deloitte, Cognizant and Capgemini are still monograms and
+   are all in simple-icons, so those five are mechanical
 6. Surface "more like this" using `patterns` once tagged questions exist
 
 ### HR marking schemes work differently

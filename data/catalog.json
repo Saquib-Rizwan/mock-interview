@@ -509,5 +509,125 @@
         ]
       }
     ]
+  },
+  {
+    "name": "Aays",
+    "roles": [
+      {
+        "name": "Associate Data Engineer",
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "other",
+            "roundName": "Resume Shortlisting",
+            "notes": "Profile-based screening only — no written test is conducted. Resumes are judged solely on alignment with a data-centric role, and generic resumes are unlikely to pass; around 11 candidates were shortlisted from the applicant pool. Tailor the resume for data before applying: highlight Python work, SQL experience and any ETL or pipeline exposure, and deprioritise skills unrelated to data engineering. There is nothing to practise in this round — the preparation is the resume itself."
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "AI Evaluation Interview",
+            "notes": "An AI-driven interview rather than a standard online aptitude test — it replaces one. Rated 7/10 for difficulty; the pool narrowed to 6–7 candidates here. Covers core data concepts and data engineering principles, with data types and structures, data modelling basics, ETL concepts, database fundamentals and Python for data named as likely areas. Because no human interviewer is present to read past an ambiguous answer, responses must be complete, structured and technically precise.",
+            "picks": [{ "category": "dbms", "type": "text", "count": 4 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Rated 8/10, and the deepest round. Backend and data-specific depth across three areas: databases and SQL (schema design, normalisation, indexing, complex joins with GROUP BY and HAVING, subqueries, window functions and query optimisation); a Python coding problem on data manipulation or algorithmic logic; and end-to-end data pipeline explanation. The pipeline walkthrough is the distinctive part of this company's process — practise saying it out loud, not just reading it.",
+            "picks": [
+              { "category": "dbms", "type": "text", "count": 4 },
+              { "category": "dsa", "type": "coding", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "Walk me through the end-to-end flow of a data pipeline you have built or studied.",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Names the stages in order — source ingestion, transformation, loading, downstream consumption — and grounds them in what the pipeline was actually for, rather than describing a generic diagram",
+                  "Describes ingestion concretely: where the data came from, whether it arrived as a scheduled batch or a stream, and how each run knew what was new since the last one",
+                  "Describes the transformation step in terms of what it did to the data — cleaning, type coercion, joining reference data, deriving fields, aggregating — and where that logic ran",
+                  "Describes loading and consumption: the destination, whether data was appended, upserted or fully replaced, and what read from it afterwards, such as a dashboard, a model or an API",
+                  "Covers how the pipeline was operated rather than only how it was written: scheduling and orchestration, how a run was monitored, and how anyone would find out if it had silently produced wrong data instead of failing outright"
+                ]
+              },
+              {
+                "text": "A data pipeline fails mid-way through processing. How do you debug and recover?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Establishes where it failed and what state the destination was left in before doing anything else, since a partial write is the real problem; reads run logs and task-level orchestrator status rather than restarting blindly",
+                  "Distinguishes the class of failure because the response differs: a transient infrastructure or network error is worth retrying, whereas a data or schema error will fail identically on retry and needs the input or the code fixed",
+                  "Explains why the job cannot simply be re-run unless it is idempotent, and how idempotency is achieved in practice — writing a deterministic partition that a re-run overwrites, or upserting on a natural key rather than appending",
+                  "Describes containing the damage: quarantining bad records to a dead-letter queue so one malformed row cannot halt an entire run, and checkpointing so a restart resumes from the last completed stage rather than from the beginning",
+                  "Closes the loop rather than stopping at the fix: alerting so the failure is noticed before a downstream consumer notices it, and adding a validation check for the condition that caused it so the same failure is caught earlier next time"
+                ]
+              },
+              {
+                "text": "What makes a data pipeline fault-tolerant and idempotent, and why does idempotency matter so much?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Idempotent means running a step twice produces the same result as running it once, which is precisely what makes a retry safe; without it, retrying after a partial failure silently duplicates data",
+                  "Gives the usual implementations: overwriting a deterministic partition, such as replacing a whole day's output on a re-run, or upserting on a stable business key instead of blind inserts",
+                  "Notes that at-least-once delivery is the normal guarantee in distributed systems, so duplicates will occur regardless of intent, and idempotent consumers are how exactly-once behaviour is achieved in effect",
+                  "Covers the rest of fault tolerance: bounded retries with exponential backoff for transient errors, dead-letter queues for records that can never succeed, and checkpointing so a restart does not redo completed work",
+                  "Adds the operational half: monitoring and alerting on data freshness and row counts, plus validation on the output, because a pipeline that reports success while producing wrong data is worse than one that fails loudly"
+                ]
+              },
+              {
+                "text": "How do you handle duplicate records in a data pipeline?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Starts by asking where the duplicates come from, because the fix differs: at-least-once delivery from the source, an upstream retry, a join in the transformation that fans rows out, or genuinely repeated real-world events",
+                  "Defines what duplicate means for this data before deleting anything: an exact row match, or the same business key carrying different values, in which case the pipeline must decide which version wins",
+                  "Deduplicates at the right point, usually as early as possible, on a unique or natural key, keeping the latest version by event timestamp — typically ROW_NUMBER() over a partition on the key, ordered by that timestamp",
+                  "Prefers making the write itself resistant to duplicates over cleaning up afterwards: an upsert or merge on the key, or a uniqueness constraint in the destination, so a re-run cannot create them in the first place",
+                  "Notes the operational side: separates late-arriving or out-of-order data from true duplicates, and monitors the duplicate rate rather than silently discarding rows, since a rising rate is a signal about the source rather than noise"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "managerial",
+            "roundName": "Managerial Round",
+            "notes": "A conversational panel discussion with HR and management, assessing cultural fit, communication and general professional attitude. Technical evaluation is largely complete by this stage, so the weight falls on clarity of communication and genuine motivation for the role. 3 candidates reached this round and 2 were finally selected. Deliberately no general_hr picks here: all three questions below are documented as actually asked, and the pool's generic forms of them would have restated them in the same round.",
+            "specific": [
+              {
+                "text": "Tell me about yourself and your interest in data engineering.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Gives a short structured arc rather than reciting the resume: where they are now, one or two things they have actually built, and what they are looking for next",
+                  "Grounds the interest in something concrete — a specific project, dataset or problem that made data work interesting — instead of asserting a general passion for data",
+                  "States the technical ground honestly: which of SQL, Python and any pipeline or ETL work they have genuinely done, and at what depth, without inflating it",
+                  "Connects the interest to data engineering specifically rather than to data science or analytics, showing they understand the role is about moving and shaping data reliably rather than about modelling it",
+                  "Keeps it to roughly two minutes and lands on the role being interviewed for, so the panel has an obvious next question instead of having to restart the conversation"
+                ]
+              },
+              {
+                "text": "Why do you want to work at Aays specifically?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Says something specific to this company rather than something that would apply to any employer, which shows the company was actually looked into before the interview",
+                  "Connects to the nature of the work — data and analytics consulting for enterprise clients — rather than to size, brand recognition or compensation",
+                  "Links that back to what the candidate has done or wants to do next, so the reason reads as fit rather than as flattery",
+                  "Shows awareness that the role is client-facing consulting work, which means varied business domains and explaining technical work to non-technical stakeholders",
+                  "Stays honest and specific rather than over-rehearsed: a short genuine reason lands better than a polished one that could have been written about any company"
+                ]
+              },
+              {
+                "text": "How do you handle working under pressure or with ambiguous requirements?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Gives a real example with actual stakes rather than a general claim about staying calm under pressure",
+                  "Treats ambiguity as something to reduce rather than endure: asks specific clarifying questions, or writes an assumption down explicitly and gets it confirmed, instead of guessing silently or waiting to be told",
+                  "Describes breaking the work down and prioritising so something useful still shipped, rather than the whole task stalling on the unresolved parts",
+                  "Shows communication upward: flagging the risk or the slip early to whoever needed to know, instead of absorbing it quietly and revealing the problem at the deadline",
+                  "Ends with the outcome and what changed afterwards, taking ownership of anything that went wrong rather than attributing it to unclear instructions"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 ]

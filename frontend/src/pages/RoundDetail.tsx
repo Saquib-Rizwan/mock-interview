@@ -42,7 +42,10 @@ export function RoundDetail() {
       </h2>
 
       {round.questions.length === 0 ? (
-        <p className="muted">No questions attached to this round yet.</p>
+        <p className="muted">
+          No practice questions for this round
+          {round.notes ? " — what to prepare is in the note above." : "."}
+        </p>
       ) : (
         <ul className="questions">
           {round.questions.map((q) => (
