@@ -1,0 +1,327 @@
+[
+  {
+    "text": "Your degree is in a different branch, so why are you applying for a software role?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a genuine reason rather than saying there are no jobs in their branch, since even the honest version of that answer makes the role sound like a fallback",
+      "Points to concrete evidence the interest is real: projects built, courses taken, internships, contests or self-taught work",
+      "Explains what actually caused the switch, ideally a specific moment or project rather than a vague growing interest",
+      "Frames the original branch as an asset where it genuinely is, such as domain knowledge or mathematical grounding, without overclaiming the connection",
+      "Does not disparage their own branch, degree or college, since an interviewer hears that as someone who will speak about this job the same way later"
+    ]
+  },
+  {
+    "text": "Your CGPA is lower than we usually look for. Can you explain that?",
+    "category": "general_hr",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Addresses the number directly rather than hoping the interviewer moves past it",
+      "Gives the real reason briefly and without dramatising it, whether that was health, family circumstances, a poor first year or time spent elsewhere",
+      "Takes responsibility for the part that was theirs, rather than blaming faculty, the syllabus or the evaluation system",
+      "Shows the trajectory: improved marks in later semesters, backlogs cleared, or strong performance specifically in the subjects relevant to this role",
+      "Redirects to evidence of capability the CGPA does not capture, such as projects or internships, without implying academics do not matter"
+    ]
+  },
+  {
+    "text": "Tell me about a time you had to learn something new very quickly.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names a specific thing learned and the situation that forced the speed, rather than a general claim to be a fast learner",
+      "Describes the actual method used, such as documentation, a course, reading existing code or asking someone, which is what makes the skill repeatable",
+      "Gives the timeframe honestly, since learning something in two days and in two months are very different claims",
+      "States what was produced with it, so the learning is evidenced by output rather than by assertion",
+      "Mentions what was still not understood at the end, which reads as self-aware rather than boastful"
+    ]
+  },
+  {
+    "text": "Describe a time you took the lead on something.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a specific situation, which may be informal leadership rather than an official title",
+      "Explains why leadership was needed at that moment, such as a gap, a deadline or a team that had stalled",
+      "Describes what they did to organise other people, not merely what they personally built",
+      "Credits the team rather than presenting a solo rescue, since interviewers hear the solo version constantly and discount it",
+      "States the outcome, and ideally what they would do differently if leading the same thing again"
+    ]
+  },
+  {
+    "text": "How do you handle criticism?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a concrete instance of criticism actually received, rather than a general statement about being open to feedback",
+      "Describes the initial reaction honestly, since claiming to feel nothing is not credible",
+      "Separates the content of the feedback from how it was delivered, and acts on valid points even when the delivery was poor",
+      "Describes the specific change made afterwards, which is the only real evidence the criticism was absorbed",
+      "Avoids choosing an example that is secretly a compliment, such as being told they work too hard or care too much"
+    ]
+  },
+  {
+    "text": "What motivates you?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names something specific rather than falling back on generic answers such as challenges or learning",
+      "Grounds it in an actual experience where that motivation visibly showed up",
+      "Connects it to what this role would involve day to day, so it reads as relevant rather than abstract",
+      "Is honest about the mix, since money, stability and growth are legitimate motivations and pretending otherwise sounds rehearsed",
+      "Avoids naming something the role clearly cannot provide, which signals a poor fit to the interviewer"
+    ]
+  },
+  {
+    "text": "What are your short-term and long-term goals?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Separates the two clearly, with the short term covering roughly the first year or two",
+      "Makes the short-term goal specific to this role, such as becoming productive in the stack or contributing independently",
+      "Makes the long-term goal a direction rather than a precise job title, since that exact title may not exist at this company",
+      "Shows the two are connected, so the short-term goal is a step towards the long-term one rather than unrelated to it",
+      "Does not describe a plan that visibly routes around the company, such as leaving for higher studies within a year, unless they intend to say so openly"
+    ]
+  },
+  {
+    "text": "How do you prioritise when several things are urgent at the same time?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes an actual method rather than simply claiming to manage time well",
+      "Names the criteria used to rank work, such as hard deadlines, who is blocked waiting on it, impact, and effort required",
+      "Mentions communicating with whoever is waiting, since silently missing a deadline is the real failure rather than the delay itself",
+      "Gives a concrete instance where the method was applied and states what was deliberately deprioritised",
+      "Acknowledges that something was dropped or delayed, since claiming everything was delivered on time contradicts the premise of the question"
+    ]
+  },
+  {
+    "text": "Tell me about a time you disagreed with a manager or a senior.",
+    "category": "general_hr",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Chooses a genuine professional disagreement rather than a personal clash",
+      "Shows the disagreement was raised directly with that person rather than discussed around them",
+      "Describes the case they made, ideally with evidence or reasoning rather than preference",
+      "Describes what happened once the decision was taken, and specifically that they committed to it even where it went against them",
+      "Avoids an example whose point is that they turned out to be right, since what is being tested is behaviour under disagreement rather than being correct"
+    ]
+  },
+  {
+    "text": "Are you planning to pursue higher studies?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Answers honestly, since the interviewer is assessing retention risk and an untrue answer surfaces later anyway",
+      "If higher studies are planned, gives a timeframe rather than leaving it open-ended and unsettling",
+      "If not planned, gives a reason so it sounds considered rather than like the expected answer",
+      "Distinguishes part-time or company-sponsored study from leaving to study full time, since the two carry completely different risk for the employer",
+      "Connects the answer back to an intention to contribute, rather than leaving the interviewer to infer it"
+    ]
+  },
+  {
+    "text": "What would you do if you were placed in a role or technology you did not want?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Shows willingness without sounding indifferent to what they actually want to do",
+      "Gives a reason grounded in the value of the work, such as fundamentals transferring across stacks or domain knowledge being gained",
+      "Asks about the path to move internally later rather than either refusing or pretending to have no preference at all",
+      "Cites an instance where they worked on something they did not choose and made it worthwhile",
+      "Avoids both extremes, since outright refusal reads as inflexible while total indifference reads as someone with no direction"
+    ]
+  },
+  {
+    "text": "How do you keep your technical skills up to date?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names specific sources actually used, such as particular sites, channels, newsletters, documentation or communities",
+      "Describes a habit rather than an intention, with some indication of how often",
+      "Gives a concrete example of something recently learned through those sources",
+      "Mentions building something with what was learned, since consumption alone does not produce skill",
+      "Can say something specific about at least one source, which distinguishes a real habit from a recited list"
+    ]
+  },
+  {
+    "text": "Tell me about a mistake you made and how you handled it.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Chooses a real mistake with actual consequences rather than a disguised strength",
+      "States plainly what went wrong and that it was theirs",
+      "Describes how it came to light, and in particular whether they raised it themselves or waited to be caught",
+      "Describes both the immediate fix and the separate change made so that it does not happen again",
+      "Does not over-apologise or dwell on it, since what is being tested is ownership and recovery rather than remorse"
+    ]
+  },
+  {
+    "text": "What is your biggest achievement outside academics?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Names something specific at a scale the interviewer can understand, such as a competition, an event organised, a team captained or a community project",
+      "Explains their own role in it rather than describing what the group as a whole achieved",
+      "Mentions what was genuinely difficult about it, since an achievement without difficulty evidences very little",
+      "Draws out a transferable quality without labouring the connection to the job",
+      "Chooses something they can talk about with real interest, since flat delivery undermines even a strong example"
+    ]
+  },
+  {
+    "text": "How do you work with someone you find difficult?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes the behaviour rather than labelling the person, for example missed commitments rather than lazy",
+      "Shows an attempt to understand the cause before escalating to anyone else",
+      "Describes what they actually tried, such as a direct conversation, splitting work differently, or agreeing clearer deadlines",
+      "States the outcome honestly, including cases where it did not fully resolve",
+      "Avoids speaking about the person with contempt, since the interviewer is listening for how this candidate will one day describe colleagues here"
+    ]
+  },
+  {
+    "text": "Are you comfortable with night shifts or a rotational schedule?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Answers directly rather than hedging, since operational roles genuinely need a clear answer",
+      "If willing, confirms it plainly and mentions any experience of irregular hours that supports the claim",
+      "If there are real constraints, states them honestly rather than agreeing now and objecting after joining",
+      "Asks a practical clarifying question about how often rotation happens or how long a shift block lasts, which reads as considered rather than reluctant",
+      "Avoids enthusiastic agreement that is obviously not meant, since that surfaces within weeks of joining and damages trust"
+    ]
+  },
+  {
+    "text": "Describe a time you had to meet a deadline without complete information.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a specific situation and states what information was actually missing",
+      "Explains how they decided what to assume, rather than freezing or guessing silently",
+      "Mentions writing down or communicating those assumptions so that others could correct them",
+      "Describes delivering something usable rather than nothing, while flagging clearly which parts were provisional",
+      "States what happened once the missing information arrived and whether the assumption turned out to hold"
+    ]
+  },
+  {
+    "text": "Tell me about a time you had to say no or push back on a request.",
+    "category": "general_hr",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Chooses a situation where refusing was justified, whether on capacity, quality, scope or ethical grounds",
+      "Shows the refusal was directed at the request rather than at the person making it",
+      "Describes offering an alternative, such as a later deadline or a reduced scope, rather than a flat refusal",
+      "States how it was received and what followed, including if it went badly",
+      "Shows judgement about when not to push back, since someone who refuses everything is as difficult to work with as someone who accepts everything"
+    ]
+  },
+  {
+    "text": "How would your classmates or teammates describe you?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives two or three specific traits rather than reeling off a list of adjectives",
+      "Supports at least one of them with an actual situation, so the description is evidenced rather than asserted",
+      "Includes something that is not purely flattering, which makes the whole answer more believable",
+      "Chooses traits relevant to working alongside other people, since that is what the question is really probing",
+      "Sounds like something people would genuinely say, rather than a self-assessment dressed up as somebody else's opinion"
+    ]
+  },
+  {
+    "text": "What kind of work environment brings out your best work?",
+    "category": "general_hr",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes conditions specifically, such as the degree of structure, amount of collaboration, pace or autonomy",
+      "Grounds it in a situation where they did their best work and explains what about the environment helped",
+      "Shows adaptability alongside the preference, since no environment ever matches perfectly",
+      "Aligns broadly with what this company plausibly offers, without pretending to have no preferences at all",
+      "Avoids describing an environment that is the obvious opposite of the role, such as wanting to be left alone in a client-facing job"
+    ]
+  },
+  {
+    "text": "Tell me about a time you helped someone else succeed.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a specific instance of helping a peer, junior or teammate",
+      "Explains what they actually did, such as teaching, reviewing work, taking something off their plate, or speaking up for them",
+      "Makes the other person the subject of the outcome rather than themselves",
+      "Mentions the cost to their own time or work, which is what makes the help meaningful rather than incidental",
+      "Avoids turning the story into evidence of their own superiority, which is the usual failure mode of this answer"
+    ]
+  },
+  {
+    "text": "If you received a better offer after joining us, what would you do?",
+    "category": "general_hr",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises the question is about integrity and retention rather than really being about money",
+      "Answers without either an implausible promise of lifelong loyalty or an admission that they would leave immediately",
+      "Distinguishes accepting a new offer from breaking a commitment already made, and treats that commitment as meaning something",
+      "Names what would actually keep them, such as the work, the growth or the team, which is more credible than claiming money is irrelevant",
+      "Stays honest, since an obviously rehearsed answer here damages trust more than a measured truthful one"
+    ]
+  },
+  {
+    "text": "How do you deal with repetitive or monotonous work?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Accepts that most roles contain routine work, rather than implying it is beneath them",
+      "Describes a concrete strategy such as batching similar tasks, automating part of it, or setting a consistent process",
+      "Gives an instance where they did repetitive work and explains what they did to stay accurate through it",
+      "Mentions accuracy specifically, since the real risk of monotony is errors creeping in rather than boredom itself",
+      "Balances the answer by naming what they would want alongside it, which is honest without sounding entitled"
+    ]
+  },
+  {
+    "text": "Tell me about a time you had to convince someone of your idea.",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes a specific idea and identifies who needed convincing and why they were resistant",
+      "Explains the case made, such as data, a prototype or a small trial, rather than persistence alone",
+      "Shows they understood the other person's actual objection rather than talking past it",
+      "States the outcome honestly, including if the idea was only partly adopted or adopted in modified form",
+      "Shows they would have accepted a no, since the question tests persuasion rather than stubbornness"
+    ]
+  },
+  {
+    "text": "What matters most to you right now: money, learning, or work-life balance?",
+    "category": "general_hr",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Actually answers rather than deflecting by saying all three matter equally",
+      "Gives a genuine ranking with a reason attached to their current career stage rather than an abstract principle",
+      "Is honest that money matters, since candidates who claim it does not are rarely believed",
+      "Connects the stated priority to what this role and company actually offer",
+      "Acknowledges the ranking may shift later in their career, which reads as self-aware rather than fixed"
+    ]
+  }
+]

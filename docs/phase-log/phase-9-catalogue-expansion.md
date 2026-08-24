@@ -1,9 +1,9 @@
 # Phase 9 — Catalogue expansion
 
-Status: **groundwork done and four core pools authored to target.**
-`os`, `dbms`, `cn` and `oops` are at **40 questions each**, up from 15.
-`general_hr` (15) and `aptitude` (8) are still thin, and no new companies have
-been added yet.
+Status: **groundwork done and five pools authored to target.**
+`os`, `dbms`, `cn`, `oops` and `general_hr` are at **40 questions each**, up
+from 15. Only `aptitude` (8) is still thin, and it is blocked on a design
+decision rather than on effort. No new companies have been added yet.
 
 The insight that shapes the phase: **company breadth multiplies against pool
 depth.** The pools were 15 questions each in `os`, `dbms`, `cn`, `oops`,
@@ -241,29 +241,61 @@ which are different questions.
 ## Still to do in this phase
 
 1. ~~Take `os`, `dbms`, `cn` and `oops` from 15 to 40~~ — **done**
-2. `general_hr` 15 → 40, and `aptitude` 8 → 40. Aptitude is blocked on a
-   decision, not on effort: see below.
-3. Add companies from the user's placement-cell material, batch by batch
-4. Company logos as each is added — one line in `components/companyLogos.ts`
-5. Surface "more like this" using `patterns` once tagged questions exist
+2. ~~`general_hr` 15 → 40~~ — **done**
+3. `aptitude` 8 → 40 — deferred until Phase 10 lands, see below
+4. Add companies from the user's placement-cell material, batch by batch
+5. Company logos as each is added — one line in `components/companyLogos.ts`
+6. Surface "more like this" using `patterns` once tagged questions exist
 
-### The MCQ decision, still open
+### HR marking schemes work differently
 
-The four PDFs carry roughly 150 MCQs with answer keys, currently unused. Two
-routes, and this is a schema question rather than an authoring one:
+Worth recording, because it is not obvious: an HR question has no correct
+answer, so its `expectedAnswerPoints` cannot describe content. They describe the
+**shape of a good answer** instead — whether it uses a specific example rather
+than a general claim, whether it takes ownership rather than assigning blame,
+whether it stays credible rather than choosing a weakness that is secretly a
+strength. This follows the pattern already set by the original 15 and keeps the
+LLM grading something checkable rather than judging character.
 
-- **Reword each into a written "explain your reasoning" question.** No schema
-  change. Arguably better preparation, since a student who can only recognise the
-  right option among four has not demonstrated they could produce it. Costs a
-  rewrite per question.
-- **Add a real MCQ question type.** A new `questionType` value, storage for the
-  options, a separate grading path that does not involve the LLM at all, and
-  frontend rendering. This touches Phase 3's schema and so must be agreed before
-  it is built, not during.
+## The MCQ decision — resolved, and promoted to Phase 10
 
-The same decision gates aptitude, where the existing questions are phrased as
-*"…explain your approach"* precisely so they can be graded as written answers
-against a marking scheme.
+The four PDFs carry roughly 150 MCQs with answer keys. The original framing was
+whether to reword them as written questions or add an MCQ question type. The
+user reframed it correctly, and the reframing is the important part:
+
+> **An interview is a conversation; an assessment is a test.** No interviewer
+> reads four options aloud. MCQs belong to the *online screening round* that
+> precedes interviews — the TCS NQT, the Infosys and Wipro online tests — so
+> MCQ is not a question type that floats anywhere in the app. It is the format
+> of a particular kind of round.
+
+That changes the design. The consequences:
+
+- **Format is a property of the round, not of `roundType`.** There are already 12
+  `technical` rounds, and a technical round may be a written test at one company
+  and a conversation at another. So format needs its own field, `roundMode`, with
+  values `interview` and `assessment`.
+- **`roundMode` is per-company data and must come from the user's placement
+  material**, not be inferred. Where the material is silent it defaults to
+  `interview`. Same integrity line as the rest of the catalogue: a missing
+  assessment round is better than an invented one.
+- **Grading happens on submission of the whole test**, not per question, which
+  needs a session concept that does not exist today — `Submission` is one row per
+  question, graded immediately.
+- **The review must show worked solutions, not just the correct letter.** For
+  aptitude especially, *how* you reach twenty seconds is the entire value. That
+  makes each MCQ's explanation comparable labour to a five-point marking scheme.
+
+Settled with the user: **timed** with auto-submit, **provision for negative
+marking** (per-company, from their material), and **answers changeable** before
+submission, which means the test UI needs question navigation rather than a
+single scrolling list.
+
+This is large enough to be its own phase — new enum, new table, new ingest
+script, a third grading path and a test-taking UI — so it becomes **Phase 10**
+and deployment moves to Phase 11. Aptitude authoring waits for it, for exactly
+the reason the aptitude category split was done first: authoring 32 questions in
+one format and then migrating them is the mistake this project keeps avoiding.
 
 ---
 
