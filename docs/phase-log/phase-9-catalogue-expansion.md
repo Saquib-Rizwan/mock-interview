@@ -1,13 +1,22 @@
 # Phase 9 — Catalogue expansion
 
-Status: **groundwork done — schema, migrations and the LeetCode importer.**
-No questions authored yet; that waits on source material.
+Status: **groundwork done and four core pools authored to target.**
+`os`, `dbms`, `cn` and `oops` are at **40 questions each**, up from 15.
+`general_hr` (15) and `aptitude` (8) are still thin, and no new companies have
+been added yet.
 
 The insight that shapes the phase: **company breadth multiplies against pool
 depth.** The pools were 15 questions each in `os`, `dbms`, `cn`, `oops`,
 `general_hr`, and 8 in `other`. Ten companies and 13 roles already drew from
 those same 15, so adding companies alone would have shown every student the same
 questions. Companies and questions grow together or not at all.
+
+Worth recording precisely because it was nearly missed: **ingestion alone changes
+nothing a student sees.** `ingest-questions` only fills the shared bank;
+`seed-catalog` is what walks each round and draws from that bank, and its rolling
+per-pool cursor is the mechanism that stops two companies showing the same
+questions. Deepening a pool is only half the operation — the catalogue has to be
+re-seeded afterwards or the new questions sit unused.
 
 ---
 
@@ -148,6 +157,53 @@ for the unsupported type `list<String>`.
 Drafts land in `data/questions/drafts/`, which is gitignored because reference
 solutions are the answer key.
 
+## 4. Authoring the core pools, 15 → 40
+
+Source material was four sets of subject notes the user supplied as PDFs — OS,
+DBMS, CN and OOPS — complete with worked explanations, MCQs and answer keys.
+Having the answers mattered: marking points are derived from a source of truth
+rather than invented, which is the difference between a defensible scheme and a
+plausible-sounding one.
+
+Written in two batches per subject, 10 then 15:
+
+| File | Adds |
+|---|---|
+| `os-batch-2.json`, `os-batch-3.json` | deadlock (conditions, strategies, Banker's), synchronisation (critical-section requirements, Peterson, hardware primitives, monitors, producer-consumer, dining philosophers, readers-writers), memory (MMU/TLB, paging, segmentation), disk and file allocation, schedulers, IPC |
+| `dbms-batch-2.json`, `dbms-batch-3.json` | CAP, tier architecture, ER modelling, normalisation 1NF–3NF, lossless join vs dependency preservation, conflict serializability, schedule recoverability, timestamp and optimistic concurrency, recovery, views, subqueries, indexes, query optimisation, data protection |
+| `cn-batch-2.json`, `cn-batch-3.json` | TCP handshake and TCP vs UDP (both were genuine holes), routing protocols, CIDR, DNS, HTTP, mail protocols, topologies, framing, Hamming, access and channelization protocols, Ethernet frame, headers, FLSM vs VLSM |
+| `oops-batch-2.json`, `oops-batch-3.json` | virtual destructors, why constructors cannot be virtual, object slicing, friend classes, static members, inheritance modes, operator overloading, garbage collection, overriding rules, casting, composition vs inheritance, aggregation vs composition |
+
+**Nothing is copied.** Facts come from the notes; every question and every marking
+point is written fresh. This repository is public and the notes are paid course
+material carrying a watermark, so the same rule already applied to LeetCode
+statements applies here.
+
+### Two errors in the source material
+
+Both were contradicted rather than reproduced, and both were reported to the user:
+
+- The DBMS notes state on one page that UPI wallet payments favour **consistency
+  and availability**, while their own MCQ answer key for the same scenario says
+  **consistency and partition tolerance**. The answer key is right — during a
+  partition you cannot have both C and A, which is the entire content of the
+  theorem.
+- The CN notes describe a **"0-persistent CSMA"** as priority-based with a
+  predefined transmission order. The standard third mode is **non-persistent**
+  CSMA: if the channel is busy, wait a random interval and sense again. The
+  standard definition was used.
+
+### Duplicate control
+
+Two passes ran before anything was accepted: exact-text matching against every
+existing question, and a Jaccard token-overlap scan against all prior questions
+in the same category. The scan caught two genuine collisions in batch 3 — a
+sharding question that duplicated an existing one almost entirely, and a
+method-overriding question that made three overlapping questions in that area.
+Both were replaced rather than trimmed. Highest remaining similarity is 0.40,
+between *what an interface is* and *when to choose one over an abstract class*,
+which are different questions.
+
 ## What I verified
 
 - Both migrations applied; category counts confirmed by querying the database
@@ -160,9 +216,16 @@ solutions are the answer key.
 
 ## What I have **not** verified
 
-- **The app has not been opened since the migration.** Aptitude rounds now pick
-  from a category that did not exist an hour ago; nothing has confirmed the
-  rounds still populate in the browser.
+- **Batch 3 has not been ingested.** The 60 questions in the `*-batch-3.json`
+  files are validated as JSON, checked for duplicates and typechecked against the
+  schema, but they have not yet been loaded into a database or seen in the
+  browser. Batch 2 has, and the user confirmed it working.
+- **No marking scheme has been graded against a real student answer.** The
+  schemes are written to be sharp and non-overlapping, but whether they are
+  actually fair — whether two points penalise the same gap twice — is only
+  knowable by answering a question and reading the per-point verdicts. This is
+  the single most important thing still unchecked, because it sets the standard
+  for `general_hr` and `aptitude`.
 - **`prisma generate` did not fully complete** — it hit `EPERM` renaming
   `query_engine-windows.dll.node` because the dev server holds it. The
   TypeScript types were written (both new fields are present and typecheck
@@ -177,10 +240,30 @@ solutions are the answer key.
 
 ## Still to do in this phase
 
-1. Author questions to take each core pool from 15 to roughly 40
-2. Add companies from the user's placement-cell material, batch by batch
-3. Company logos as each is added — one line in `components/companyLogos.ts`
-4. Surface "more like this" using `patterns` once tagged questions exist
+1. ~~Take `os`, `dbms`, `cn` and `oops` from 15 to 40~~ — **done**
+2. `general_hr` 15 → 40, and `aptitude` 8 → 40. Aptitude is blocked on a
+   decision, not on effort: see below.
+3. Add companies from the user's placement-cell material, batch by batch
+4. Company logos as each is added — one line in `components/companyLogos.ts`
+5. Surface "more like this" using `patterns` once tagged questions exist
+
+### The MCQ decision, still open
+
+The four PDFs carry roughly 150 MCQs with answer keys, currently unused. Two
+routes, and this is a schema question rather than an authoring one:
+
+- **Reword each into a written "explain your reasoning" question.** No schema
+  change. Arguably better preparation, since a student who can only recognise the
+  right option among four has not demonstrated they could produce it. Costs a
+  rewrite per question.
+- **Add a real MCQ question type.** A new `questionType` value, storage for the
+  options, a separate grading path that does not involve the LLM at all, and
+  frontend rendering. This touches Phase 3's schema and so must be agreed before
+  it is built, not during.
+
+The same decision gates aptitude, where the existing questions are phrased as
+*"…explain your approach"* precisely so they can be graded as written answers
+against a marking scheme.
 
 ---
 
@@ -211,3 +294,19 @@ It also solves the "similar questions" problem without any machine learning.
 LeetCode labels its own problems by pattern, so a sliding-window question
 arrives already tagged as one, and finding more like it is a database filter
 rather than a similarity score nobody can audit.
+
+On top of those foundations, four subjects went from fifteen questions each to
+forty. The questions themselves are the cheap part; what takes the time is the
+marking scheme, because every question needs five separate things an answer
+ought to contain, sharp enough to be checkable and distinct enough that a
+student who misses one idea is not penalised twice for it. That is what the
+LLM grades against, and it is the only thing standing between useful feedback
+and a confident-sounding guess.
+
+The source was the student's own subject notes, which mattered more than it
+sounds: because the notes carry worked answers, the marking points could be
+derived from something authoritative rather than invented. Two places where the
+notes were wrong were found in the process — one where a page contradicted its
+own answer key about the CAP theorem, and one where a protocol was given a
+non-standard name — and both were corrected rather than repeated, since a
+question bank that teaches an error is worse than one that is merely thin.

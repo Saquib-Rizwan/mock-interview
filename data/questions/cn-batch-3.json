@@ -1,0 +1,197 @@
+[
+  {
+    "text": "Compare PAN, LAN, CAN, MAN and WAN.",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "PAN covers a personal workspace of roughly one to a hundred metres using Bluetooth, IrDA or Zigbee, such as a phone paired with earbuds",
+      "LAN covers a building or floor, up to about two kilometres, over Ethernet or Wi-Fi, and is privately owned with very low error rates and easy maintenance",
+      "CAN spans a campus of roughly one to five kilometres, linking multiple buildings with Ethernet and fibre, and is still privately owned",
+      "MAN spans a city, roughly five to fifty kilometres, using technologies such as Metro Ethernet or MPLS, and may be publicly or privately owned",
+      "WAN reaches beyond fifty kilometres up to global scale over leased lines, MPLS, VPN or satellite; states the trend that as reach grows, transmission speed falls while cost, error rate and maintenance difficulty all rise"
+    ]
+  },
+  {
+    "text": "Explain unicast, broadcast, multicast and anycast, and give a real use of each.",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Unicast sends from one source to exactly one destination, and is by far the most common mode, covering ordinary web browsing and file transfer",
+      "Broadcast sends from one source to every node on the local network; ARP and DHCP depend on it, and routers deliberately do not forward broadcasts beyond the LAN",
+      "Multicast sends to a selected subset of nodes that have joined a group, which is efficient for delivering one stream to many receivers at once, as in IPTV",
+      "Anycast sends to any one of a set of nodes sharing the same address, normally whichever is nearest by routing metric; CDNs and public DNS resolvers use it for latency and failover",
+      "Explains the efficiency argument for multicast: one copy leaves the source and the network duplicates it only where paths diverge, whereas unicasting to n receivers means sending n separate copies"
+    ]
+  },
+  {
+    "text": "What is framing, and why are byte stuffing and bit stuffing needed?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Framing groups the raw bit stream arriving from the physical layer into discrete frames, so the receiver knows where one unit of data ends and the next begins",
+      "A frame carries a flag delimiting its start and end, a header with source and destination MAC addresses, the payload, and a trailer holding error detection bits",
+      "Fixed-size framing needs no delimiter because the length alone defines the boundary; variable-size framing needs either a length field in the header or an explicit end delimiter",
+      "Byte stuffing is the character-oriented solution: the sender inserts an escape byte before any payload byte that happens to match the flag pattern, and the receiver strips it out again",
+      "Bit stuffing is the bit-oriented equivalent: after five consecutive 1 bits the sender inserts a 0, so the flag pattern can never occur inside the payload, and the receiver removes the stuffed bit on arrival"
+    ]
+  },
+  {
+    "text": "How does Hamming code correct an error, and how does forward error correction differ from backward error correction?",
+    "category": "cn",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Hamming code is a forward error correction scheme: it adds enough redundancy that the receiver can locate and repair a single-bit error without requesting a retransmission",
+      "Parity bits are placed at positions that are powers of two, namely 1, 2, 4 and 8, and each one checks a fixed set of positions determined by the binary representation of the index",
+      "The sender computes each parity bit over its own group, conventionally using even parity, then transmits the data and parity bits together as one codeword",
+      "The receiver recomputes every parity bit; the binary number formed by which parity checks failed is exactly the position of the corrupted bit, so flipping that bit corrects the error",
+      "Contrasts the two approaches: backward error correction only detects the error and asks for retransmission, while forward correction spends bandwidth on redundancy instead, which is essential where retransmission is impossible or would arrive too late, as on deep-space or real-time links"
+    ]
+  },
+  {
+    "text": "Explain the controlled access protocols: reservation, polling and token passing.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Controlled access schemes prevent collisions by regulating in advance who may transmit, rather than detecting or avoiding collisions after they have already begun",
+      "Reservation: stations claim upcoming slots by marking a reservation frame containing one mini-slot per station, and only those that reserved may then transmit data",
+      "Polling: a central primary station asks each secondary in turn whether it has data to send, and only the polled station may respond, so a collision cannot occur",
+      "Token passing: a token circulates around a logical ring and only the station holding it may transmit, giving orderly collision-free access with a bounded worst-case waiting time",
+      "Names their weaknesses: polling wastes capacity asking stations that have nothing to send and fails entirely if the primary dies, while token passing must be able to detect and regenerate a lost token and suffers if the station holding it fails"
+    ]
+  },
+  {
+    "text": "Compare FDMA, TDMA and CDMA.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Channelization protocols divide a shared medium so several users can transmit without interfering, rather than contending for the whole channel",
+      "FDMA gives each user a separate frequency band for the entire time, so all users transmit simultaneously on different frequencies; it is simple but a band sits unused whenever its owner is idle",
+      "TDMA gives every user the full bandwidth but only during an assigned time slot, so users transmit one after another, which is more bandwidth-efficient than FDMA in digital systems",
+      "CDMA lets every user transmit across the whole band at the same time, separated by orthogonal spreading codes, so a receiver recovers one signal by correlating against its code",
+      "Maps them to real systems and states the trade-off: FDMA in analogue radio, TDMA in GSM and CDMA in 3G, with CDMA giving the best utilisation and inherent resistance to eavesdropping at the cost of demanding tight power control"
+    ]
+  },
+  {
+    "text": "Describe the Ethernet frame format and explain why a minimum frame size exists.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A seven-byte preamble provides bit synchronisation, followed by a one-byte start frame delimiter marking where the frame proper begins",
+      "Destination and source MAC addresses of six bytes each; the destination may be unicast, multicast or broadcast, but the source is always unicast",
+      "A two-byte length or type field, then a payload of 46 to 1500 bytes carrying the IP header and user data",
+      "Padding is added when necessary so the frame excluding the preamble reaches the 64-byte minimum, and the reason that minimum exists is that a station must still be transmitting when a collision signal gets back to it, otherwise the collision would go undetected",
+      "A four-byte CRC trailer computed over the addresses, length, data and padding, used by the receiver to detect corruption; a frame failing CRC is discarded silently rather than corrected, leaving recovery to the upper layers"
+    ]
+  },
+  {
+    "text": "What does a bridge do, and how does a switch differ from it?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A bridge operates at the data link layer and connects two or more LAN segments, forwarding frames based on MAC addresses rather than blindly repeating signals",
+      "It learns which addresses live on which side by observing the source address of frames passing through it, and builds a MAC address table from that observation",
+      "Because it forwards a frame only when the destination is on the other side, it filters local traffic and splits the collision domain, which a hub or repeater cannot do",
+      "A static bridge has its table configured by an administrator, while a dynamic or transparent bridge builds and updates the table automatically and adapts when devices move",
+      "A switch is essentially a multiport bridge implemented in hardware for speed: each port is its own collision domain, links run full duplex, and dedicated paths exist between port pairs, which is why collisions effectively disappear on a switched LAN"
+    ]
+  },
+  {
+    "text": "What is the difference between a router and a gateway?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A router forwards packets between networks that use the same protocol suite, selecting the path from its routing table based on the destination IP address",
+      "A gateway connects networks that speak different protocols and performs the translation between them, so it is doing conversion rather than only forwarding",
+      "Because translation may require reaching into the payload, a gateway can operate across several OSI layers and is commonly associated with the application layer, whereas a router is a layer 3 device",
+      "A gateway sits at the boundary of a network, and in a home or small office the same physical box typically performs routing, NAT and firewall duties at once, which is why the terms are often used loosely",
+      "Gives a concrete example that makes the distinction real, such as a VoIP gateway bridging an IP telephony network with the traditional circuit-switched telephone network"
+    ]
+  },
+  {
+    "text": "What is the difference between a firewall and an intrusion detection system?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A firewall enforces policy on traffic crossing a boundary, permitting or blocking it according to rules about IP addresses, ports and protocols",
+      "It sits inline at the network boundary so all traffic passes through it, which is what lets it actively stop what it disallows, in both the incoming and outgoing directions",
+      "An IDS monitors traffic or host activity to detect suspicious behaviour and raises an alert, but does not itself block anything",
+      "A network IDS watches traffic across a whole segment, while a host IDS watches activity, logs and file changes on one individual machine",
+      "Explains why both exist: a firewall enforces what you already know to forbid, whereas an IDS surfaces what got through or what originated inside the perimeter; an IPS is the inline variant that both detects and blocks"
+    ]
+  },
+  {
+    "text": "Explain the important fields of the IPv4 header.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Version and header length occupy the first byte, followed by type of service for priority handling, and total length giving header plus data up to 65,535 bytes",
+      "Identification, flags and fragment offset together handle fragmentation: identification groups the fragments of one datagram, DF forbids fragmenting, MF indicates more fragments follow, and the offset gives the fragment position in eight-byte units",
+      "Time to live is decremented by every router and the packet is discarded when it reaches zero, which is what stops a packet circulating forever in a routing loop",
+      "Protocol identifies which transport protocol the payload belongs to, such as TCP, UDP or ICMP, and the header checksum covers only the header, so it must be recomputed at every hop because TTL changes",
+      "Source and destination addresses of 32 bits each, plus a variable options field, giving a header of 20 bytes minimum and 60 bytes maximum"
+    ]
+  },
+  {
+    "text": "Explain the TCP header and what each control flag is for.",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Source and destination ports identify the sending and receiving applications, and together with the two IP addresses form the four-tuple that uniquely identifies a connection",
+      "The sequence number gives the byte offset of the first byte in this segment, and the acknowledgement number gives the next byte the receiver expects, which together make ordering and retransmission possible",
+      "Header length is measured in 32-bit words and yields a header of 20 to 60 bytes, since options such as maximum segment size are variable in length",
+      "The control flags: SYN initiates a connection, ACK marks the acknowledgement field valid, FIN begins a graceful close, RST aborts the connection immediately, PSH requests immediate delivery to the application, and URG marks the urgent pointer valid",
+      "Window size advertises how much data the receiver can still buffer and is the mechanism of flow control, while the checksum is mandatory in TCP, unlike the optional UDP checksum in IPv4"
+    ]
+  },
+  {
+    "text": "What is a socket address, and why is an IP address or a port number alone not enough?",
+    "category": "cn",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A socket address is an IP address paired with a port number, and it uniquely identifies one endpoint of a network connection",
+      "The IP address identifies which machine on the network the data is for, while the port number identifies which application or service on that machine should receive it",
+      "An IP address alone is insufficient because one machine runs many network applications at once, and the arriving data would have no way to reach the right one",
+      "A port number alone is insufficient because ports are not globally unique; the same port number is in use on millions of machines simultaneously",
+      "Gives a concrete example, such as port 80 on a host reaching a web server while port 21 on the same host reaches an FTP server, and notes that a TCP connection is actually identified by the full pair of socket addresses at both ends"
+    ]
+  },
+  {
+    "text": "Why does FTP use two separate connections?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "FTP is an out-of-band protocol: it uses two separate TCP connections, one carrying control information and one carrying the file data",
+      "The control connection on port 21 is opened at the start of the session and stays open throughout, carrying commands and the server replies to them",
+      "The data connection, conventionally port 20 in active mode, is opened for each individual transfer and closed when that transfer finishes, so it is non-persistent",
+      "Separating them means a command such as abort can be sent and acted upon while a transfer is still in progress, which would be impossible if commands shared the data stream",
+      "Notes that FTP is stateful, remembering the current directory and transfer mode across commands, and that it sends credentials in the clear, which is why FTPS or SFTP should be used instead"
+    ]
+  },
+  {
+    "text": "What is the difference between fixed length and variable length subnet masking?",
+    "category": "cn",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Subnetting borrows bits from the host portion to create smaller networks: the number of subnets is two to the power of the borrowed bits, and the hosts per subnet is two to the power of the remaining host bits, minus two",
+      "Fixed length subnet masking gives every subnet the same mask and therefore exactly the same size, regardless of how many hosts each one actually needs",
+      "That wastes addresses whenever requirements differ: a point-to-point link needing two addresses receives the same sized block as a department needing sixty",
+      "Variable length subnet masking allows a different mask per subnet, so each block is sized to its own requirement, which is what CIDR makes possible",
+      "Describes the method: allocate the largest requirement first and work downwards, keeping each block aligned on an address boundary divisible by its own size, so that no two blocks overlap"
+    ]
+  }
+]

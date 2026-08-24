@@ -1,0 +1,197 @@
+[
+  {
+    "text": "What is the scope resolution operator in C++, and what is it used for?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "The :: operator accesses a name that lies outside the current scope, or that belongs to a particular class or namespace",
+      "It reaches a global variable when a local variable of the same name is shadowing it, written as ::x",
+      "It defines a member function outside the class body, as in void Student::show(), which keeps the class declaration readable",
+      "It qualifies a namespace member such as A::value, and accesses static members through the class itself, as in ClassName::count",
+      "It also resolves ambiguity under multiple inheritance, allowing obj.Base1::show() to state which inherited version is meant; Java has no equivalent operator and relies on the dot with package qualification"
+    ]
+  },
+  {
+    "text": "Does Java support multiple inheritance? Explain the reasoning behind the answer.",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Java does not allow a class to extend more than one class, but it does allow a class to implement any number of interfaces",
+      "The reason for the restriction is ambiguity: if two parent classes each supplied a different implementation of the same method, the compiler would have no basis for deciding which one the child inherits",
+      "That ambiguity is the diamond problem, and C++ takes the opposite route, permitting multiple inheritance and requiring explicit qualification or virtual inheritance to resolve it",
+      "Interfaces avoided the problem because classically they carried no implementation at all, so the implementing class was forced to provide exactly one version of each method itself",
+      "Java 8 default methods reintroduced the possibility of a conflict, and Java handles it by making the clash a compile-time error that the class must resolve explicitly using InterfaceName.super.method()"
+    ]
+  },
+  {
+    "text": "What is an interface in Java, and what can it contain?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "An interface is a contract specifying what a class must be able to do, without prescribing how it does it",
+      "Its methods are implicitly public and abstract, and its fields are implicitly public static final, which is to say constants",
+      "It cannot have constructors or instance state, which is why an interface can never be instantiated directly",
+      "Since Java 8 an interface may contain default methods with a body, which allows a new method to be added without breaking every existing implementer, and static methods belonging to the interface itself",
+      "Since Java 9 it may also contain private methods to share code between default methods; the enduring differences from an abstract class are that interfaces support multiple inheritance and hold no instance state"
+    ]
+  },
+  {
+    "text": "Can an abstract class have a constructor? Can you declare a pointer to an abstract class in C++?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Yes, an abstract class can have a constructor, and usually should, because it has instance fields that need initialising as part of every derived object",
+      "That constructor is never used to create an abstract object directly: it runs as part of constructing a derived object, invoked by the derived class constructor",
+      "Neither language allows an abstract class to be instantiated: C++ refuses because at least one pure virtual function has no implementation, and Java rejects any use of new on an abstract type",
+      "You can absolutely declare a pointer or reference to an abstract class in C++, or a variable of an abstract type in Java, and that is precisely how polymorphism is used, holding a derived object through a base handle",
+      "Identifies the distinction being tested: declaring a handle of an abstract type is legal and routine, whereas creating an object of that type is not, and an abstract class should also declare a virtual destructor since it exists to be held polymorphically"
+    ]
+  },
+  {
+    "text": "What are the rules for method overriding in Java?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Overriding means a subclass supplies its own implementation of a method already declared in its superclass",
+      "The method name and parameter list must match exactly; a different parameter list produces an overload in the subclass rather than an override",
+      "The return type must be identical or a covariant subtype, so an override is permitted to return a more specific type than the parent declared",
+      "The access modifier may not be more restrictive than the parent's, since anything callable through the parent type must remain callable, and a checked exception thrown may not be broader than the parent declared",
+      "Static, final and private methods cannot be overridden; overriding is resolved at run time from the actual object type, which is what makes it run-time or dynamic polymorphism"
+    ]
+  },
+  {
+    "text": "What does the final keyword do in Java, and how does it differ from finally and finalize?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A final variable can be assigned only once and never reassigned, which is how constants are declared, usually together with static",
+      "A final method cannot be overridden by any subclass, which locks in behaviour the class author does not want changed",
+      "A final class cannot be extended at all, which is why String is declared final and cannot be subclassed",
+      "Applied to a reference, final makes the reference immutable rather than the object: a final List can still have elements added to it, only the variable cannot be pointed at something else",
+      "Distinguishes the similarly named terms: finally is a block that always runs after a try or catch, and finalize is the deprecated cleanup hook that ran before garbage collection"
+    ]
+  },
+  {
+    "text": "Can a static method be overridden in Java? Explain what actually happens.",
+    "category": "oops",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "No: a static method belongs to the class rather than to any instance, so there is no object whose actual type could drive dynamic dispatch",
+      "Declaring a static method in a subclass with the same signature is method hiding rather than overriding, and the two are resolved by completely different rules",
+      "Which version runs is decided at compile time from the reference type, so a Parent-typed reference pointing at a Child object will call the Parent version",
+      "Instance methods behave the opposite way: in exactly the same situation the Child version runs, because dispatch uses the actual object type rather than the reference type",
+      "Because the two cases look identical in source but behave differently, calling a static method through an instance reference is misleading and should always be written as ClassName.method() instead"
+    ]
+  },
+  {
+    "text": "What does the super keyword do in Java?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "super refers to the immediate parent class from inside a subclass",
+      "super.method() calls the parent version of a method the subclass has overridden, which is how an override extends the parent behaviour rather than replacing it entirely",
+      "super.field accesses a parent field that a subclass field of the same name is hiding",
+      "super(...) calls a parent constructor, and where it is used it must be the very first statement in the subclass constructor",
+      "If neither an explicit super nor a this constructor call is written, the compiler inserts a no-argument super() automatically, which is why a parent lacking a no-argument constructor forces the child to call one explicitly"
+    ]
+  },
+  {
+    "text": "Explain Java's four access modifiers.",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "private: visible only inside the declaring class, and not even to its subclasses",
+      "default, also called package-private, which applies when no modifier is written at all: visible to any class in the same package but nowhere outside it",
+      "protected: visible throughout the package and additionally to subclasses in other packages",
+      "public: visible from everywhere",
+      "Notes the contrast with C++, which has only private, protected and public and no package concept, and gives the design guidance that fields should start private and visibility should be widened only when genuinely needed"
+    ]
+  },
+  {
+    "text": "What is upcasting and downcasting, and why is one safe and the other not?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Upcasting converts a derived reference to a base reference and is always safe, so it happens implicitly with no cast written",
+      "It is what makes polymorphism usable in practice: a collection of Animal references can hold Dogs and Cats, and a virtual call still dispatches to the actual type",
+      "Upcasting narrows what is visible rather than what exists: only members declared in the base type can be called through the base reference, even though the object remains a complete derived object",
+      "Downcasting converts a base reference back to a derived one and is unsafe, because the object may not really be of that type, which is why it must be written explicitly",
+      "Guarding it: Java throws ClassCastException at run time so instanceof should be checked first, while C++ dynamic_cast returns nullptr for pointers or throws for references; a downcast that keeps appearing is usually a sign the design should have used a virtual method instead"
+    ]
+  },
+  {
+    "text": "What is constructor overloading, and what happens if a class defines no constructor at all?",
+    "category": "oops",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Constructor overloading provides several constructors differing in their parameter lists, so an object can be created with different amounts of information supplied",
+      "If a class declares no constructor whatsoever, the compiler supplies a default no-argument constructor that performs default initialisation",
+      "That implicit constructor disappears the moment any constructor is declared, so writing only a parameterised constructor makes the no-argument form a compile error",
+      "Constructors can delegate to one another to avoid duplicated initialisation code, using this(...) in Java or a delegating constructor in C++",
+      "Notes what a constructor cannot be: it has no return type, it is not inherited, and it cannot be virtual, although it can be overloaded"
+    ]
+  },
+  {
+    "text": "When should you prefer composition over inheritance?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Inheritance expresses an is-a relationship, where the derived type genuinely is a kind of the base type; composition expresses has-a, where one object holds another as a member",
+      "Inheritance is the tighter coupling, because the subclass depends on its parent internals, so a change to the parent can break subclasses that were never touched, which is the fragile base class problem",
+      "Composition is more flexible, since the contained object can be swapped at run time and only its public interface is depended upon",
+      "Applies the substitution test: use inheritance only when a derived object can be used anywhere the base is expected without surprising the caller, so a Car should hold an Engine rather than extend one",
+      "States the standard design guidance to prefer composition by default, reserving inheritance for genuinely substitutable is-a relationships"
+    ]
+  },
+  {
+    "text": "What is the difference between aggregation and composition?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Both are has-a relationships, and what separates them is ownership and lifetime",
+      "Aggregation is a weak has-a: the contained object can exist independently of the container, and destroying the container does not destroy it",
+      "Composition is a strong has-a: the lifetime of the contained object is bound to the container, so destroying the container destroys it as well",
+      "Gives examples that make the distinction concrete, such as a department aggregating professors who continue to exist if the department closes, versus a house composed of rooms that cease to exist with it",
+      "Notes how the difference appears in code: aggregation typically stores a reference or pointer to an object created elsewhere, while composition typically constructs and owns the member directly"
+    ]
+  },
+  {
+    "text": "Why is Java not considered a purely object-oriented language?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A purely object-oriented language would treat absolutely everything as an object, and Java does not",
+      "Primitive types such as int, char, boolean and double are not objects: they have no methods and do not inherit from Object",
+      "Static members belong to the class rather than to any object and can be used without ever creating an instance, which departs from the pure model as well",
+      "Wrapper classes and autoboxing exist precisely to bridge the gap, allowing a primitive to be used where an object is required, as in collections",
+      "The reason is pragmatic rather than accidental: primitives avoid the memory and indirection overhead of object headers, which matters a great deal in large arrays and arithmetic-heavy code"
+    ]
+  },
+  {
+    "text": "Why use getters and setters rather than making fields public?",
+    "category": "oops",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Encapsulation bundles data with the methods that operate on it and restricts direct access to internal state, normally by declaring fields private",
+      "A setter can validate before assigning, so an invalid value such as a negative age can be rejected outright, which a public field can never do",
+      "Accessors also preserve invariants across related fields, so an object cannot be left in a combination of states that should be impossible",
+      "They give logical independence: the internal representation can change while the accessor signature stays the same, so no calling code needs modifying",
+      "Notes the honest caveat that a getter and setter pair that merely exposes a field with no validation adds nothing over a public field, and that immutability, where state is set once in the constructor and never changed afterwards, is often a stronger guarantee than encapsulation through setters"
+    ]
+  }
+]

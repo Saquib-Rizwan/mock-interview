@@ -1,0 +1,197 @@
+[
+  {
+    "text": "What are the main types of operating system, and what is each one optimised for?",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Batch processing: jobs with similar requirements are grouped and executed without user interaction, which suits long non-interactive work such as payroll runs",
+      "Multiprogramming: several programs are kept in memory at once and the CPU switches to another whenever the current one blocks, so the CPU is not left idle during I/O",
+      "Multitasking or time-sharing: extends multiprogramming with time slices so that a single user can run several programs that appear to progress simultaneously",
+      "Real-time: guarantees a response within a strict deadline, used where being late is the same as being wrong, such as airbag controllers, satellites and industrial robots",
+      "Distributed: manages a group of independent machines and presents them to the user as a single system, coordinating processing and data sharing across them"
+    ]
+  },
+  {
+    "text": "What are the different categories of system call? Give an example of each.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Process control: creating, executing and terminating processes, plus waiting and allocating memory, for example fork, exec, wait and exit",
+      "File management: creating, deleting, opening, closing, reading, writing and repositioning files, and getting or setting file attributes",
+      "Device management: requesting and releasing a device, reading and writing it, and attaching or detaching it, for example ioctl",
+      "Information maintenance: getting and setting system data such as time and date, and querying process, file or device attributes, for example getpid and uname",
+      "Communication: creating and deleting connections, sending and receiving messages and transferring status information, for example pipe, shmget and socket"
+    ]
+  },
+  {
+    "text": "Explain the many-to-one, one-to-one and many-to-many multithreading models.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Many-to-one maps many user threads onto a single kernel thread: switching is fast because the kernel is not involved, but one blocking system call blocks every thread in the process",
+      "That model also cannot use more than one core, since the kernel only ever sees one schedulable entity regardless of how many user threads exist",
+      "One-to-one gives each user thread its own kernel thread, so threads block independently and can genuinely run in parallel on different cores",
+      "The cost of one-to-one is a kernel thread per user thread, which is why systems place a limit on how many a process may create",
+      "Many-to-many multiplexes many user threads onto a smaller or equal number of kernel threads, letting the kernel create as many as demand requires; the two-level variant adds the option of binding one particular user thread permanently to a kernel thread"
+    ]
+  },
+  {
+    "text": "What is the difference between preemptive and non-preemptive scheduling? Classify the common algorithms.",
+    "category": "os",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Non-preemptive: once a process holds the CPU it keeps it until it terminates or voluntarily blocks, usually for I/O",
+      "Preemptive: the operating system can take the CPU away, typically when a time slice expires or a higher-priority or shorter job arrives",
+      "Non-preemptive is simpler with fewer context switches, but responsiveness is poor and one long job blocks everything queued behind it",
+      "Preemptive gives better response time and fairer distribution, at the cost of context-switch overhead and the need to protect shared data that may now be interrupted mid-update",
+      "Classifies correctly: FCFS and SJF are non-preemptive, while Shortest Remaining Time First, Round Robin and preemptive priority scheduling are preemptive"
+    ]
+  },
+  {
+    "text": "Four processes arrive as follows: P1 at time 0 with burst 8, P2 at time 1 with burst 4, P3 at time 2 with burst 2, P4 at time 3 with burst 1. Using First-Come First-Served scheduling, work out the completion, turnaround and waiting time for each process and the averages. Explain your reasoning.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the definitions used: turnaround time is completion time minus arrival time, and waiting time is turnaround time minus burst time",
+      "Builds the FCFS order correctly as P1 from 0 to 8, then P2 from 8 to 12, then P3 from 12 to 14, then P4 from 14 to 15",
+      "Completion times of 8, 12, 14 and 15 for P1 through P4 respectively",
+      "Turnaround times of 8, 11, 12 and 12, and waiting times of 0, 7, 10 and 11",
+      "Averages of 10.75 for turnaround time and 7 for waiting time, and identifies the convoy effect as the reason the three short jobs wait so long behind the single long one"
+    ]
+  },
+  {
+    "text": "What is the difference between multilevel queue scheduling and multilevel feedback queue scheduling?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Multilevel queue keeps several separate ready queues for different classes of process, such as system, interactive and batch, each with its own scheduling algorithm",
+      "A process is assigned to one queue permanently when it enters and cannot move between queues, which is what makes the scheme rigid",
+      "The consequence is that lower-priority queues can starve indefinitely whenever the higher queues stay busy",
+      "Multilevel feedback queue lets processes move between queues according to observed behaviour, demoting processes that consume whole time slices and promoting ones that block early for I/O",
+      "Aging promotes long-waiting processes upward, which is what prevents starvation; the price is complexity, since the number of queues, the quantum for each and the promotion and demotion rules all have to be tuned"
+    ]
+  },
+  {
+    "text": "Explain Peterson's solution to the critical section problem. What are its limitations?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "It is a purely software solution to the critical section problem for exactly two processes, using no special hardware instruction",
+      "It uses two shared variables: a flag array recording whether each process wants to enter, and a turn variable recording whose turn it is to give way",
+      "Each process sets its own flag to true, sets turn to the other process, then waits while the other process also wants to enter and it is that other process turn",
+      "It satisfies all three requirements: mutual exclusion, progress and bounded waiting",
+      "Its limitations: it works only for two processes, it assumes loads and stores are atomic, and it can be broken by compiler or CPU instruction reordering unless the variables are volatile or memory barriers are used; the Bakery algorithm generalises the idea to n processes"
+    ]
+  },
+  {
+    "text": "What hardware support does an operating system use for synchronisation, and what is the drawback common to all of it?",
+    "category": "os",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Disabling interrupts prevents any context switch while inside the critical section: simple and effective on a single CPU, but useless on a multicore machine and dangerous because it delays every other interrupt too",
+      "Test-and-set atomically writes true to a memory location and returns its previous value, so exactly one caller observes false and wins the lock",
+      "Compare-and-swap atomically compares a location with an expected value and writes a new value only if they match, which is the foundation of most lock-free data structures",
+      "What makes these safe is that each is a single atomic hardware operation, where a separate read followed by a write could be interleaved and would race",
+      "The shared drawback is busy waiting: a losing process spins and burns CPU, which is acceptable for very short critical sections but wasteful for long ones, and without scheduler support these primitives can still produce priority inversion or livelock"
+    ]
+  },
+  {
+    "text": "What is a monitor, and what problem do condition variables solve inside one?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A monitor is a high-level synchronisation construct that bundles shared data together with the procedures that operate on it, and guarantees only one process executes inside it at a time",
+      "Mutual exclusion is provided automatically by the compiler or runtime, rather than being something the programmer must remember to code correctly with explicit wait and signal calls",
+      "Condition variables address the second problem: a process already inside the monitor may need to wait for a state that only another process can bring about, and it cannot simply hold the monitor while waiting",
+      "Calling wait on a condition variable blocks the caller and releases the monitor, so another process can enter and make the condition true; signal then wakes a waiting process",
+      "Compared with raw semaphores this is much harder to get wrong, because a forgotten or misordered semaphore operation silently produces a deadlock or a race, whereas the monitor enforces the locking itself"
+    ]
+  },
+  {
+    "text": "Explain the dining philosophers problem and why the obvious solution fails.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Five philosophers alternate between thinking and eating; each needs both the fork to their left and the fork to their right, and only five forks exist",
+      "The obvious solution, where everyone picks up their left fork and then their right, deadlocks when all five pick up their left fork at the same moment",
+      "That state satisfies all four deadlock conditions, and makes circular wait particularly visible since each philosopher waits on the neighbour to one side",
+      "Standard fixes: allow at most four philosophers at the table simultaneously, require both forks to be acquired atomically under a mutex, or break the symmetry by having odd-numbered philosophers take the right fork first",
+      "Notes that a correct solution must also avoid starvation, since a philosopher whose two neighbours keep alternating could be permanently unable to eat even though the system as a whole is making progress"
+    ]
+  },
+  {
+    "text": "Explain the readers-writers problem and the trade-off between reader-priority and writer-priority solutions.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Many readers may access the shared data simultaneously without harm, but a writer needs exclusive access with no readers and no other writer present",
+      "The point of the problem is that a simple mutex on every access is correct but wasteful, because concurrent reads never conflict with one another",
+      "The standard solution keeps a readCount protected by its own mutex: the first reader to arrive acquires the write lock and the last reader to leave releases it",
+      "Under reader-priority any arriving reader may join an ongoing read, which means a steady stream of readers can starve a waiting writer indefinitely",
+      "Writer-priority blocks new readers as soon as a writer is waiting, which prevents that starvation at the cost of delaying readers; choosing between them is a policy decision about which side is worse to starve"
+    ]
+  },
+  {
+    "text": "What are the main mechanisms for inter-process communication, and when would you choose each?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Shared memory: two processes map the same region and read and write it directly, which is the fastest option but requires its own synchronisation to prevent races",
+      "Message passing: processes exchange structured messages through the kernel, which is slower but safer because nothing is shared, and it works across machines as well as within one",
+      "Pipes are unidirectional and normally used between related processes such as parent and child, while named pipes or FIFOs have a filesystem name so unrelated processes can use them",
+      "Sockets give full-duplex communication between processes on the same machine or across a network, using TCP where reliability matters or UDP where speed does",
+      "Signals carry a notification rather than data and arrive asynchronously, suiting shutdown and event alerts; message queues hold messages in order with optional priorities and survive independently of the sender"
+    ]
+  },
+  {
+    "text": "How does paging work, and what does it fix compared with contiguous allocation?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Physical memory is divided into fixed-size frames and each process address space into pages of exactly the same size, so any page may be placed in any free frame",
+      "This eliminates external fragmentation, because a process never needs a contiguous run of free memory and scattered free frames are all usable",
+      "A logical address is split into a page number and an offset: the page number indexes the page table to obtain a frame number, and the offset is carried through unchanged",
+      "The page table is per process and lives in memory, so a naive implementation costs two memory accesses per reference, which is exactly why a TLB is needed",
+      "Internal fragmentation remains and averages half a page per process, because the final page of a process is rarely filled completely"
+    ]
+  },
+  {
+    "text": "Compare paging and segmentation. What does segmented paging achieve?",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Paging divides memory into fixed-size blocks chosen by the hardware, while segmentation divides it into variable-size logical units the programmer recognises, such as code, stack, heap and data",
+      "A paging address is a page number plus offset resolved through a page table; a segmentation address is a segment number plus offset resolved through a segment table holding a base address and a limit",
+      "Paging suffers internal fragmentation but no external fragmentation; segmentation is the reverse, with no internal fragmentation but external fragmentation as differently sized segments are allocated and freed",
+      "Segmentation makes protection and sharing natural, because a segment is one meaningful unit that can be marked read-only or shared as a whole, whereas a page boundary corresponds to nothing in the program",
+      "Segmented paging divides each segment into pages, keeping the logical view of segmentation with the allocation behaviour of paging, at the cost of two lookups per address translation"
+    ]
+  },
+  {
+    "text": "Compare the file allocation methods used by file systems.",
+    "category": "os",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Contiguous allocation stores a file in consecutive blocks, so both sequential and direct access are fast and the directory entry needs only a start block and a length",
+      "Its problems are external fragmentation and growth: extending a file may require relocating the whole thing if the following blocks are already taken",
+      "Linked allocation makes the file a chain of blocks, each holding a pointer to the next, which removes external fragmentation and lets files grow freely",
+      "Linked allocation pays for this with slow direct access, since reaching block n means walking the chain from the start, with space lost to a pointer in every block, and fragility, because one corrupted pointer loses the rest of the file",
+      "Indexed allocation gives each file an index block listing the addresses of all its data blocks, giving fast direct access and easy growth, at the cost of a whole block per file even for tiny ones; large files need multi-level indexing, which is what UNIX inodes do with direct and single, double and triple indirect pointers"
+    ]
+  }
+]

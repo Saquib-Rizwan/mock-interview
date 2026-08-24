@@ -1,0 +1,197 @@
+[
+  {
+    "text": "What are the main types of database, and how would you choose between them?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Relational: data in tables with a fixed schema, linked by primary and foreign keys, with full ACID guarantees; the default for structured transactional work such as payments",
+      "Document: schema-flexible JSON or BSON documents, so different records may carry different fields without a migration, which suits catalogues and profiles that vary between entries",
+      "Key-value: a distributed hash table giving the fastest possible lookup by key, with no ability to query by value, which suits sessions and caches",
+      "Graph stores nodes and edges as first-class objects so relationship traversal is cheap, suiting social connections and fraud rings; time-series is optimised for timestamped appends and range scans, suiting sensors and market data",
+      "States the selection principle: choose by the shape of the data and the access pattern rather than by popularity, and notes that SQL is a query language rather than a storage model, so many non-relational stores now offer SQL-like querying"
+    ]
+  },
+  {
+    "text": "Explain the building blocks of the relational model, and the difference between a schema and an instance.",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A domain is the set of permitted values for a column, enforced by its data type together with any CHECK constraint",
+      "An attribute is a single column of a table, and all of its values must be drawn from one domain",
+      "A tuple is a single row describing exactly one real-world item, and must contain only atomic values in order to satisfy first normal form",
+      "A relation is the table as a whole: a set of tuples over the same set of attributes, giving the ladder domain, attribute, tuple, relation",
+      "The schema is the stable structure of table names, attributes, domains and constraints, while the instance is the actual set of rows present at a given moment; the schema is the blank worksheet and the instance is today filled-in copy"
+    ]
+  },
+  {
+    "text": "What is the difference between generalization, specialization and aggregation in an ER model?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Generalization works bottom-up: attributes common to several entity sets are factored out into a higher-level superclass, for example Student and Instructor being generalised into Person",
+      "Specialization works top-down: a superclass is divided into subclasses that add their own distinct attributes, for example Person specialising into Student with a roll number and Instructor with a department",
+      "Subclasses inherit the superclass attributes, so a query needing every person consults only the superclass while a programme-specific query uses the subclass alone",
+      "Specialization can be total, meaning every superclass entity must belong to some subclass, or partial; and disjoint, meaning an entity belongs to at most one subclass, or overlapping",
+      "Aggregation is a different idea: it treats a relationship together with its participating entities as a single higher-level unit so that the relationship itself can take part in another relationship, for example a Student-Project-Guide relationship that then needs its own submission status"
+    ]
+  },
+  {
+    "text": "Describe the states a transaction passes through during its lifetime.",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Active: the transaction is executing its statements and making changes, and remains in this state for most of its life",
+      "Partially committed: the final statement has executed but the changes are not yet permanent, because log records are still being written to stable storage",
+      "Committed: the changes are permanent and durable, and success is reported back to the user",
+      "Failed: an error, constraint violation or deadlock has made normal execution impossible; aborted follows, once the database has undone every change and restored the prior state",
+      "After aborting, the transaction is either restarted from the beginning or killed, and from either committed or aborted it reaches the terminated state"
+    ]
+  },
+  {
+    "text": "Explain recoverable, cascadeless and strict schedules, and why a non-recoverable schedule is dangerous.",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A schedule is recoverable if any transaction that has read data written by another commits only after that other transaction has committed, so nothing commits on the basis of data that is later rolled back",
+      "Cascading rollback is the next problem: when a transaction aborts, every transaction that read its uncommitted writes must abort too, and the aborts spread outward like dominoes",
+      "A cascadeless schedule allows a transaction to read only committed data, which eliminates cascading aborts entirely, though it still permits writing over a value another transaction has written but not committed",
+      "A strict schedule is the strongest of the three: no transaction may read or write a value written by another until that transaction has committed or aborted, giving neither dirty reads nor dirty writes",
+      "A non-recoverable schedule is one where a transaction reads uncommitted data and then commits before the transaction it read from; if that transaction later aborts there is no clean rollback path and the database is left holding bad committed data, which is why real systems obtain strictness through strict two-phase locking"
+    ]
+  },
+  {
+    "text": "Explain timestamp ordering and optimistic concurrency control. When is each appropriate?",
+    "category": "dbms",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Timestamp ordering is a lock-free protocol: every transaction is given a timestamp when it starts, and conflicting operations must take effect in timestamp order",
+      "Each data item carries the largest read and write timestamps it has seen, and any operation that would violate timestamp order is rejected, rolling that transaction back to restart with a new timestamp",
+      "Because the older transaction always wins, no cycle of waiting can ever form, which makes the scheme deadlock-free by construction, though it can cause repeated restarts",
+      "Optimistic concurrency control assumes conflicts are rare: transactions read and write freely in a private workspace, and a validation phase at commit time checks whether any conflict actually occurred, rolling back and retrying if so",
+      "Choosing between them: locking suits high-conflict workloads where retries would waste more than waiting does, while optimistic control suits read-heavy low-conflict workloads such as reporting, where lock acquisition would dominate the cost"
+    ]
+  },
+  {
+    "text": "What techniques does a database use to recover after a crash?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Write-ahead logging: every change is recorded in a log on stable storage before the change itself reaches the database, so the log always contains enough information to redo or undo the change",
+      "On restart, undo removes the effects of transactions that were still active at crash time, while redo reapplies transactions that had committed but whose modified pages had not yet been written to disk",
+      "Checkpointing periodically records a known consistent point in the log, so recovery only needs to work back to the last checkpoint rather than replaying the entire history",
+      "Shadow paging keeps the original copy of a page intact while changes are written elsewhere and switches over atomically only at commit, so a crash simply leaves the old consistent state in place",
+      "Backup and restore covers what the log cannot, namely media failure where the disk itself is lost, which is why off-site backups and periodic restore drills matter alongside the log"
+    ]
+  },
+  {
+    "text": "Explain aggregate functions and GROUP BY. What rules govern which columns may appear in the SELECT list?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Aggregate functions collapse many rows into a single summary value: COUNT, SUM, AVG, MAX and MIN",
+      "GROUP BY partitions the rows into groups defined by the listed columns, so the aggregate is then evaluated once per group rather than once for the whole table",
+      "Every column in the SELECT list must either appear in the GROUP BY clause or be wrapped in an aggregate function, because otherwise the value the database should return for the group would be ambiguous",
+      "WHERE filters individual rows before grouping happens, whereas HAVING filters entire groups after aggregation, which is precisely why an aggregate may appear in HAVING but not in WHERE",
+      "COUNT(*) counts every row including those containing NULLs, while COUNT(column) skips rows where that column is NULL, and the other aggregates ignore NULLs as well"
+    ]
+  },
+  {
+    "text": "What is a view in SQL, and what problems does it solve?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A view is a named query that behaves like a virtual table; its rows are computed when the view is queried rather than being stored separately",
+      "It hides complexity, so a join across four tables can be presented to application code and reports as a single simple table name",
+      "It is a security mechanism: a view can expose only chosen columns or rows, so a user granted access to the view never sees the sensitive columns underneath",
+      "It provides a degree of logical data independence, because the underlying tables can be restructured while the view continues to present the old shape, leaving dependent queries unchanged",
+      "A materialized view differs by actually storing its result and refreshing it on a schedule, trading staleness and storage for read speed; an ordinary view is only updatable when the query is simple enough for the DBMS to map a change back to one base row"
+    ]
+  },
+  {
+    "text": "What is the difference between a correlated and an uncorrelated subquery? When would you use EXISTS rather than IN?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A scalar subquery returns exactly one value and can appear anywhere a value is expected, such as comparing each row against the maximum CGPA in the table",
+      "An uncorrelated subquery does not reference the outer query at all, so it can be evaluated once and its result reused for every outer row",
+      "A correlated subquery references a column from the outer query, so conceptually it must be re-evaluated for each outer row, which is what makes it more expensive",
+      "EXISTS tests only whether the subquery returns any row at all, which is why SELECT 1 is conventional inside it: it can stop at the first match rather than materialising the whole result set",
+      "NOT EXISTS is safer than NOT IN whenever the subquery may return NULLs, because NOT IN against a list containing a NULL evaluates to unknown and silently returns no rows at all"
+    ]
+  },
+  {
+    "text": "What is the difference between UNION, UNION ALL and a JOIN?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "UNION combines the results of two SELECT statements vertically, stacking one result set on top of the other, and removes duplicate rows",
+      "UNION ALL performs the same combination without removing duplicates, which is noticeably faster because no sort or hash pass is required",
+      "Both require the two queries to produce the same number of columns, in the same order, with compatible data types",
+      "A JOIN is a fundamentally different operation: it combines tables horizontally by matching rows on a condition, widening the result rather than lengthening it",
+      "Gives the practical rule: prefer UNION ALL unless duplicates genuinely need eliminating, since the deduplication is pure cost when the two inputs are already disjoint"
+    ]
+  },
+  {
+    "text": "What is the difference between a clustered and a non-clustered index?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "A clustered index determines the physical order in which rows are stored, so the table itself is effectively the index, and there can only be one per table",
+      "A non-clustered index is a separate structure holding sorted key values with pointers back to the rows, leaving the table order untouched, and a table may have many of them",
+      "Range queries are much faster on a clustered index because the matching rows are physically adjacent and can be read in a few sequential I/O operations",
+      "A non-clustered index lookup usually needs an extra step to fetch the row itself, unless the index is covering, meaning it already contains every column the query asks for",
+      "Every index speeds up reads and slows down writes, since each insert, update and delete must maintain all of them, which is why indexes are added in response to measured slow queries rather than added pre-emptively"
+    ]
+  },
+  {
+    "text": "How would you protect sensitive personal data held in a database?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Role-based access control: define roles such as student, faculty and admin, attach permissions to the roles rather than to individual users, then assign users to roles, so the rules stay manageable as people join and leave",
+      "Encryption at rest scrambles the files on disk so a stolen drive reveals nothing, while encryption in transit over TLS stops anyone reading credentials or records off the network",
+      "Column-level encryption protects particular sensitive columns such as bank account or national identity numbers, so even a read at database level does not expose them, at the cost of decrypting whenever they are queried",
+      "Data masking replaces real values with realistic but non-sensitive substitutes in non-production copies, so developers and testers work with usable data without ever handling real personal information; static masking alters a copy permanently while dynamic masking substitutes values on the fly as they are read",
+      "The choice of masking type matters: deterministic masking maps a given value to the same replacement every time so joins and foreign keys still work, whereas non-deterministic masking must not be used on columns referenced by foreign keys because it would break referential integrity"
+    ]
+  },
+  {
+    "text": "What practical techniques would you use to speed up a slow SQL query?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Select only the columns actually needed rather than SELECT *, since fewer columns mean less I/O and a better chance the query can be satisfied entirely from an index",
+      "Filter early and join afterwards, so that the join operates on the smallest possible row set rather than filtering the already-joined result",
+      "Put indexed columns directly in the WHERE or JOIN condition, and avoid wrapping an indexed column in a function, because a condition such as UPPER(name) equals a value cannot use the index on name and forces a full scan",
+      "Use LIMIT or TOP when the interface only displays part of the result, so the database can stop early instead of materialising and sorting everything",
+      "Read the execution plan with EXPLAIN and act on what it actually shows: a sequential scan where an index scan was expected is the signal that an index is missing, unusable or not selective enough"
+    ]
+  },
+  {
+    "text": "Write a SQL query to return the second-highest salary from an employee table, and explain how you would generalise it to the nth highest. What edge cases must it handle?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives a working query, for example SELECT MAX(salary) FROM employee WHERE salary is less than the result of SELECT MAX(salary) FROM employee",
+      "Gives an alternative using ORDER BY salary DESC with LIMIT 1 OFFSET 1, and notes that OFFSET n minus 1 generalises it to the nth highest",
+      "Handles duplicate salaries: uses DISTINCT or a correlated count so that two employees on the same salary occupy one rank rather than shifting the answer down",
+      "Names the edge case where fewer than n distinct salaries exist, where the query should return NULL rather than an error or a silently wrong row",
+      "Mentions the window function approach using DENSE_RANK over an ordering by salary descending, and explains why DENSE_RANK rather than ROW_NUMBER or RANK when tied salaries should share a position"
+    ]
+  }
+]
