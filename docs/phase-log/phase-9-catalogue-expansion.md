@@ -297,6 +297,37 @@ and deployment moves to Phase 11. Aptitude authoring waits for it, for exactly
 the reason the aptitude category split was done first: authoring 32 questions in
 one format and then migrating them is the mistake this project keeps avoiding.
 
+### Phase 10 is deferred, deliberately
+
+A full plan was written and then **not built**, on the user's judgement that the
+assessment round is "highly undefined and varietyful for different companies".
+That is the correct call, and the reason is stronger than the one originally
+given for building now: what varies between companies is not only the *values*
+— duration, negative marking — but the *structure*. Real screening tests are
+often sectioned, with a separate timer and sometimes a separate cut-off per
+section, and some forbid returning to an earlier section at all. An
+`AssessmentAttempt` with one timer and one flat answer list would not survive
+contact with that, and the migration would be exactly the kind this project
+keeps designing around.
+
+**What unblocks it: one company's assessment round in detail** — duration and
+whether it is per section, the sections and their question counts, negative
+marking, whether questions can be revisited, and any per-section cut-off. One
+real example is enough to build a schema that survives the other nine; a guess
+is not.
+
+One distinction is worth preserving for whenever it does get built. Marking
+existing aptitude rounds as `assessment` inside `catalog.json` would be shipping
+a guess as product data, and is ruled out. A **dev-only test fixture** used to
+verify the endpoints is not shipped data and does not touch the catalogue, so it
+is not covered by that rule — the machinery can be verified without fabricating
+anything in the catalogue.
+
+Noted for later: the *question* format is far more stable than the *round*
+format. An MCQ is options, a correct index and a worked solution regardless of
+how the surrounding test is run, so authoring MCQs is much less exposed to this
+uncertainty than building the session machinery is.
+
 ---
 
 ## In plain English
