@@ -83,6 +83,8 @@ export function QuestionDetail() {
         </span>
         {question.questionType === "coding" ? (
           <span className="badge">graded by test cases</span>
+        ) : question.questionType === "mcq" ? (
+          <span className="badge">multiple choice</span>
         ) : (
           <span className="badge">
             graded against {question.expectedPointCount}{" "}
@@ -93,6 +95,26 @@ export function QuestionDetail() {
 
       {question.questionType === "coding" ? (
         <CodingWorkspace questionId={id} />
+      ) : question.questionType === "mcq" ? (
+        /* An MCQ is only meaningful inside a timed, whole-test attempt, so this
+           page does not offer to answer one. Without this branch it would have
+           rendered the written-answer form, and submitting would have been
+           rejected by the `questionType !== "text"` guard in the submissions
+           route — a dead end reached only after the student had typed. The
+           options are shown read-only so the question is still worth reading. */
+        <div className="mcq-preview">
+          <p className="muted">
+            This is a multiple-choice question. It is answered inside its timed
+            assessment, not on its own.
+          </p>
+          {question.options && (
+            <ol className="mcq-options">
+              {question.options.map((opt, i) => (
+                <li key={i}>{opt}</li>
+              ))}
+            </ol>
+          )}
+        </div>
       ) : (
         <form onSubmit={onSubmit}>
           <label htmlFor="answer">Your answer</label>

@@ -44,6 +44,26 @@ type SpecificQuestion = {
   expectedAnswerPoints: string[];
 };
 
+/** One timed section of an assessment. Questions are drawn from the MCQ pools. */
+type SectionSpec = {
+  name: string;
+  durationMin?: number;
+  marksPerQuestion?: number;
+  picks: Pick[];
+};
+
+/**
+ * Present only on rounds that are timed tests rather than conversations.
+ * Its presence is what makes the round an assessment round — there is no
+ * separate mode flag; see phase-10-mcq-assessments.md.
+ */
+type AssessmentSpec = {
+  totalDurationMin?: number;
+  negativeMarking?: number;
+  canRevisit?: boolean;
+  sections: SectionSpec[];
+};
+
 type RoundSpec = {
   order: number;
   roundType: RoundType;
@@ -51,6 +71,7 @@ type RoundSpec = {
   notes?: string;
   picks?: Pick[];
   specific?: SpecificQuestion[];
+  assessment?: AssessmentSpec;
 };
 
 type RoleSpec = {
@@ -133,6 +154,7 @@ async function main() {
   ) as CompanySpec[];
 
   let roundCount = 0;
+  let assessmentCount = 0;
   let attached = 0;
   let detached = 0;
   let shortfalls: string[] = [];
@@ -223,11 +245,90 @@ async function main() {
           });
           detached += toRemove.length;
         }
+
+        // The assessment is additive: a round keeps its written practice
+        // questions AND gains a timed test. Replacing one with the other would
+        // have removed working functionality from three existing rounds.
+        if (roundSpec.assessment) {
+          const spec = roundSpec.assessment;
+          const assessment = await prisma.assessment.upsert({
+            where: { roundId: round.id },
+            create: {
+              roundId: round.id,
+              totalDurationMin: spec.totalDurationMin ?? null,
+              negativeMarking: spec.negativeMarking ?? null,
+              canRevisit: spec.canRevisit ?? true,
+            },
+            update: {
+              totalDurationMin: spec.totalDurationMin ?? null,
+              negativeMarking: spec.negativeMarking ?? null,
+              canRevisit: spec.canRevisit ?? true,
+            },
+            select: { id: true },
+          });
+          assessmentCount++;
+
+          for (const [i, sectionSpec] of spec.sections.entries()) {
+            const section = await prisma.assessmentSection.upsert({
+              where: {
+                assessmentId_order: { assessmentId: assessment.id, order: i + 1 },
+              },
+              create: {
+                assessmentId: assessment.id,
+                order: i + 1,
+                name: sectionSpec.name,
+                durationMin: sectionSpec.durationMin ?? null,
+                marksPerQuestion: sectionSpec.marksPerQuestion ?? 1,
+              },
+              update: {
+                name: sectionSpec.name,
+                durationMin: sectionSpec.durationMin ?? null,
+                marksPerQuestion: sectionSpec.marksPerQuestion ?? 1,
+              },
+              select: { id: true },
+            });
+
+            const picked: string[] = [];
+            for (const pick of sectionSpec.picks) {
+              // Same rolling cursor as the written pools, so two sections do
+              // not silently receive the same questions.
+              const ids = await drawFromPool({ ...pick, type: "mcq" });
+              if (ids.length < pick.count) {
+                shortfalls.push(
+                  `${companySpec.name} / ${roleSpec.name} / ${roundSpec.roundName} / ` +
+                    `${sectionSpec.name}: wanted ${pick.count} ${pick.category} mcq, got ${ids.length}`
+                );
+              }
+              ids.forEach((id) => {
+                if (!picked.includes(id)) picked.push(id);
+              });
+            }
+
+            // Rewritten wholesale rather than diffed: order matters here in a
+            // way it does not for a round listing, and an existing row with a
+            // stale order_index would collide with the unique index.
+            await prisma.assessmentQuestion.deleteMany({
+              where: { sectionId: section.id },
+            });
+            if (picked.length > 0) {
+              await prisma.assessmentQuestion.createMany({
+                data: picked.map((questionId, order) => ({
+                  sectionId: section.id,
+                  questionId,
+                  order: order + 1,
+                })),
+              });
+            }
+          }
+        }
       }
     }
   }
 
-  console.log(`Seeded ${companies.length} companies, ${roundCount} rounds`);
+  console.log(
+    `Seeded ${companies.length} companies, ${roundCount} rounds, ` +
+      `${assessmentCount} assessment(s)`
+  );
   console.log(`  attached: ${attached}`);
   console.log(`  detached: ${detached}`);
   if (shortfalls.length > 0) {

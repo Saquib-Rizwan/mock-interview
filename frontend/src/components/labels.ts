@@ -20,5 +20,8 @@ export const CATEGORY_LABELS: Record<QuestionCategory, string> = {
   oops: "OOPS",
   general_hr: "General HR",
   aptitude: "Aptitude",
+  c_programming: "C Programming",
+  python: "Python",
+  cloud: "Cloud",
   other: "Other",
 };

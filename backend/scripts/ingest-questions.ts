@@ -56,6 +56,15 @@ function validate(record: unknown, index: number): string[] {
   const points = r.expectedAnswerPoints;
   if (Array.isArray(points) && points.some((p) => typeof p !== "string" || !p.trim())) {
     errors.push(`${label} expectedAnswerPoints must contain only non-empty strings`);
+  } else if (r.questionType === "mcq") {
+    // Routed rather than rejected silently: an MCQ needs options, a correct
+    // index and a worked solution, none of which this file's shape can carry.
+    // Without this branch it fell through to the "must have expectedAnswerPoints"
+    // rule below and failed with a misleading message.
+    errors.push(
+      `${label} mcq questions are loaded by ingest-mcq.ts — ` +
+        `run: npm run ingest:mcq --workspace backend -- <file>`
+    );
   } else if (r.questionType === "coding") {
     // Coding questions are graded by test cases, not by the LLM against a
     // rubric, so answer points are meaningless here. Their signature and tests

@@ -642,7 +642,25 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "Technical & Aptitude Assessment",
-            "notes": "Online MCQ screening run on the MEC campus, 45 minutes. NEGATIVE MARKING APPLIES — the guidance from the drive was to attempt a question only when confident, which changes the strategy as much as the preparation. Topics span DSA and OOP principles, output-prediction questions in C and Java, frontend basics, DevOps and Cloud fundamentals, CN, DBMS and Operating Systems, plus logical reasoning and quantitative aptitude such as Work and Time. Note the format gap: the real round is multiple choice, while the questions below are written answers on the same topics. Practising them builds the knowledge but not the speed or the guess-discipline the actual round tests.",
+            "notes": "Online MCQ screening run on the MEC campus, 45 minutes. NEGATIVE MARKING APPLIES — the guidance from the drive was to attempt a question only when confident, which changes the strategy as much as the preparation. Topics span DSA and OOP principles, output-prediction questions in C and Java, frontend basics, DevOps and Cloud fundamentals, CN, DBMS and Operating Systems, plus logical reasoning and quantitative aptitude such as Work and Time. Note the format gap: the real round is multiple choice, while the questions below are written answers on the same topics. Practising them builds the knowledge but not the speed or the guess-discipline the actual round tests, so a timed mock test now sits alongside them. ONE ASSUMPTION IS BAKED INTO THAT MOCK: the source says negative marking applied but never says how much, so it uses 0.25 marks per wrong answer, which is the usual convention. The 45-minute limit and the fact that marks are deducted are both from the source; the 0.25 is not.",
+            "assessment": {
+              "totalDurationMin": 45,
+              "negativeMarking": 0.25,
+              "sections": [
+                {
+                  "name": "Technical & Aptitude",
+                  "marksPerQuestion": 1,
+                  "picks": [
+                    { "category": "aptitude", "count": 2 },
+                    { "category": "dsa", "count": 2 },
+                    { "category": "oops", "count": 2 },
+                    { "category": "os", "count": 2 },
+                    { "category": "dbms", "count": 2 },
+                    { "category": "cn", "count": 2 }
+                  ]
+                }
+              ]
+            },
             "picks": [
               { "category": "aptitude", "type": "text", "count": 3 },
               { "category": "oops", "type": "text", "count": 2 },

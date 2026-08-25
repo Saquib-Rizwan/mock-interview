@@ -149,13 +149,24 @@ catalogRouter.get(
         // Count only, so the UI can say "graded against 5 points" without
         // revealing what they are.
         expectedAnswerPoints: true,
+        // MCQ questions expose their OPTIONS and nothing else. `correctIndex`
+        // and `solution` are never selected here — not filtered out afterwards,
+        // never fetched — which is the same defence the hidden test cases use.
+        // A leak would require someone to add a field to this select.
+        mcqSpec: { select: { options: true } },
       },
     });
 
     if (!question) return res.status(404).json({ error: "Question not found" });
 
-    const { expectedAnswerPoints, ...rest } = question;
-    res.json({ question: { ...rest, expectedPointCount: expectedAnswerPoints.length } });
+    const { expectedAnswerPoints, mcqSpec, ...rest } = question;
+    res.json({
+      question: {
+        ...rest,
+        expectedPointCount: expectedAnswerPoints.length,
+        options: mcqSpec?.options ?? null,
+      },
+    });
   })
 );
 
@@ -173,6 +184,9 @@ catalogRouter.get(
         role: {
           select: { id: true, name: true, company: { select: { id: true, name: true } } },
         },
+        // Present only on rounds that are timed tests. Its presence is what
+        // tells the client to offer the mock test; there is no mode flag.
+        assessment: { select: { id: true, totalDurationMin: true, negativeMarking: true } },
         questions: {
           select: {
             question: {

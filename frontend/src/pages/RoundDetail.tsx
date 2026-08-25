@@ -37,6 +37,27 @@ export function RoundDetail() {
       </p>
       {round.notes && <p className="note">{round.notes}</p>}
 
+      {/* Additive: a round that is a timed test keeps its written practice
+          questions below AND offers the mock. Neither replaces the other. */}
+      {round.assessment && (
+        <div className="mock-cta">
+          <div>
+            <p className="tile-title">Timed mock test</p>
+            <p className="muted small">
+              {round.assessment.totalDurationMin
+                ? `${round.assessment.totalDurationMin} minutes`
+                : "No time limit recorded"}
+              {round.assessment.negativeMarking
+                ? ` · −${round.assessment.negativeMarking} per wrong answer`
+                : " · no negative marking"}
+            </p>
+          </div>
+          <Link to={`/assessments/${round.assessment.id}`} className="cta-link">
+            Take it
+          </Link>
+        </div>
+      )}
+
       <h2>
         {answered === 0
           ? `${round.questions.length} ${round.questions.length === 1 ? "question" : "questions"}`

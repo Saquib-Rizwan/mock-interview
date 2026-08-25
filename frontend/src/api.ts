@@ -31,7 +31,10 @@ export type QuestionCategory =
   | "oops"
   | "general_hr"
   | "aptitude"
-  | "other";
+  | "other"
+  | "c_programming"
+  | "python"
+  | "cloud";
 
 export type Difficulty = "easy" | "medium" | "hard";
 
@@ -97,7 +100,7 @@ export type QuestionSummary = {
   text: string;
   category: QuestionCategory;
   difficulty: Difficulty;
-  questionType: "text" | "coding";
+  questionType: "text" | "coding" | "mcq";
   /** Whether this user has a saved attempt at it. Never reveals the score. */
   attempted: boolean;
 };
@@ -107,10 +110,103 @@ export type QuestionDetail = {
   text: string;
   category: QuestionCategory;
   difficulty: Difficulty;
-  questionType: "text" | "coding";
+  questionType: "text" | "coding" | "mcq";
   // How many criteria the answer is graded against. The criteria themselves
   // stay on the server.
   expectedPointCount: number;
+  /**
+   * Choices for an MCQ, null for anything else. The correct index and the
+   * worked solution are NOT part of this type and are never sent while a test
+   * is in progress — see the select in backend/src/catalog/routes.ts.
+   */
+  options: string[] | null;
+};
+
+/**
+ * An MCQ as it is presented while a test is being taken. There is deliberately
+ * no `correctIndex` and no `solution` on this type: the server never sends them
+ * before submission, and having no field for them means a careless render
+ * cannot reveal one.
+ */
+export type AssessmentQuestion = {
+  id: string;
+  text: string;
+  category: QuestionCategory;
+  difficulty: Difficulty;
+  options: string[];
+};
+
+export type AssessmentSection = {
+  id: string;
+  order: number;
+  name: string;
+  durationMin: number | null;
+  marksPerQuestion: number;
+  questions: AssessmentQuestion[];
+};
+
+export type AssessmentDetail = {
+  id: string;
+  totalDurationMin: number | null;
+  /** Marks lost per wrong answer. Null means none applies. */
+  negativeMarking: number | null;
+  canRevisit: boolean;
+  round: {
+    id: string;
+    roundName: string;
+    role: { id: string; name: string; company: { id: string; name: string } };
+  };
+  sections: AssessmentSection[];
+};
+
+/** Summary of a round's assessment, when it has one. */
+export type RoundAssessment = {
+  id: string;
+  totalDurationMin: number | null;
+  negativeMarking: number | null;
+};
+
+export type Attempt = {
+  id: string;
+  startedAt: string;
+  answers: Record<string, number>;
+};
+
+export type AttemptResult = {
+  score: number;
+  maxScore: number;
+  correctCount: number;
+  wrongCount: number;
+  unansweredCount: number;
+  negativeMarking: number | null;
+  elapsedSec: number;
+};
+
+/**
+ * A question as it appears AFTER submission. This is the only shape that
+ * carries `correctIndex` and `solution`, and the server only fills it once the
+ * attempt has a submittedAt — see the 409 in the review route.
+ */
+export type ReviewQuestion = {
+  id: string;
+  text: string;
+  category: QuestionCategory;
+  difficulty: Difficulty;
+  options: string[];
+  correctIndex: number | null;
+  solution: string | null;
+  chosenIndex: number | null;
+  correct: boolean;
+  /** Signed: positive for correct, negative for a wrong answer, 0 if skipped. */
+  marks: number;
+};
+
+export type AttemptReview = {
+  roundId: string;
+  roundName: string;
+  negativeMarking: number | null;
+  submittedAt: string;
+  sections: { id: string; name: string; questions: ReviewQuestion[] }[];
 };
 
 export type PointVerdict = { point: string; covered: boolean; comment: string };
@@ -262,6 +358,8 @@ export type RoundDetail = {
   notes: string | null;
   role: { id: string; name: string; company: { id: string; name: string } };
   questions: QuestionSummary[];
+  /** Non-null only when this round is a timed test rather than a conversation. */
+  assessment: RoundAssessment | null;
 };
 
 // Thrown for any non-2xx response so callers can show the server's message
@@ -355,6 +453,32 @@ export const api = {
 
   // Takes a key it ignores, to satisfy useFetch's stable-fetcher contract.
   progress: (_key: string) => request<{ progress: Progress }>("/progress"),
+
+  assessment: (id: string) =>
+    request<{ assessment: AssessmentDetail }>(`/assessments/${id}`),
+
+  startAttempt: (assessmentId: string) =>
+    request<{ attempt: Attempt; resumed: boolean }>(
+      `/assessments/${assessmentId}/attempts`,
+      { method: "POST" }
+    ),
+
+  saveAnswers: (attemptId: string, answers: Record<string, number>) =>
+    request<{ saved: boolean }>(`/attempts/${attemptId}/answers`, {
+      method: "PATCH",
+      body: JSON.stringify({ answers }),
+    }),
+
+  // Answers are sent again with the submit so a selection made after the last
+  // autosave cannot be lost in the gap between the two requests.
+  submitAttempt: (attemptId: string, answers: Record<string, number>) =>
+    request<{ result: AttemptResult }>(`/attempts/${attemptId}/submit`, {
+      method: "POST",
+      body: JSON.stringify({ answers }),
+    }),
+
+  attemptReview: (attemptId: string) =>
+    request<{ review: AttemptReview }>(`/attempts/${attemptId}/review`),
 
   healthFull: () =>
     request<{ backend: string; mlService: { status: string; error?: string } }>(

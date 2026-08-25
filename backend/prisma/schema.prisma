@@ -33,6 +33,20 @@ enum QuestionCategory {
   // category. Filing it under `other` would have made it unfilterable.
   oops
   general_hr
+  // Added in Phase 10, before bulk MCQ authoring rather than after. Each is
+  // asked by at least TWO documented drives, which is the threshold this
+  // project has used elsewhere for earning a category:
+  //   c_programming — Anora (pointers, output prediction), Abilytics (C and Java)
+  //   python        — Armada (tuple/dict/list), Cloudium, Abilytics
+  //   cloud         — Cloudium (IaaS/PaaS/SaaS), Abilytics
+  // DevOps was considered and REJECTED for now: only Abilytics asks for it, so
+  // it stays inline as a company-specific question until a second company does.
+  //
+  // Added before authoring on purpose. Filing 150 questions under `other` and
+  // migrating them afterwards would be the expensive version of this.
+  c_programming
+  python
+  cloud
   // Split out of `other` in Phase 9. Aptitude rounds were drawing from the same
   // pool as genuine miscellany, which made the thinnest pool in the catalogue
   // (8 questions) look deeper than it was and left aptitude unfilterable.
@@ -45,6 +59,12 @@ enum QuestionCategory {
 enum QuestionType {
   text
   coding
+  // Added in Phase 10. Graded against a recorded correct option rather than by
+  // the LLM or by test cases, which is why it needs neither expectedAnswerPoints
+  // nor a CodingSpec. The existing write paths already refuse it: submissions
+  // requires `text` and coding requires `coding`, so an mcq row cannot be
+  // answered down either route by accident.
+  mcq
 }
 
 enum Difficulty {
@@ -82,8 +102,9 @@ model User {
   // safer default and costs one integer.
   tokenVersion Int      @default(0) @map("token_version")
 
-  submissions     Submission[]
-  codeSubmissions CodeSubmission[]
+  submissions        Submission[]
+  codeSubmissions    CodeSubmission[]
+  assessmentAttempts AssessmentAttempt[]
 
   @@map("app_user")
 }
@@ -129,8 +150,8 @@ model Company {
 }
 
 model Role {
-  id        String  @id @default(uuid())
-  companyId String  @map("company_id")
+  id        String @id @default(uuid())
+  companyId String @map("company_id")
   name      String
 
   // Eligibility, as stated by the placement material — three states, not two.
@@ -156,8 +177,8 @@ model Role {
   /// never assume it means there is no cutoff.
   minCgpa Float? @map("min_cgpa")
 
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  rounds    Round[]
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  rounds  Round[]
 
   // The same role name may exist at different companies, but not twice at one.
   @@unique([companyId, name])
@@ -177,14 +198,19 @@ model Round {
 
   questions RoundQuestion[]
 
+  // Present only when this round is a timed test rather than a conversation.
+  // Its existence IS the mode: there is deliberately no separate `roundMode`
+  // flag that could disagree with whether an assessment actually exists.
+  assessment Assessment?
+
   @@unique([roleId, order])
   @@map("round")
 }
 
 model Question {
-  id       String           @id @default(uuid())
-  text     String
-  category QuestionCategory
+  id                   String           @id @default(uuid())
+  text                 String
+  category             QuestionCategory
   // Discrete points, kept separate so Phase 4 can hand the LLM a checklist
   // rather than prose it has to re-parse.
   //
@@ -192,9 +218,9 @@ model Question {
   // against a rubric. Postgres text[] is already allowed to be empty, so this
   // needed no migration — the "must be non-empty" rule only ever lived in the
   // Phase 5 ingest script, which now applies it to text questions only.
-  expectedAnswerPoints String[]     @map("expected_answer_points")
+  expectedAnswerPoints String[]         @map("expected_answer_points")
   difficulty           Difficulty
-  questionType         QuestionType @map("question_type")
+  questionType         QuestionType     @map("question_type")
 
   rounds      RoundQuestion[]
   submissions Submission[]
@@ -204,6 +230,11 @@ model Question {
   codingSpec      CodingSpec?
   testCases       TestCase[]
   codeSubmissions CodeSubmission[]
+
+  // Multiple-choice questions only. Same shape of relationship as CodingSpec:
+  // a question with questionType = mcq and no McqSpec cannot be presented.
+  mcqSpec             McqSpec?
+  assessmentQuestions AssessmentQuestion[]
 
   @@map("question")
 }
@@ -255,7 +286,7 @@ model CodingSpec {
   ///
   /// Plural because a question genuinely belongs to several: "longest substring
   /// without repeating characters" is sliding-window AND hash-table.
-  patterns     String[] @default([])
+  patterns String[] @default([])
 
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
@@ -303,10 +334,10 @@ model CodeSubmission {
   // submission, so a second opinion on the same bytes has no value.
   review      Json?
 
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user     User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   // Restrict, matching Submission: a question with attempts against it should
   // not be deletable out from under that history.
-  question Question @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  question Question     @relation(fields: [questionId], references: [id], onDelete: Restrict)
   results  TestResult[]
 
   @@index([userId, questionId])
@@ -333,4 +364,131 @@ model TestResult {
 
   @@index([submissionId])
   @@map("test_result")
+}
+
+// ---------------------------------------------------------------------------
+// Phase 10 — assessment (MCQ) rounds.
+//
+// Modelled from two real drives rather than invented: Abilytics runs a single
+// 45-minute MCQ paper WITH negative marking, while Anora runs three consecutive
+// sections at 75, 30 and 15 minutes with 65, 5 and 15 questions, single mark
+// each. Those two disagree about marking and about whether sections exist at
+// all, which is exactly why marking sits per-assessment and sections are a
+// table rather than columns.
+// ---------------------------------------------------------------------------
+
+/// Everything needed to present one multiple-choice question.
+///
+/// Separate from Question for the same reason CodingSpec is, and it is the
+/// whole point: the answer key lives here, so it is absent from every query
+/// that does not name this table. Leaking `correctIndex` to the browser would
+/// make the mock test pointless, and defence by omission beats defence by
+/// remembering to exclude a column.
+model McqSpec {
+  questionId   String   @id @map("question_id")
+  /// Presented in this order; `correctIndex` indexes into it.
+  options      String[]
+  correctIndex Int      @map("correct_index")
+  /// The worked steps. Revealed only after the whole test is submitted, never
+  /// while it is being taken.
+  solution     String
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@map("mcq_spec")
+}
+
+/// A round that is a timed test rather than an interview.
+model Assessment {
+  id      String @id @default(uuid())
+  roundId String @unique @map("round_id")
+
+  /// Overall limit where the source states one. Null when only per-section
+  /// times are known, as with Anora, or when no timing was recorded at all.
+  totalDurationMin Int? @map("total_duration_min")
+
+  /// Marks deducted per wrong answer. Null means none stated. This cannot be a
+  /// global constant: Abilytics deducts, Anora does not.
+  negativeMarking Float? @map("negative_marking")
+
+  /// Whether a candidate may return to an earlier question. Defaults true
+  /// because that is the common case; a company that forbids it says so.
+  canRevisit Boolean @default(true) @map("can_revisit")
+
+  round    Round               @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  sections AssessmentSection[]
+  attempts AssessmentAttempt[]
+
+  @@map("assessment")
+}
+
+/// One timed section within an assessment. Anora's paper is three of these run
+/// back to back; Abilytics' is a single section covering everything.
+model AssessmentSection {
+  id           String @id @default(uuid())
+  assessmentId String @map("assessment_id")
+  order        Int    @map("order_index")
+  name         String
+
+  /// Per-section limit. Null when only an overall duration is stated.
+  durationMin Int? @map("duration_min")
+
+  /// Marks for a correct answer in this section. A float because a paper may
+  /// weight sections differently, even though every drive recorded so far is 1.
+  marksPerQuestion Float @default(1) @map("marks_per_question")
+
+  assessment Assessment           @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+  questions  AssessmentQuestion[]
+
+  @@unique([assessmentId, order])
+  @@map("assessment_section")
+}
+
+/// Which questions sit in which section, and in what order.
+model AssessmentQuestion {
+  sectionId  String @map("section_id")
+  questionId String @map("question_id")
+  order      Int    @map("order_index")
+
+  section  AssessmentSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  // Restrict, matching RoundQuestion: pool questions are shared, so detaching a
+  // section must never delete the question itself.
+  question Question          @relation(fields: [questionId], references: [id], onDelete: Restrict)
+
+  @@id([sectionId, questionId])
+  @@unique([sectionId, order])
+  @@map("assessment_question")
+}
+
+/// One sitting of an assessment.
+///
+/// The session concept the whole phase turned on: a mock test is graded as a
+/// whole after submission, not question by question as it is answered, so the
+/// selections have to live somewhere until then.
+model AssessmentAttempt {
+  id           String @id @default(uuid())
+  userId       String @map("user_id")
+  assessmentId String @map("assessment_id")
+
+  startedAt   DateTime  @default(now()) @map("started_at")
+  /// Null while the attempt is still open. Scoring columns stay null with it,
+  /// so an abandoned attempt is distinguishable from one scored zero.
+  submittedAt DateTime? @map("submitted_at")
+
+  /// { questionId: selectedIndex }. A question absent from this map was not
+  /// answered, which is scored differently from answering it wrongly wherever
+  /// negative marking applies.
+  answers Json @default("{}")
+
+  score           Float?
+  maxScore        Float? @map("max_score")
+  correctCount    Int?   @map("correct_count")
+  wrongCount      Int?   @map("wrong_count")
+  unansweredCount Int?   @map("unanswered_count")
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assessment Assessment @relation(fields: [assessmentId], references: [id], onDelete: Cascade)
+
+  @@index([userId, assessmentId])
+  @@map("assessment_attempt")
 }

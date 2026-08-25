@@ -1519,3 +1519,298 @@ code.io {
     min-width: 100%;
   }
 }
+
+/* ===== Phase 10 — taking a timed assessment ============================== */
+
+hr.rule {
+  border: 0;
+  border-top: 1px solid var(--border-strong);
+  margin: 2rem 0 1rem;
+}
+
+/* The invitation on a round page. The accent appears as a solid block, which
+   is the only way it is allowed to appear. */
+.mock-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1.75rem 0 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+}
+
+.cta-link {
+  flex: 0 0 auto;
+  padding: 0.7rem 1.2rem;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
+.cta-link:hover { background: var(--text); }
+
+.test-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1.5rem 0 1.25rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 2px solid var(--text);
+}
+
+/* Mono with lining figures: the display face never sets numbers. */
+.test-clock {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.test-clock.is-low { color: var(--accent); }
+
+/* The question map. A grid of numbered pips — a device used nowhere else, so
+   this list cannot be mistaken for the round listing or the spine. */
+.test-grid {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.test-pip {
+  width: 2.1rem;
+  height: 2.1rem;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  background: var(--bg);
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Answered fills solid ink; current carries a thick accent rule — the same
+   two devices the round spine uses, so the vocabulary stays consistent. */
+.test-pip.is-answered {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.test-pip.is-current {
+  box-shadow: inset 0 -3px 0 var(--accent);
+  color: var(--text);
+}
+
+.test-pip.is-answered.is-current { color: var(--bg); }
+
+.mcq-choices,
+.mcq-options {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+
+.mcq-choices li { margin-bottom: 0.6rem; }
+
+.mcq-choice {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  width: 100%;
+  padding: 0.95rem 1.1rem;
+  border: 1px solid var(--border-strong);
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mcq-choice:hover { border-color: var(--text); }
+
+.mcq-choice.is-chosen {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.mcq-letter {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+/* Read-only listing on a question page, where an MCQ cannot be answered. */
+.mcq-preview { margin-top: 1.5rem; }
+
+.mcq-options {
+  counter-reset: opt;
+  margin-top: 1rem;
+}
+
+.mcq-options li {
+  padding: 0.6rem 0 0.6rem 2.2rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.mcq-options li::before {
+  counter-increment: opt;
+  content: counter(opt, upper-alpha);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.score-block {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0.5rem;
+}
+
+.score-figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.score-of {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.score-lines {
+  list-style: none;
+  padding: 0;
+  margin: 1.75rem 0;
+  border-top: 1px solid var(--border-strong);
+}
+
+.score-lines li {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.score-lines strong {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+@media (max-width: 560px) {
+  .test-pip { width: 1.9rem; height: 1.9rem; }
+  .score-figure { font-size: 3rem; }
+}
+
+/* ===== 10c — reviewing a finished attempt =============================== */
+
+/*
+ * A fourth list device, distinct from the round listing's margin rule, the
+ * spine's filled node and the test's numbered pips. Here the verdict is the
+ * device: a thick left rule whose colour says what happened, so the page can be
+ * skimmed for wrong answers without reading a word.
+ */
+.review-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+
+.review-list > li {
+  margin-bottom: 2rem;
+  padding-left: 1.1rem;
+  border-left: 3px solid var(--border-strong);
+}
+
+.review-list > li.is-right   { border-left-color: var(--text); }
+.review-list > li.is-wrong   { border-left-color: var(--accent); }
+.review-list > li.is-skipped { border-left-color: var(--border); }
+
+.review-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.review-num,
+.review-marks {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.review-marks { margin-left: auto; }
+
+.review-verdict {
+  font-family: var(--font-sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.review-options {
+  list-style: none;
+  padding: 0;
+  margin: 0.9rem 0 0.9rem;
+}
+
+.review-options li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid transparent;
+}
+
+/* The key is stated by a solid block; a wrong pick is outlined in accent.
+   Two different devices, so they stay legible when they land on one row. */
+.review-options li.is-key {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.review-options li.is-yours {
+  border-color: var(--accent);
+}
+
+.review-tag {
+  margin-left: auto;
+  font-family: var(--font-sans);
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  white-space: nowrap;
+}

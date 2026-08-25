@@ -14,6 +14,7 @@
     "db:studio": "prisma studio",
     "ingest": "tsx scripts/ingest-questions.ts",
     "ingest:coding": "tsx scripts/ingest-coding.ts",
+    "ingest:mcq": "tsx scripts/ingest-mcq.ts",
     "harness": "tsx scripts/preview-harness.ts",
     "expected": "tsx scripts/compute-expected.ts",
     "seed:catalog": "tsx scripts/seed-catalog.ts",

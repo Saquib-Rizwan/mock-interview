@@ -6,6 +6,7 @@ import { Layout } from "./components/Layout";
 import { Companies } from "./pages/Companies";
 import { CompanyDetail } from "./pages/CompanyDetail";
 import { Login } from "./pages/Login";
+import { AssessmentRunner } from "./pages/AssessmentRunner";
 import { Progress } from "./pages/Progress";
 import { QuestionDetail } from "./pages/QuestionDetail";
 import { RoleDetail } from "./pages/RoleDetail";
@@ -93,6 +94,15 @@ function App() {
         element={
           <Private>
             <QuestionDetail />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/assessments/:id"
+        element={
+          <Private>
+            <AssessmentRunner />
           </Private>
         }
       />

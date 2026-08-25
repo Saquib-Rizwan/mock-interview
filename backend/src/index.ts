@@ -2,6 +2,7 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import type { NextFunction, Request, Response } from "express";
+import { assessmentsRouter, attemptsRouter } from "./assessments/routes";
 import { authRouter } from "./auth/routes";
 import { catalogRouter } from "./catalog/routes";
 import { codingRouter } from "./coding/routes";
@@ -92,6 +93,8 @@ app.use("/catalog", catalogRouter);
 app.use("/submissions", submissionsRouter);
 app.use("/coding", codingRouter);
 app.use("/progress", progressRouter);
+app.use("/assessments", assessmentsRouter);
+app.use("/attempts", attemptsRouter);
 
 // Last-resort handler. Async routes reach it via the asyncHandler wrapper,
 // which forwards promise rejections to next(). Errors are logged in full but

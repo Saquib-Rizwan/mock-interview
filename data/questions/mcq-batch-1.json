@@ -1,0 +1,142 @@
+[
+  {
+    "text": "Which data structure is best suited for implementing a browser's back-button functionality?",
+    "category": "dsa",
+    "difficulty": "easy",
+    "options": ["Queue", "Stack", "Priority queue", "Circular linked list"],
+    "correctIndex": 1,
+    "solution": "Navigation is last-in-first-out: the page you return to is always the most recent one you left, which is exactly what a stack pops. A queue would return the oldest page first, which is the opposite of what Back means. In practice a browser keeps two stacks, one for back and one for forward, and visiting a new page from a mid-history position clears the forward stack."
+  },
+  {
+    "text": "Which of the following is NOT a feature of object-oriented programming?",
+    "category": "oops",
+    "difficulty": "easy",
+    "options": ["Polymorphism", "Encapsulation", "Compilation", "Inheritance"],
+    "correctIndex": 2,
+    "solution": "Polymorphism, encapsulation, inheritance and abstraction are the four pillars of OOP. Compilation is a step in translating source code to machine code and applies to procedural languages just as much as object-oriented ones, so it is not a feature of the paradigm at all."
+  },
+  {
+    "text": "A pipe fills a tank in 6 hours and another fills it in 8 hours. If both are opened together, how long does the tank take to fill?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["7/24 hours", "24/7 hours", "7 hours", "14 hours"],
+    "correctIndex": 1,
+    "solution": "Work with rates, not times. The first pipe fills 1/6 of the tank per hour and the second fills 1/8, so together they fill 1/6 + 1/8 = 4/24 + 3/24 = 7/24 of the tank each hour. The time is the reciprocal of the combined rate: 24/7 hours, which is about 3 hours 26 minutes. The common error is adding or averaging the times rather than the rates — 7/24 is the rate, not the answer."
+  },
+  {
+    "text": "Which CPU scheduling algorithm can starve long processes indefinitely?",
+    "category": "os",
+    "difficulty": "medium",
+    "options": [
+      "First Come First Served",
+      "Round Robin",
+      "Shortest Job First",
+      "Multilevel queue with aging"
+    ],
+    "correctIndex": 2,
+    "solution": "Shortest Job First always picks the shortest available burst, so a long process is overtaken every time a shorter one arrives and may never run. FCFS cannot starve anything because it serves strictly in arrival order, and Round Robin gives every process a slice within one cycle. Aging is the standard cure — it raises a waiting process's priority over time — so the multilevel queue option is explicitly starvation-free."
+  },
+  {
+    "text": "Which of the following is NOT stored in a Process Control Block?",
+    "category": "os",
+    "difficulty": "medium",
+    "options": [
+      "Program counter",
+      "CPU register contents",
+      "The process's source code",
+      "List of open files"
+    ],
+    "correctIndex": 2,
+    "solution": "The PCB holds what the operating system needs to suspend and resume a process: process ID and state, program counter, register contents, memory-management information, accounting data, and I/O status including open files. Source code is not present at run time at all — the process holds compiled instructions in its text segment, and the source may not even exist on the machine."
+  },
+  {
+    "text": "Thrashing in an operating system occurs when",
+    "category": "os",
+    "difficulty": "medium",
+    "options": [
+      "two processes deadlock over the same resource",
+      "a process spends more time paging than executing",
+      "the CPU sits idle waiting for an I/O device",
+      "the page table grows larger than physical memory"
+    ],
+    "correctIndex": 1,
+    "solution": "Thrashing is when the degree of multiprogramming is so high that each process holds too few frames to keep its working set resident. Every process then faults almost immediately after being scheduled, so the system spends its time swapping pages rather than doing work, and CPU utilisation collapses. The fix is to reduce the degree of multiprogramming, or to use a working-set or page-fault-frequency model to allocate frames. Deadlock and I/O waiting are different problems entirely."
+  },
+  {
+    "text": "Which normal form removes partial dependency of a non-key attribute on part of a composite primary key?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "options": ["First normal form", "Second normal form", "Third normal form", "BCNF"],
+    "correctIndex": 1,
+    "solution": "1NF only requires atomic values. 2NF adds the rule that every non-key attribute must depend on the WHOLE primary key, which is what eliminates partial dependency — and it can only arise when the key is composite, so a table with a single-column key in 1NF is automatically in 2NF. 3NF then removes transitive dependency, and BCNF tightens 3NF for the case where a non-trivial determinant is not a candidate key."
+  },
+  {
+    "text": "Which SQL clause filters rows after aggregation has been applied?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "options": ["WHERE", "HAVING", "GROUP BY", "ORDER BY"],
+    "correctIndex": 1,
+    "solution": "WHERE filters individual rows before they are grouped, so it cannot refer to an aggregate such as COUNT(*) or SUM(x). HAVING runs after GROUP BY has formed the groups and computed the aggregates, which is why the condition COUNT(*) > 5 belongs there. GROUP BY forms the groups and ORDER BY sorts the final result; neither filters."
+  },
+  {
+    "text": "Which OSI layer is responsible for end-to-end delivery and error recovery between two hosts?",
+    "category": "cn",
+    "difficulty": "medium",
+    "options": ["Data Link layer", "Network layer", "Transport layer", "Session layer"],
+    "correctIndex": 2,
+    "solution": "The Transport layer provides process-to-process delivery across the whole path, with sequencing, acknowledgement and retransmission in TCP. The Data Link layer handles error detection only across a single physical link, not end to end. The Network layer handles routing and logical addressing but IP itself is best-effort and unreliable. The Session layer manages dialogue and synchronisation, not delivery."
+  },
+  {
+    "text": "How many usable host addresses does a /29 IPv4 subnet provide?",
+    "category": "cn",
+    "difficulty": "medium",
+    "options": ["6", "8", "14", "30"],
+    "correctIndex": 0,
+    "solution": "A /29 leaves 32 minus 29 = 3 host bits, giving 2 to the power 3 = 8 total addresses in the block. Two of those are unusable by hosts: the all-zeros address identifies the network itself and the all-ones address is the broadcast address. That leaves 8 minus 2 = 6 usable host addresses. The general formula is 2 to the power (32 minus prefix) minus 2."
+  },
+  {
+    "text": "In C++, which member function is invoked automatically when an object goes out of scope?",
+    "category": "oops",
+    "difficulty": "easy",
+    "options": ["Constructor", "Destructor", "Copy constructor", "Friend function"],
+    "correctIndex": 1,
+    "solution": "The destructor runs automatically when an object's lifetime ends, which for a local object is when it goes out of scope, and it is where resources such as heap memory, file handles and locks are released. The constructor runs at creation, not at destruction. A copy constructor runs when an object is initialised from another. A friend function is not a member at all and is never called implicitly."
+  },
+  {
+    "text": "Method overloading is an example of which kind of polymorphism?",
+    "category": "oops",
+    "difficulty": "easy",
+    "options": [
+      "Run-time polymorphism",
+      "Compile-time polymorphism",
+      "Inheritance",
+      "Encapsulation"
+    ],
+    "correctIndex": 1,
+    "solution": "Overloading is resolved by the compiler from the number and types of the arguments, so the decision is made before the program runs — hence compile-time, also called static polymorphism. Overriding is the run-time form: the version that executes depends on the actual object type and is resolved through the virtual table while the program runs. Inheritance and encapsulation are separate pillars, not kinds of polymorphism."
+  },
+  {
+    "text": "What is the worst-case time complexity of quicksort?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "options": ["O(n log n)", "O(n squared)", "O(n)", "O(log n)"],
+    "correctIndex": 1,
+    "solution": "Quicksort partitions around a pivot. When the pivot is consistently the smallest or largest element — for example when a naive first-element pivot meets already-sorted input — one partition holds n minus 1 elements and the recursion depth becomes n, giving O(n squared). The average and best cases are O(n log n), which is why randomising the pivot or using median-of-three makes the worst case very unlikely in practice."
+  },
+  {
+    "text": "Which traversal of a binary search tree visits the nodes in ascending order of their keys?",
+    "category": "dsa",
+    "difficulty": "easy",
+    "options": ["Pre-order", "In-order", "Post-order", "Level-order"],
+    "correctIndex": 1,
+    "solution": "In-order traversal visits the left subtree, then the node, then the right subtree. Because a BST holds all smaller keys on the left and all larger keys on the right, this produces the keys in sorted order — which is also a quick way to check whether a tree is a valid BST. Pre-order visits the node first and is used to copy a tree, post-order visits it last and is used to delete one, and level-order is a breadth-first sweep."
+  },
+  {
+    "text": "If 20% of a number is 45, what is 60% of the same number?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["90", "135", "150", "180"],
+    "correctIndex": 1,
+    "solution": "There is no need to find the number at all. 60% is three times 20%, so the answer is 3 times 45 = 135. If you prefer to solve it fully: 20% of x = 45 gives x = 45 divided by 0.2 = 225, and 60% of 225 = 135. Spotting the ratio between the two percentages is the faster route and is what this kind of question is testing."
+  }
+]
