@@ -37,10 +37,13 @@ export function QuestionDetail() {
       const { submission, points } = await api.submit(id, answer);
       setPoints(points);
       setHistory((prev) => [submission, ...prev]);
-      setAnswer("");
+      // The answer stays in the box on success as well as on failure.
+      // Clearing it was wrong twice over: a long answer written slowly vanished
+      // the moment it was graded, and the per-point verdicts are only useful
+      // while you can still see the text they refer to. Revising and
+      // resubmitting is the normal loop here, not the exception — and every
+      // attempt is kept in the history below regardless.
     } catch (err) {
-      // The typed answer is deliberately left in the box so a failed grading
-      // attempt does not lose the student's work.
       setSubmitError(err instanceof Error ? err.message : "Submission failed");
     } finally {
       setBusy(false);

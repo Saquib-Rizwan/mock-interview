@@ -16,7 +16,11 @@ const MAX_ANSWER_LENGTH = 8000;
 const ANALYZE_TIMEOUT_MS = 60_000;
 
 type AnalyzeResult = {
-  points: { point: string; covered: boolean; comment: string }[];
+  // No `point` text: ml-service returns one verdict per expected point, in the
+  // order the points were sent, and the text is re-attached here. Having the
+  // model write all five points back verbatim was the largest avoidable cost in
+  // the call — output tokens spent returning data we had just supplied.
+  points: { covered: boolean; comment: string }[];
   gap_analysis: string;
   suggested_answer: string;
 };
@@ -89,6 +93,18 @@ submissionsRouter.post(
       }
 
       analysis = (await mlResponse.json()) as AnalyzeResult;
+
+      // Verdicts are matched to points BY POSITION, so a count mismatch would
+      // silently pin each comment to the wrong criterion — feedback that reads
+      // as authoritative and is wrong about which point was missed. Refuse
+      // instead. Nothing has been written at this stage.
+      if (analysis.points.length !== question.expectedAnswerPoints.length) {
+        return res.status(502).json({
+          error:
+            `Analysis returned ${analysis.points.length} verdicts for ` +
+            `${question.expectedAnswerPoints.length} expected points. Nothing was saved.`,
+        });
+      }
     } catch (err) {
       // Nothing is written on failure: a submission row with empty feedback
       // would look like a graded attempt in the student's history.
@@ -98,6 +114,13 @@ submissionsRouter.post(
           : "Could not reach the analysis service. Is ml-service running?";
       return res.status(502).json({ error: reason });
     }
+
+    // The point text comes from our own record, never from the model.
+    const verdicts = question.expectedAnswerPoints.map((point, i) => ({
+      point,
+      covered: analysis.points[i].covered,
+      comment: analysis.points[i].comment,
+    }));
 
     const submission = await prisma.submission.create({
       data: {
@@ -109,7 +132,7 @@ submissionsRouter.post(
         // Persisted as of Phase 7. Previously these were shown once and thrown
         // away, which meant a text answer could never be scored after the fact
         // — no progress view, no sense of which points a student keeps missing.
-        points: analysis.points,
+        points: verdicts,
       },
       select: {
         id: true,
@@ -120,7 +143,7 @@ submissionsRouter.post(
       },
     });
 
-    res.status(201).json({ submission, points: analysis.points });
+    res.status(201).json({ submission, points: verdicts });
   })
 );
 

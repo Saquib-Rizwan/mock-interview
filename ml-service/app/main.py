@@ -1,6 +1,13 @@
+from pathlib import Path
+
 from dotenv import load_dotenv
 
-load_dotenv()  # must run before llm.py reads GEMINI_API_KEY
+# Explicit path, not a bare load_dotenv(): that searches upward from the CURRENT
+# WORKING DIRECTORY, so launching uvicorn from the repo root with --app-dir
+# silently found no .env and the service failed with "GEMINI_API_KEY is not set"
+# even though the file was sitting right there. Anchoring to this file's own
+# location makes the service start correctly from anywhere.
+load_dotenv(Path(__file__).resolve().parent.parent / ".env")  # before llm.py reads the key
 
 from fastapi import FastAPI, HTTPException  # noqa: E402
 

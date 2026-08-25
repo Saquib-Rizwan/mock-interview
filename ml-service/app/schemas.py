@@ -9,7 +9,11 @@ class AnalyzeRequest(BaseModel):
 
 
 class PointVerdict(BaseModel):
-    point: str
+    # Deliberately no `point` field. The caller already holds the expected
+    # points and passes them in, so having the model write all five back
+    # verbatim was output tokens spent to return data we sent it — the single
+    # largest avoidable cost in this call. The caller re-attaches the text by
+    # position; see `verdicts` in backend/src/submissions/routes.ts.
     covered: bool
     comment: str
 
