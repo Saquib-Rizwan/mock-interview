@@ -1,0 +1,418 @@
+[
+  {
+    "text": "The price of a commodity rises by 25% and then falls by 20%. What is the net percentage change in price? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Takes a convenient starting price such as 100, which is legitimate because the question asks for a percentage rather than an amount",
+      "Applies the 25% rise to get 125",
+      "Applies the 20% fall to 125 rather than to the original 100, giving 100",
+      "States that the net change is zero, so the price is back where it started",
+      "Explains why the percentages cannot simply be added and subtracted: each is taken on a different base, and the 20% fall is a fall on the larger, already-increased figure"
+    ]
+  },
+  {
+    "text": "An amount of 6,300 rupees is divided among A, B and C in the ratio 3 : 5 : 6. How much does B receive? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Adds the ratio terms to get 14 total parts",
+      "Divides the total amount by the number of parts to find one part is worth 450 rupees",
+      "Multiplies by B's share of 5 parts",
+      "States the answer as 2,250 rupees",
+      "Checks the result by confirming the three shares of 1,350, 2,250 and 2,700 add back to 6,300"
+    ]
+  },
+  {
+    "text": "The average weight of 8 people increases by 2.5 kg when a new person replaces one of them weighing 65 kg. What is the weight of the new person? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that the group size is unchanged at 8, so only the total weight has moved",
+      "Computes the rise in total weight as 8 multiplied by 2.5, which is 20 kg",
+      "Sees that this entire rise is the difference between the new person and the one who left",
+      "States the answer as 85 kg, being 65 plus 20",
+      "Explains why the individual weights of the other seven are irrelevant and never need to be known, which is what makes the shortcut valid"
+    ]
+  },
+  {
+    "text": "A father is three times as old as his son. Five years ago he was four times as old. Find their present ages. Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Defines a variable for the son's present age and writes the father's as three times it",
+      "Writes the second condition five years earlier as father minus 5 equals four times son minus 5",
+      "Substitutes and simplifies to 3s minus 5 equals 4s minus 20, giving s equals 15",
+      "States the present ages as son 15 and father 45",
+      "Verifies against the second condition: five years ago they were 10 and 40, and 40 is indeed four times 10"
+    ]
+  },
+  {
+    "text": "A sum of money at simple interest amounts to 5,200 rupees in 3 years and 6,000 rupees in 5 years. Find the principal and the rate of interest. Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that under simple interest the same amount is added every year, so the difference between the two amounts is pure interest",
+      "Computes 800 rupees of interest over the 2 intervening years, giving 400 rupees per year",
+      "Works back from the 3-year amount: principal equals 5,200 minus 3 years of interest, which is 5,200 minus 1,200",
+      "States the principal as 4,000 rupees and the rate as 10% per annum, from 400 divided by 4,000",
+      "Notes that this subtraction only works because the interest is simple; under compound interest the yearly additions differ and the difference of two amounts is not a whole number of equal instalments"
+    ]
+  },
+  {
+    "text": "Find the difference between the compound interest and the simple interest on 10,000 rupees at 10% per annum for 2 years. Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Computes the simple interest as 10,000 times 10 times 2 divided by 100, which is 2,000 rupees",
+      "Computes the compound amount as 10,000 times 1.1 squared, which is 12,100, so the compound interest is 2,100 rupees",
+      "States the difference as 100 rupees",
+      "Explains where the difference comes from: it is the interest earned in the second year on the first year's interest of 1,000 rupees",
+      "Notes the standard shortcut for two years, that the difference equals the principal times the rate over 100 squared, and confirms it gives the same 100 rupees"
+    ]
+  },
+  {
+    "text": "Two trains 120 m and 180 m long run on parallel tracks in opposite directions at 54 km/h and 90 km/h. How long do they take to cross each other completely? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Adds the speeds because the trains move in opposite directions, giving a relative speed of 144 km/h",
+      "Converts 144 km/h to 40 m/s by multiplying by 5/18",
+      "Takes the distance to be covered as the sum of both train lengths, 300 m, not the length of either one alone",
+      "Divides 300 by 40 to get the answer of 7.5 seconds",
+      "Explains why the lengths add: crossing is complete only when the rear of one train has passed the rear of the other, so both bodies must clear each other; had they been travelling in the same direction the speeds would have been subtracted instead"
+    ]
+  },
+  {
+    "text": "A boat covers 30 km downstream in 2 hours and returns upstream over the same distance in 3 hours. Find the speed of the boat in still water and the speed of the stream. Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Computes the downstream speed as 30 divided by 2, which is 15 km/h",
+      "Computes the upstream speed as 30 divided by 3, which is 10 km/h",
+      "States the relationships: downstream speed is boat plus stream, upstream is boat minus stream",
+      "Takes half the sum for the still-water speed of 12.5 km/h and half the difference for the stream speed of 2.5 km/h",
+      "Checks the answer by confirming 12.5 plus 2.5 gives 15 and 12.5 minus 2.5 gives 10"
+    ]
+  },
+  {
+    "text": "Pipe A can fill a tank in 6 hours and pipe B can empty it in 9 hours. If both are opened together on an empty tank, how long will it take to fill? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Expresses each pipe as a rate per hour: A fills 1/6 of the tank, B empties 1/9",
+      "Subtracts rather than adds for the emptying pipe, since it works against the filling one",
+      "Computes the net rate as 1/6 minus 1/9, which is 1/18 of the tank per hour",
+      "Takes the reciprocal to state the answer as 18 hours",
+      "Notes the check that decides whether the tank fills at all: the filling rate must exceed the emptying rate, and had B been faster than A the net rate would be negative and the tank would never fill"
+    ]
+  },
+  {
+    "text": "A vessel holds 40 litres of pure milk. 4 litres are removed and replaced with water, and this is done a second time. How much pure milk remains? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that after the first replacement the vessel holds a mixture, so the second removal takes out water as well as milk, not 4 litres of pure milk",
+      "Sees that each operation leaves the same fraction of whatever milk was present, namely 36/40 or 0.9",
+      "Applies that fraction twice, giving 40 times 0.9 squared",
+      "States the answer as 32.4 litres of milk, with 7.6 litres of water",
+      "States the general formula, that the milk remaining is the initial quantity times one minus the replaced amount over the total, all raised to the number of operations"
+    ]
+  },
+  {
+    "text": "A invests 12,000 rupees for 6 months and B invests 8,000 rupees for 9 months in a business. If the total profit is 7,000 rupees, how should it be divided? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that profit follows capital multiplied by the time it was invested for, not capital alone",
+      "Computes A's contribution as 12,000 times 6, which is 72,000",
+      "Computes B's contribution as 8,000 times 9, which is also 72,000",
+      "Concludes the ratio is 1 : 1 and each receives 3,500 rupees",
+      "Draws out why the answer is worth noticing: A put in more money and B put in more time, and here the two exactly cancel, which is precisely the case that dividing on capital alone would get wrong"
+    ]
+  },
+  {
+    "text": "A machine costing 50,000 rupees depreciates at 10% per annum on its reducing value. What is it worth after 3 years? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises this as compound decrease, so each year's 10% is taken on the value at the start of that year rather than on the original cost",
+      "Writes the value after n years as 50,000 times 0.9 raised to the power n",
+      "Evaluates 0.9 cubed as 0.729",
+      "States the answer as 36,450 rupees",
+      "Contrasts it with the wrong straight-line answer of 35,000 that comes from deducting 5,000 three times, and explains that reducing-balance depreciation always leaves more than that"
+    ]
+  },
+  {
+    "text": "What is the remainder when 2 raised to the power 31 is divided by 7? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Looks for a cycle in the powers of 2 modulo 7 rather than attempting to compute the number itself",
+      "Finds that 2 cubed is 8, which leaves remainder 1 on division by 7, so the pattern repeats every 3 powers",
+      "Writes 31 as 3 times 10 plus 1, so 2 to the 31 is 2 cubed raised to the 10, times 2",
+      "Concludes that the first factor contributes remainder 1, so the answer is 2",
+      "Explains why finding a power that gives remainder 1 is the whole technique: from that point the exponent only matters modulo the cycle length"
+    ]
+  },
+  {
+    "text": "Four bells toll at intervals of 6, 8, 12 and 18 seconds. They toll together at 9:00:00. When do they next toll together, and how many times do they toll together in the following hour? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies that they coincide at every common multiple of the intervals, so the first is the LCM",
+      "Computes the LCM by prime factorisation: 6 is 2 times 3, 8 is 2 cubed, 12 is 2 squared times 3, 18 is 2 times 3 squared, so the LCM is 2 cubed times 3 squared",
+      "States the LCM as 72 seconds, so they next toll together at 9:01:12",
+      "Divides 3,600 seconds by 72 to get 50 coincidences in the hour",
+      "Notes why LCM and not HCF is the right tool, and that the count excludes the 9:00:00 start because the question asks about the hour that follows it"
+    ]
+  },
+  {
+    "text": "The length of a rectangle is increased by 20% and its breadth is decreased by 20%. What is the percentage change in area? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States that area is length times breadth, so the multipliers apply to the product",
+      "Writes the new area as 1.2 times 0.8 times the original, which is 0.96 times the original",
+      "States the answer as a 4% decrease",
+      "Explains why the answer is not zero: the two 20% changes are taken on different quantities, so they do not cancel",
+      "Notes the general result that equal percentage rises and falls always leave a net loss, of the percentage squared over 100"
+    ]
+  },
+  {
+    "text": "If 15 workers can build a wall in 12 days, how many days will 20 workers take, assuming every worker works at the same rate? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Computes the total work as 15 times 12, which is 180 worker-days",
+      "Recognises the total work is fixed, so more workers means proportionally fewer days",
+      "Divides 180 by 20 to get the answer",
+      "States the answer as 9 days",
+      "Identifies this as inverse proportion and states the assumption it rests on, that workers do not interfere with one another and the rate per worker stays constant however many are on site"
+    ]
+  },
+  {
+    "text": "A trader sells two articles at 1,200 rupees each, gaining 20% on one and losing 20% on the other. What is the overall profit or loss? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that the two cost prices differ even though the selling prices are equal, so they must be found separately",
+      "Computes the first cost price as 1,200 divided by 1.2, which is 1,000 rupees",
+      "Computes the second cost price as 1,200 divided by 0.8, which is 1,500 rupees",
+      "Compares total cost of 2,500 against total revenue of 2,400 and states a loss of 100 rupees, which is 4%",
+      "Explains why the answer is a loss rather than break-even: the 20% loss is taken on the larger cost price, so it outweighs the 20% gain on the smaller one, and the result is always a loss of the percentage squared over 100"
+    ]
+  },
+  {
+    "text": "A man travels from A to B at 40 km/h and returns along the same road at 60 km/h. What is his average speed for the whole journey? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States that average speed is total distance divided by total time, never the average of the two speeds",
+      "Takes a convenient distance such as 120 km each way, or works with a symbolic distance d",
+      "Computes the times as 3 hours and 2 hours, giving 240 km in 5 hours",
+      "States the answer as 48 km/h",
+      "Explains why the answer is below the arithmetic mean of 50: more time is spent at the slower speed, and gives the harmonic mean formula 2ab over a plus b, which applies only when the two distances are equal"
+    ]
+  },
+  {
+    "text": "All roses are flowers. Some flowers fade quickly. Does it follow that some roses fade quickly? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States clearly that the conclusion does not follow",
+      "Explains that roses are contained within flowers, but the flowers that fade quickly need not overlap the roses at all",
+      "Gives a concrete counter-model: every rose could be long-lasting while the quick-fading flowers are all tulips, which satisfies both premises and contradicts the conclusion",
+      "Notes that the conclusion is possible but not necessary, and that a syllogism asks only what must follow",
+      "Identifies the general rule being tested, that a universal premise combined with a particular one gives no valid particular conclusion about the subject unless the middle term is distributed correctly"
+    ]
+  },
+  {
+    "text": "Five friends P, Q, R, S and T sit in a row. Q is immediately to the right of P. S sits between Q and T. P and R occupy the two ends. Who sits in the middle? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Starts from the most restrictive clue, that P and R take the two ends, and tests P at the left end",
+      "Places Q immediately to P's right, at position 2",
+      "Uses S between Q and T to fix S at position 3 and T at position 4, leaving R at position 5",
+      "States the final order as P, Q, S, T, R and answers that S sits in the middle",
+      "Confirms the arrangement is unique by checking that putting P at the right-hand end leaves no room for Q immediately to its right, so that branch is impossible"
+    ]
+  },
+  {
+    "text": "In a certain code, TEACHER is written as VGCEJGT. How is CHILDREN written in that code? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Compares the two words letter by letter rather than looking for a rearrangement",
+      "Finds that each letter has moved two places forward in the alphabet: T to V, E to G, A to C, and so on",
+      "Confirms the rule holds for every letter of the sample, which is what rules out a coincidence on the first one or two",
+      "Applies the same shift to each letter of CHILDREN in turn: C to E, H to J, I to K, L to N, D to F, R to T, E to G, N to P",
+      "States the answer as EJKNFTGP, and notes that letters near the end of the alphabet would need wrapping round to the start, which does not arise here"
+    ]
+  },
+  {
+    "text": "A man walks 10 km north, then 6 km east, then 2 km south, then 6 km west. How far is he from his starting point, and in which direction? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Treats the north-south and east-west movements as two independent axes rather than tracking the path as a whole",
+      "Nets the north-south movement: 10 km north against 2 km south leaves 8 km north",
+      "Nets the east-west movement: 6 km east against 6 km west leaves zero, so the eastward leg is entirely undone",
+      "States the answer as 8 km, due north of the starting point",
+      "Notes that because one axis nets to zero no Pythagoras step is needed, and that had it not, the distance would be the square root of the sum of the two squared net displacements"
+    ]
+  },
+  {
+    "text": "What is the angle between the hour and minute hands of a clock at 3:40? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Establishes the rates: the minute hand moves 6 degrees per minute and the hour hand 0.5 degrees per minute",
+      "Places the minute hand at 40 times 6, which is 240 degrees from the 12 o'clock position",
+      "Places the hour hand at 3 times 30 plus 40 times 0.5, which is 90 plus 20, giving 110 degrees",
+      "Takes the difference to state the answer as 130 degrees",
+      "Emphasises the step most often missed, that the hour hand does not sit on the 3 but has moved two thirds of the way towards the 4, and notes that if the difference exceeded 180 it would be subtracted from 360"
+    ]
+  },
+  {
+    "text": "Find the odd one out: 8, 27, 64, 100, 125, 216. Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Tests the numbers against a common pattern rather than looking only at size or parity",
+      "Identifies that 8, 27, 64, 125 and 216 are the cubes of 2, 3, 4, 5 and 6",
+      "Notes that the cubes follow consecutive bases, which makes the pattern deliberate rather than coincidental",
+      "States the answer as 100, which is a perfect square but not a perfect cube",
+      "Notes the trap that 64 is both a square and a cube, so a student testing for squares alone would wrongly keep 100 and reject something else"
+    ]
+  },
+  {
+    "text": "Three boxes contain apples, oranges and a mixture of both. All three are labelled, and every label is wrong. You may draw one fruit, without looking, from one box of your choosing. How do you correctly label all three boxes? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Draws from the box labelled Mixed, and identifies this as the only choice that works",
+      "Explains why: since every label is wrong, that box is not mixed, so it is pure and one fruit settles it completely",
+      "Suppose an apple is drawn, that box is Apples; then the box labelled Oranges cannot be oranges and cannot be apples, so it must be the Mixed box",
+      "Concludes the remaining box, labelled Apples, must hold the oranges, so all three are determined from a single draw",
+      "Explains why drawing from either other box fails: a box labelled Apples could be oranges or mixed, so drawing an orange from it leaves the answer ambiguous, and it is the every label is wrong condition that carries the whole solution"
+    ]
+  },
+  {
+    "text": "In a class, Anu ranks 12th from the top and 28th from the bottom. How many students are in the class? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that the two ranks together account for everyone, but that Anu herself is counted in both",
+      "Adds the two ranks to get 40",
+      "Subtracts 1 to correct the double count",
+      "States the answer as 39 students",
+      "Explains the check that catches the off-by-one: with 39 students, being 12th from the top means 27 students are below her, and 27 plus Anu gives exactly the 28th-from-bottom position"
+    ]
+  },
+  {
+    "text": "A cube painted red on all its faces is cut into 64 identical smaller cubes. How many of the small cubes have exactly two faces painted? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Determines that 64 small cubes means the big cube was cut 4 along each edge, since 4 cubed is 64",
+      "Recognises that exactly two painted faces means a cube lying on an edge but not at a corner",
+      "Counts the non-corner positions per edge as 4 minus 2, which is 2, across 12 edges",
+      "States the answer as 24 cubes",
+      "Checks the whole decomposition adds up: 8 corner cubes with three faces, 24 edge cubes with two, 24 face-centre cubes with one and 8 interior cubes with none, totalling 64"
+    ]
+  },
+  {
+    "text": "A company's sales were 40 lakh rupees in 2022 and 60 lakh in 2023, while its expenses were 32 lakh and 40 lakh respectively. In which year was the profit higher as a percentage of expenses, and by how much? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Computes profit for each year as sales minus expenses: 8 lakh in 2022 and 20 lakh in 2023",
+      "Divides each profit by that year's expenses rather than by its sales, because the question asks for a percentage of expenses",
+      "Computes 8 over 32 as 25% and 20 over 40 as 50%",
+      "States that 2023 was higher, by 25 percentage points",
+      "Notes the distinction that makes the answer defensible: this is a gap of 25 percentage points, not a 25% increase, and the ratio also happens to have doubled, which is a different statement again"
+    ]
+  },
+  {
+    "text": "Two dice are thrown together. What is the probability of getting at least one six? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that at least one is most easily handled through its complement, namely no six at all",
+      "Computes the probability that a single die avoids a six as 5/6, and multiplies for two independent dice to get 25/36",
+      "Subtracts from 1 to get the answer",
+      "States the answer as 11/36",
+      "Explains why adding 1/6 and 1/6 to get 1/3 is wrong: it counts the outcome where both dice show a six twice, and the complement method avoids that double counting entirely"
+    ]
+  },
+  {
+    "text": "From 7 men and 5 women, in how many ways can a committee of 5 be formed containing exactly 3 men and 2 women? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies this as a selection problem where order does not matter, so combinations rather than permutations apply",
+      "Computes the ways of choosing 3 men from 7 as 7C3, which is 35",
+      "Computes the ways of choosing 2 women from 5 as 5C2, which is 10",
+      "Multiplies rather than adds, because every choice of men can pair with every choice of women, and states the answer as 350",
+      "Explains why order is irrelevant here, and notes that if the committee had named roles such as chair and secretary the count would rise because the arrangement within the group would then matter"
+    ]
+  },
+  {
+    "text": "In a class of 60 students, 35 play cricket, 30 play football and 12 play both. How many play neither? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Recognises that adding 35 and 30 counts the 12 who play both games twice",
+      "Applies the inclusion-exclusion principle: 35 plus 30 minus 12 gives 53 who play at least one game",
+      "Subtracts from the class total of 60",
+      "States the answer as 7 students",
+      "Checks the parts add up: 23 play only cricket, 18 play only football, 12 play both and 7 play neither, which totals 60"
+    ]
+  },
+  {
+    "text": "Find the sum of all three-digit numbers divisible by 7. Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies the first three-digit multiple of 7 as 105 and the last as 994",
+      "Recognises the numbers form an arithmetic progression with common difference 7",
+      "Finds the number of terms as 994 minus 105, divided by 7, plus 1, which gives 128",
+      "Applies the sum formula, number of terms over 2 times first plus last, giving 64 times 1,099",
+      "States the answer as 70,336, and notes the two most common slips are forgetting the plus 1 in the term count and starting from 100 rather than the first actual multiple"
+    ]
+  }
+]

@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { asyncHandler } from "../asyncHandler";
 import { requireAuth } from "../auth/middleware";
+import { attemptedQuestionIds } from "./attempted";
 import { prisma } from "../prisma";
 
 // Read-only browsing of the company -> role -> round -> question tree.
@@ -14,14 +15,32 @@ catalogRouter.get(
   asyncHandler(async (_req, res) => {
     const companies = await prisma.company.findMany({
       orderBy: { name: "asc" },
-      select: { id: true, name: true, _count: { select: { roles: true } } },
+      select: {
+        id: true,
+        name: true,
+        // Roles come back in full rather than as a count, so the browser can
+        // search and filter the whole catalogue without a round trip per
+        // keystroke. The payload is a few hundred short strings even at
+        // sixty-plus companies, which is far cheaper than the alternative.
+        roles: {
+          orderBy: { name: "asc" },
+          select: {
+            id: true,
+            name: true,
+            eligibleBranches: true,
+            openToAllBranches: true,
+            minCgpa: true,
+          },
+        },
+      },
     });
 
     res.json({
-      companies: companies.map(({ id, name, _count }) => ({
+      companies: companies.map(({ id, name, roles }) => ({
         id,
         name,
-        roleCount: _count.roles,
+        roleCount: roles.length,
+        roles,
       })),
     });
   })
@@ -66,6 +85,9 @@ catalogRouter.get(
       select: {
         id: true,
         name: true,
+        eligibleBranches: true,
+        openToAllBranches: true,
+        minCgpa: true,
         company: { select: { id: true, name: true } },
         rounds: {
           // Explicit sequence, never insertion order.
@@ -76,7 +98,10 @@ catalogRouter.get(
             roundType: true,
             roundName: true,
             notes: true,
-            _count: { select: { questions: true } },
+            // The ids, not a _count aggregate: the same rows answer both "how
+            // many questions" and "how many of them has this user attempted",
+            // so fetching them once is cheaper than counting and then asking.
+            questions: { select: { questionId: true } },
           },
         },
       },
@@ -84,14 +109,24 @@ catalogRouter.get(
 
     if (!role) return res.status(404).json({ error: "Role not found" });
 
+    // One lookup for the whole role rather than one per round.
+    const attempted = await attemptedQuestionIds(
+      req.userId!,
+      role.rounds.flatMap((round) => round.questions.map((q) => q.questionId))
+    );
+
     res.json({
       role: {
         id: role.id,
         name: role.name,
+        eligibleBranches: role.eligibleBranches,
+        openToAllBranches: role.openToAllBranches,
+        minCgpa: role.minCgpa,
         company: role.company,
-        rounds: role.rounds.map(({ _count, ...round }) => ({
+        rounds: role.rounds.map(({ questions, ...round }) => ({
           ...round,
-          questionCount: _count.questions,
+          questionCount: questions.length,
+          answeredCount: questions.filter((q) => attempted.has(q.questionId)).length,
         })),
       },
     });
@@ -161,13 +196,24 @@ catalogRouter.get(
 
     const { questions, ...rest } = round;
 
+    const attempted = await attemptedQuestionIds(
+      req.userId!,
+      questions.map((rq) => rq.question.id)
+    );
+
     res.json({
       round: {
         ...rest,
         // Flatten the join rows into plain questions. Company-specific and
         // general-bank questions come back together, indistinguishable except
         // by their category.
-        questions: questions.map((rq) => rq.question),
+        //
+        // `attempted` is per-user and safe to send: it says only that this
+        // person has answered before, never what the answer or the score was.
+        questions: questions.map((rq) => ({
+          ...rq.question,
+          attempted: attempted.has(rq.question.id),
+        })),
       },
     });
   })

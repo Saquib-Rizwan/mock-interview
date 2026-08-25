@@ -53,7 +53,19 @@ type RoundSpec = {
   specific?: SpecificQuestion[];
 };
 
-type RoleSpec = { name: string; rounds: RoundSpec[] };
+type RoleSpec = {
+  name: string;
+  /**
+   * Eligibility, optional because most catalogue entries predate the placement
+   * material and genuinely have none stated. Omitting these is meaningful: it
+   * records that the source was silent, which is not the same as saying anyone
+   * may apply. See the comment on Role in schema.prisma.
+   */
+  eligibleBranches?: string[];
+  openToAllBranches?: boolean;
+  minCgpa?: number;
+  rounds: RoundSpec[];
+};
 type CompanySpec = { name: string; roles: RoleSpec[] };
 
 /**
@@ -136,8 +148,21 @@ async function main() {
     for (const roleSpec of companySpec.roles) {
       const role = await prisma.role.upsert({
         where: { companyId_name: { companyId: company.id, name: roleSpec.name } },
-        create: { companyId: company.id, name: roleSpec.name },
-        update: {},
+        create: {
+          companyId: company.id,
+          name: roleSpec.name,
+          eligibleBranches: roleSpec.eligibleBranches ?? [],
+          openToAllBranches: roleSpec.openToAllBranches ?? false,
+          minCgpa: roleSpec.minCgpa ?? null,
+        },
+        // Rewritten on every seed, not left alone: the JSON is the source of
+        // truth for eligibility, so correcting a CGPA cutoff in the file has to
+        // reach the database on the next run.
+        update: {
+          eligibleBranches: roleSpec.eligibleBranches ?? [],
+          openToAllBranches: roleSpec.openToAllBranches ?? false,
+          minCgpa: roleSpec.minCgpa ?? null,
+        },
         select: { id: true },
       });
 

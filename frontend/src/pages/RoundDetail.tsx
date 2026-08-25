@@ -13,6 +13,7 @@ export function RoundDetail() {
   if (!data) return null;
 
   const { round } = data;
+  const answered = round.questions.filter((q) => q.attempted).length;
 
   return (
     <>
@@ -37,8 +38,9 @@ export function RoundDetail() {
       {round.notes && <p className="note">{round.notes}</p>}
 
       <h2>
-        {round.questions.length}{" "}
-        {round.questions.length === 1 ? "question" : "questions"}
+        {answered === 0
+          ? `${round.questions.length} ${round.questions.length === 1 ? "question" : "questions"}`
+          : `${answered} of ${round.questions.length} answered`}
       </h2>
 
       {round.questions.length === 0 ? (
@@ -49,7 +51,7 @@ export function RoundDetail() {
       ) : (
         <ul className="questions">
           {round.questions.map((q) => (
-            <li key={q.id}>
+            <li key={q.id} className={q.attempted ? "is-done" : undefined}>
               {/* Carries the round id so the question page can link back. */}
               <Link to={`/questions/${q.id}?round=${round.id}`} className="question">
                 <p className="question-text">{q.text}</p>
@@ -64,7 +66,11 @@ export function RoundDetail() {
         </ul>
       )}
 
-      <p className="muted small">Click a question to answer it and get feedback.</p>
+      <p className="muted small">
+        Click a question to answer it and get feedback. A rule in the margin
+        marks the ones you have already attempted — it says nothing about how
+        you scored.
+      </p>
     </>
   );
 }

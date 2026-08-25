@@ -515,6 +515,7 @@
     "roles": [
       {
         "name": "Associate Data Engineer",
+        "openToAllBranches": true,
         "rounds": [
           {
             "order": 1,
@@ -622,6 +623,506 @@
                   "Describes breaking the work down and prioritising so something useful still shipped, rather than the whole task stalling on the unresolved parts",
                   "Shows communication upward: flagging the risk or the slip early to whoever needed to know, instead of absorbing it quietly and revealing the problem at the deadline",
                   "Ends with the outcome and what changed afterwards, taking ownership of anything that went wrong rather than attributing it to unclear instructions"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Abilytics",
+    "roles": [
+      {
+        "name": "Software Engineer / DevOps Engineer",
+        "eligibleBranches": ["CS", "CU", "EC"],
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Technical & Aptitude Assessment",
+            "notes": "Online MCQ screening run on the MEC campus, 45 minutes. NEGATIVE MARKING APPLIES — the guidance from the drive was to attempt a question only when confident, which changes the strategy as much as the preparation. Topics span DSA and OOP principles, output-prediction questions in C and Java, frontend basics, DevOps and Cloud fundamentals, CN, DBMS and Operating Systems, plus logical reasoning and quantitative aptitude such as Work and Time. Note the format gap: the real round is multiple choice, while the questions below are written answers on the same topics. Practising them builds the knowledge but not the speed or the guess-discipline the actual round tests.",
+            "picks": [
+              { "category": "aptitude", "type": "text", "count": 3 },
+              { "category": "oops", "type": "text", "count": 2 },
+              { "category": "cn", "type": "text", "count": 2 },
+              { "category": "dbms", "type": "text", "count": 2 }
+            ]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Written Coding Round",
+            "notes": "Online, 15 minutes, one problem. Focused on array manipulation — fundamental logic and implementation speed rather than algorithmic depth. The documented problem was: move all zeroes to the end of an integer array while preserving the relative order of the non-zero elements, in place and without extra space. Marked on correctness and efficiency of the logic, on producing either a working solution or a clear logical walkthrough inside the time limit, and on code clarity under pressure. Practise array problems against a self-imposed 15-minute timer; the constraint is the point of this round.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 3 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical + HR Interview",
+            "notes": "One-on-one, online or offline. Opens by following up the Round 2 coding problem — you are asked to explain and justify your approach and state its complexity, so do not discard your reasoning after the coding round. Then string problems and two-pointer techniques, core CS across CN, DBMS and OOPS, emerging areas including AI and DevOps, a detailed walkthrough of every project on your resume with your specific contribution and your justification of the tech and architecture choices, and finally behavioural and case-based situational questions.",
+            "picks": [
+              { "category": "dsa", "type": "text", "count": 2 },
+              { "category": "cn", "type": "text", "count": 1 },
+              { "category": "dbms", "type": "text", "count": 1 },
+              { "category": "oops", "type": "text", "count": 1 },
+              { "category": "general_hr", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "What do you understand by DevOps? Name the tools commonly used in a CI/CD pipeline and what each one does.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Describes DevOps as a working practice rather than a job title or a tool: development and operations sharing responsibility for a service from commit through to running it in production, so that releases become small, frequent and reversible",
+                  "Names the stages of a CI/CD pipeline in order — source control, build, automated test, artefact packaging, deploy to an environment, then monitoring — and distinguishes continuous integration, which is merging and testing every change, from continuous delivery or deployment, which is shipping it",
+                  "Names real tools against those stages rather than listing them loose: Git with GitHub or GitLab for source, Jenkins, GitHub Actions or GitLab CI as the orchestrator, Docker for packaging, Kubernetes for orchestration, Terraform or Ansible for infrastructure, and Prometheus with Grafana for monitoring",
+                  "Explains what the automation actually buys: a broken build is caught within minutes of the commit that caused it rather than at release, which is what makes frequent small releases safer than infrequent large ones",
+                  "Shows judgement rather than enthusiasm by naming a cost or a limit — pipelines need maintaining, flaky tests destroy trust in the signal, and a rollback plan matters more than deploy frequency"
+                ]
+              },
+              {
+                "text": "Explain your approach to the coding problem you were given. What was its time and space complexity, and could it be improved?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "States the approach in plain terms before any code — what the algorithm does and why it is correct — rather than narrating the syntax line by line",
+                  "Gives the time complexity with the reasoning behind it, naming what n is and why the work grows the way it does, instead of asserting a bound",
+                  "Gives the space complexity separately and correctly, distinguishing extra space used by the algorithm from the input itself, which is what the phrase in place actually turns on",
+                  "Identifies the edge cases the solution handles: an empty input, a single element, all elements identical, and whichever degenerate case is specific to the problem",
+                  "Answers the improvement question honestly — either naming a concrete better approach and its trade-off, or explaining why the current bound is already optimal because every element must be examined at least once"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "managerial",
+            "roundName": "CEO Interview",
+            "notes": "Offline, at the Abilytics office, with the CEO. A high-level discussion of vision, projects and cultural alignment rather than a technical examination. Opens with a formal self-introduction — keep it crisp — then an exhaustive deep-dive on every project on the resume, where what is being assessed is depth of understanding and genuine ownership rather than breadth. The ability to explain complex technical ideas in simple language was heavily weighted. This round is as much about how you speak as what you say.",
+            "specific": [
+              {
+                "text": "Tell me about yourself and your most impactful project.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Opens with a short structured introduction rather than a chronological recital of the resume, and moves to the project quickly because that is what the question is really asking about",
+                  "Chooses one project and commits to it, rather than surveying several thinly, and says plainly what it does",
+                  "Explains why this one is the most impactful using something observable — who used it, what it replaced, what measurably changed — rather than asserting that it was significant",
+                  "States their own contribution precisely, especially where the work was a team effort, without either inflating it or hiding behind we",
+                  "Leaves obvious openings for the interviewer to go deeper, since the stated purpose of this round is to test depth of understanding and ownership, and a closed answer wastes that"
+                ]
+              },
+              {
+                "text": "How does your project solve a real-world problem, and who is your target user?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Names a specific problem and who has it, rather than describing the technology and leaving the problem implied",
+                  "Describes the target user concretely enough that their situation is imaginable, and does not answer everyone, which is the answer that signals the question was never considered",
+                  "Explains what those users do today without the project, since the alternative is what any real solution is judged against",
+                  "Connects the technical choices back to the user's need, so the architecture reads as a response to a problem rather than as a list of technologies used",
+                  "Is honest about reach: distinguishes what the project actually does today from what it could do, which reads as far stronger than overclaiming to a founder who will know the difference"
+                ]
+              },
+              {
+                "text": "Where do you see yourself in five years, and how does this role fit into that vision?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Gives a direction rather than a job title, since a specific title five years out reads as either rehearsed or inflexible",
+                  "Describes the kind of problems they want to be trusted with and the depth they want to reach, which is the answerable part of the question",
+                  "Connects that direction to this role concretely — what this company and this work would teach that the alternatives would not",
+                  "Answers the second half of the question rather than only the first, since the fit is what is actually being assessed",
+                  "Stays credible: ambition that ignores the years of work in between is a weaker answer than a modest plan with a clear first step"
+                ]
+              },
+              {
+                "text": "What excites you most about working at a startup like Abilytics?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Says something specific to this company and its work, not something that would apply to any startup, since the question is partly a check on whether the company was researched",
+                  "Names what a startup actually offers that a large company does not — breadth of ownership, proximity to the decisions, seeing a change reach users quickly — rather than the word culture",
+                  "Shows the trade is understood rather than only the upside: less structure, less mentorship on tap, shifting priorities, and more responsibility earlier than is comfortable",
+                  "Links it to something the candidate has actually done, so the preference reads as informed rather than aspirational",
+                  "Avoids criticising large companies to praise this one, which lands badly and is not what was asked"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Alfaedge",
+    "roles": [
+      {
+        "name": "Software Engineer",
+        "eligibleBranches": ["CS", "CU", "EC"],
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "technical",
+            "roundName": "Tech & HR Interview",
+            "notes": "Offline, semi-formal and conversational, run as three parallel panels of two — one technical and one managerial panelist each. IMPORTANT, AND UNUSUAL: the drive had no aptitude test, no coding round and no group discussion anywhere in the process. Resume shortlisting led straight into this interview and one more. Covers a personal introduction including school life and club activities, the projects on your resume down to the core concepts and implementation, one LeetCode-style DSA problem asked verbally — solve it, explain the approach, then discuss how it could be optimised — and two classic logical puzzles. The two documented puzzles were the 9-balls balance-scale problem and the two-ropes 45-minute problem; both are in the aptitude pool. Structured, step-by-step reasoning out loud is what is being marked, not just the final answer.",
+            "picks": [
+              { "category": "dsa", "type": "text", "count": 2 },
+              { "category": "aptitude", "type": "text", "count": 2 },
+              { "category": "general_hr", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "Why do you want to join a startup rather than a large, established company?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Gives reasons rooted in the nature of the work — ownership of whole features, closeness to the people making decisions, seeing a change reach users in days rather than quarters",
+                  "Shows the trade-off is understood rather than only the appeal: less structure and mentorship, less job security, shifting priorities, and responsibility arriving before it feels earned",
+                  "Grounds the preference in something they have actually done, such as a project or a small team they worked in, so it reads as informed rather than romantic",
+                  "Says something specific about this company rather than about startups in general, since the question is also checking whether they researched it",
+                  "Avoids disparaging large companies to justify the choice, and avoids implying the decision is temporary or a fallback"
+                ]
+              },
+              {
+                "text": "What would you do if the startup you joined shut down?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Answers the question directly rather than deflecting into optimism that it will not happen, since the interviewer is testing composure about a real possibility",
+                  "Treats it as a risk that was weighed before joining rather than one being considered for the first time in the room",
+                  "Focuses on what would be carried forward — the range of work, the ownership, the speed of learning — which are genuinely more portable than a title at a large firm",
+                  "Describes a concrete next step, such as looking for a similar-stage company or using the network and reputation built there, rather than a vague resilience claim",
+                  "Keeps the tone steady and unresentful, since the manner of the answer is being read as much as its content"
+                ]
+              },
+              {
+                "text": "Consider me your grandfather. Explain your project to me in enough detail that I understand it.",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Starts from the problem and the person who has it, in ordinary language, before anything about how it was built",
+                  "Uses an everyday analogy that genuinely maps onto the mechanism rather than one that merely sounds friendly, and abandons it before it starts to mislead",
+                  "Removes jargon rather than translating it mid-sentence: no framework names, no acronyms, and no describing an API as a way for programs to talk to each other and continuing regardless",
+                  "Keeps a real thread of cause and effect so the listener could explain it back — what goes in, what happens to it, what comes out and why that is useful",
+                  "Checks understanding along the way rather than delivering a monologue, since the round is explicitly testing whether the listener follows, not whether the speaker knows"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Offline, conversational but technically rigorous, and almost entirely project-driven. Candidates were encouraged to discuss their projects as independent contributors — architectural decisions, debugging approach and scalability. Expect stress testing and debugging under load, the toughest bugs you have actually hit, a real scenario where your first approach failed, the engineering trade-offs behind a design choice, and what you know about the company. Know every aspect of your own projects: implementation details, design choices, trade-offs, bugs faced and how you resolved them. There is nowhere to hide in this round if the resume overstates.",
+            "specific": [
+              {
+                "text": "A feature in your project breaks under stress load. How would you debug and fix it?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Starts by reproducing the failure under controlled load rather than guessing, and defines what breaking means here — errors, timeouts, wrong results or unacceptable latency — because the investigation differs for each",
+                  "Measures before changing anything: profiles CPU and memory, reads latency percentiles rather than averages, and checks logs and metrics to locate which component degrades first",
+                  "Names the usual culprits and how to tell them apart — an algorithm that is superlinear in the input, a database query missing an index or being issued once per row, memory growth from objects never released, a connection or thread pool exhausted, or lock contention serialising the work",
+                  "Fixes the specific bottleneck found rather than reaching first for more hardware, then re-measures under the same load to confirm the fix moved the number and did not simply relocate the problem",
+                  "Adds something durable so the next occurrence is caught earlier: a load test in CI, an alert on the metric that moved, or a limit such as backpressure, a timeout or a circuit breaker so the system degrades rather than collapses"
+                ]
+              },
+              {
+                "text": "What were the toughest bugs you encountered in your project, and how did you resolve them?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Picks one genuinely difficult bug and tells it properly rather than listing several shallowly, and says what the visible symptom was",
+                  "Explains what made it hard — intermittent, only in production, only under concurrency, or a symptom appearing far from its cause — since that is the part the question is actually asking about",
+                  "Describes the method rather than a flash of insight: narrowing by bisecting the change history, adding targeted logging, reproducing reliably, and forming a hypothesis that could be disproved",
+                  "States the real root cause and distinguishes it from the symptom that was first treated, which is what separates a fix from a workaround",
+                  "Says what changed afterwards — a regression test, an assertion, a code review habit — and is candid about the mistake if it was their own, since ownership is being assessed alongside skill"
+                ]
+              },
+              {
+                "text": "Walk me through a scenario in your project where your initial approach did not work. What did you change?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Describes the original approach and why it was reasonable at the time, so the story is about learning rather than about early carelessness",
+                  "States concretely how it was discovered not to work — a measurement, a failure, a limit hit, or user feedback — rather than a vague sense that it was wrong",
+                  "Explains what was actually changed and why that addressed the cause, distinguishing a redesign from a patch",
+                  "Shows the decision was evidence-driven, including what was ruled out and on what grounds",
+                  "Reflects on what would be done differently from the start now, which is the part that shows the lesson generalised beyond this one project"
+                ]
+              },
+              {
+                "text": "While implementing a key feature, what trade-offs did you consider, and why did you choose the final design?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Names at least two genuine alternatives that were considered, rather than presenting the chosen design as the only option that existed",
+                  "States the axes the decision turned on in concrete terms — latency against accuracy, memory against processing speed, scalability, ease of integration, or development time",
+                  "Explains what the chosen design gives up, since a trade-off with no cost is not a trade-off and claiming one signals the alternatives were never seriously weighed",
+                  "Ties the choice to the actual constraints of the project — expected load, team size, deadline, hardware — rather than to what is generally considered best practice",
+                  "Says under what conditions the decision would be revisited, which shows the choice was contextual rather than absolute"
+                ]
+              },
+              {
+                "text": "What do you know about Alfaedge, and what motivated you to apply here?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "References something specific about the company — its products, technology or stated mission — rather than generic praise that would fit any employer",
+                  "Ties that to the candidate's own interests or work, so the motivation reads as fit rather than flattery",
+                  "Shows awareness of what working there would actually involve day to day, given it is a small company where roles are broad",
+                  "Gives a motivation that is about the work rather than about compensation, location or the company simply having visited the campus",
+                  "Stays honest rather than over-rehearsed: a short genuine reason lands better than a polished one, and a founder-scale company will notice the difference"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Anora Labs",
+    "roles": [
+      {
+        "name": "Trainee Engineer",
+        "eligibleBranches": ["CS", "EC", "EEE"],
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Online Assessment",
+            "notes": "Online, held 19 September 2025. THE PAPER IS BRANCH-SPECIFIC — around 2 hours for EC, around 1.5 hours for ME — and it runs as three consecutive sections. Section 1, 75 minutes, 65 single-mark MCQs made up of 50 core technical and 15 general aptitude, some as long paragraph questions: ratio and proportion, percentages, work and time, calendar problems, circular-track speed and time, puzzles, sequence reasoning and data interpretation from graphs and pie charts, plus C programming on pointers, functions, arrays, decimal-to-binary and output prediction. Section 2, 30 minutes, 5 coding questions in a TEXT EDITOR WITH NO COMPILER — logic writing rather than DSA, 2 easy and 3 hard with long descriptions. Section 3, 15 minutes, 15 situational psychometric MCQs on a Highly Agree to Highly Disagree scale. Note this is an electronics-leaning role: the heaviest part of Section 1 is EC or ME core technical, which is not covered by the questions below.",
+            "picks": [
+              { "category": "aptitude", "type": "text", "count": 4 },
+              { "category": "dsa", "type": "text", "count": 1 }
+            ]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview",
+            "notes": "Offline, two panels of 45 to 90 minutes each. Panel A is Analog and Circuit Design, Panel B is Digital Electronics and Programming — both are EC subject matter and are NOT covered here. What applies to a CS candidate is the programming and logical-reasoning portion, again in a text editor with no compiler, covering star patterns, decimal-to-binary logic, pointer-based output prediction, diagonal sums of a matrix and pattern-based sequence generation; plus the project and resume discussion that every candidate gets, where you explain the project flow with a block diagram and implementation steps, name the tools used, and take deep questions on anything the resume marks as a strength.",
+            "picks": [
+              { "category": "dsa", "type": "text", "count": 2 },
+              { "category": "os", "type": "text", "count": 1 }
+            ],
+            "specific": [
+              {
+                "text": "Explain your project using a block diagram, and walk through the implementation step by step.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Starts from the block diagram rather than the code: names the major blocks, what each is responsible for, and how data or control passes between them",
+                  "States what the project does and for whom before descending into how, so the listener has somewhere to fit the detail",
+                  "Walks the implementation in the order the system actually runs — input, processing, output — rather than in the order the files happen to sit in the repository",
+                  "Names the tools and technologies at each block and says why each was chosen, since this panel asks about tools explicitly",
+                  "Is precise about their own contribution and about which blocks they can answer deep questions on, because anything the resume marks as a strength will be probed hard in this round"
+                ]
+              },
+              {
+                "text": "In C, what is a pointer, and how would you work out the output of a program that does pointer arithmetic?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Defines a pointer as a variable holding the address of another object, and distinguishes the pointer, the address it holds, and the value found there",
+                  "States the rule that makes pointer arithmetic predictable: adding 1 advances by one whole element, that is by sizeof of the pointed-to type in bytes, not by one byte, so an int pointer moves 4 bytes on a typical build",
+                  "Explains the array-pointer relationship: an array name decays to a pointer to its first element, so a[i] is exactly *(a + i), which is why the two notations can be mixed",
+                  "Describes the method for an output-prediction question: draw the memory, track what each pointer holds after each statement, and evaluate the dereferences by hand rather than reading the code for its intent",
+                  "Names the traps these questions are built from — precedence of *p++ against (*p)++, char pointers moving one byte where int pointers move four, and dereferencing an uninitialised or out-of-range pointer being undefined rather than merely wrong"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "notes": "Offline, around 30 minutes, conversational and friendly with NO technical questions at all. Assesses personality and behaviour: hobbies and how you spend free time, scenario questions probing problem-solving and adaptability in hypothetical work situations, general communication and clarity of thought, and a brief practical discussion of CTC, salary structure and allowances. Prepare a confident structured self-introduction, think through common scenario answers beforehand, and be ready to discuss salary calmly rather than being caught off guard by it.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 4 }],
+            "specific": [
+              {
+                "text": "If a quarrel breaks out between colleagues at work, what would you do?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Does not take a side before understanding the disagreement, and separates the people from the substance of what they disagree about",
+                  "Describes de-escalating first — letting things cool, speaking to people individually rather than in front of an audience — instead of arbitrating on the spot",
+                  "Focuses on the shared goal, since two colleagues arguing usually still want the same outcome and differ on the route",
+                  "Knows the limit of their own role and says when it should go to a manager, rather than either escalating everything immediately or trying to resolve something beyond them",
+                  "Answers naturally rather than performing: this appears in a psychometric section too, where consistency across cross-validation questions matters more than picking the answer that sounds best"
+                ]
+              },
+              {
+                "text": "When something goes wrong, do you focus on the problem first or the solution? Explain your thinking.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Rejects the framing as a strict either-or and explains why: jumping to a solution without understanding the problem risks fixing a symptom, while analysing endlessly leaves the thing broken",
+                  "Gives the sequence they actually use — understand enough to be confident of the cause, then act — and says what enough means in practice",
+                  "Distinguishes by urgency: an outage gets stabilised first and diagnosed afterwards, whereas a design flaw deserves the analysis before anything is changed",
+                  "Supports the answer with a real example rather than leaving it abstract",
+                  "Answers consistently with how they responded to similar items in the psychometric section, since these questions are deliberately asked more than once in different forms"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Armada",
+    "roles": [
+      {
+        "name": "Technical Intern",
+        "eligibleBranches": ["CS", "CU", "EC"],
+        "minCgpa": 9.0,
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "coding",
+            "roundName": "Coding Test",
+            "notes": "ELIGIBILITY IS CGPA-GATED AT 9.0 for initial shortlisting. Online on HackerEarth, 1 hour 30 minutes, 2 problems. The shortlisting rule is unusually strict: ONLY CANDIDATES WHO COMPLETELY SOLVED BOTH PROBLEMS ADVANCED — partial credit did not count. The two documented problems were a Three Sum variation (return the indices of three numbers summing to a target, solved by two pointers or a hash map) and Longest Substring Without Repeating Characters (sliding window). Easy for a regular LeetCode practitioner, medium overall. One further warning from the drive: a candidate who finished in 30 minutes was flagged for suspected copying, so do not submit unusually fast.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 4 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical Interview 1",
+            "notes": "Online, 1 hour, single interviewer. Resume-based, conceptual and coding-focused. Opens with a self-introduction, then Python fundamentals — tuples against dictionaries, inserting into the middle of a list, linked lists against arrays — then one DSA problem chosen from your own resume and stated concepts, so it varies by candidate. Marked on programming fundamentals, logical thinking and the ability to explain a concept clearly: practise saying these out loud, because clarity of explanation counts as much as correctness here.",
+            "picks": [
+              { "category": "dsa", "type": "text", "count": 2 },
+              { "category": "dsa", "type": "coding", "count": 1 }
+            ],
+            "specific": [
+              {
+                "text": "What is the difference between a tuple and a dictionary in Python, and when would you use each?",
+                "difficulty": "easy",
+                "expectedAnswerPoints": [
+                  "States the structural difference: a tuple is an ordered sequence accessed by integer position, a dictionary maps keys to values and is accessed by key",
+                  "States the mutability difference, that a tuple cannot be changed after creation while a dictionary can have entries added, changed and removed",
+                  "Gives the lookup costs: finding a value in a tuple means scanning it in O(n), whereas a dictionary looks up by key in O(1) average because it is hash-based",
+                  "Explains the consequence of immutability that interviews actually probe, that a tuple is hashable and so can itself be a dictionary key or a set member, while a list or dict cannot",
+                  "Chooses between them on intent rather than habit: a tuple for a fixed heterogeneous record such as a coordinate or a returned pair, a dictionary for a lookup by name, and notes that dictionaries have preserved insertion order since Python 3.7"
+                ]
+              },
+              {
+                "text": "How do you insert a value into the middle of a Python list, and what does it cost?",
+                "difficulty": "easy",
+                "expectedAnswerPoints": [
+                  "Names the operation, list.insert(index, value), and notes that it inserts before the given index rather than after it",
+                  "States the cost as O(n), because every element from that index onward must shift up one position to make room",
+                  "Explains why that follows from the representation: a Python list is a dynamic array of contiguous references, not a linked list, so there is no O(1) middle insertion available",
+                  "Contrasts with append, which is O(1) amortised, and notes that repeatedly inserting at position 0 in a loop is a common accidental O(n squared)",
+                  "Names the right alternative when middle or front insertion is frequent, collections.deque for both ends in O(1), and slice assignment when a whole run of values is being spliced in at once"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview 2",
+            "notes": "Online, around 1 hour 15 minutes, single interviewer, and the deepest round. Detailed discussion of the final year project requiring full architectural understanding — CANDIDATES WERE ASKED TO DRAW ARCHITECTURAL DIAGRAMS LIVE during the interview, so prepare and rehearse them beforehand rather than improvising. Then coding: Merge Intervals, and a meeting-room scheduling problem asking you to maximise room utilisation and minimise idle time. Then domain questions tailored to the tech stack and area of interest stated on the resume, backend-related for most candidates. Marked on depth of project knowledge, problem-solving and system-level understanding.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 3 }],
+            "specific": [
+              {
+                "text": "Draw and explain the architecture of your final year project. What design decisions did you make, and why?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Produces a diagram with named components and the connections between them, rather than describing the system only in words — this round asks for it to be drawn live",
+                  "Traces one real request or one unit of data end to end through the diagram, which is what demonstrates the architecture is understood rather than memorised",
+                  "Names the significant design decisions explicitly — the data store, how components communicate, where state lives — and states what each one bought",
+                  "Names the alternatives that were rejected and the reason, since a decision presented without an alternative reads as a default that was never actually decided",
+                  "Is honest about the limits: what the design would not handle at ten times the load, and what would be changed with more time, which is the system-level understanding being assessed"
+                ]
+              },
+              {
+                "text": "Given a set of meetings with start and end times, how would you schedule them to maximise room utilisation and minimise idle time?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Clarifies which problem is being asked before solving, since maximising the number of meetings placed, minimising the number of rooms used, and minimising idle gaps are three different objectives with different algorithms",
+                  "For the minimum number of rooms, sorts by start time and uses a min-heap of end times, reusing a room whenever the earliest end is no later than the next start, which runs in O(n log n)",
+                  "For fitting the most meetings into one room, gives the greedy that sorts by END time and takes each meeting that starts after the last one taken, and states that sorting by start time or by duration does not give the optimum",
+                  "Explains why the end-time greedy is correct: taking the meeting that frees the room earliest leaves the largest possible remainder for everything after it",
+                  "Addresses idle time honestly, noting that with fixed start and end times the gaps are determined once the assignment is chosen, so minimising idle time means packing each room tightly, and states the assumptions about back-to-back bookings and half-open intervals"
+                ]
+              },
+              {
+                "text": "Why do you want to work at Armada?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Names something specific about the company's domain or products rather than offering praise that would fit any employer",
+                  "Connects that to the candidate's own work or stated area of interest, which is what the rest of this round has been probing anyway",
+                  "Shows the research was done before the interview, since this is asked again in the HR round and an inconsistent answer is noticeable",
+                  "Gives a reason about the work rather than about compensation, location, or the company simply having visited campus",
+                  "Keeps it short and genuine; a crisp honest answer lands better than a rehearsed one, and this round is not where the decision is made"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "notes": "Online, conversational panel with 2 HR interviewers plus a brief interaction with the Managing Director. Largely an introduction to the company and a basic fit assessment: self-introduction, family background, and why Armada. NO ELIMINATIONS WERE REPORTED AT THIS STAGE — most candidates who cleared Round 3 received offers — so treat it as a conversation to not mishandle rather than a hurdle to clear. Prepare a crisp self-introduction and a genuine answer to why Armada, and be ready for the brief exchange with senior leadership.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 4 }]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Cloudium",
+    "roles": [
+      {
+        "name": "Software Engineer Trainee",
+        "openToAllBranches": true,
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Aptitude Test",
+            "notes": "Offline written test, moderate difficulty, and explicitly weighted towards clarity of concepts and logical thinking rather than memorised shortcuts. Arithmetic questions were fairly easy and rewarded presence of mind — the documented example is an algebraic trick: the product (x-a)(x-b) through to (x-z) is zero, because the sequence necessarily contains the term (x-x), so no calculation is required at all. Logical reasoning had two parts, maths-based reasoning and pure logical reasoning, including flowchart and program-execution questions where you trace a flowchart or short program and give the output. A third section covered basic CS concepts and Python. CAT arithmetic papers are the recommended preparation.",
+            "picks": [
+              { "category": "aptitude", "type": "text", "count": 5 },
+              { "category": "dsa", "type": "text", "count": 1 }
+            ]
+          },
+          {
+            "order": 2,
+            "roundType": "other",
+            "roundName": "Personality Test",
+            "notes": "A behavioural self-assessment of self-awareness, personal strengths and work-style preferences, used as a cultural-fit and behavioural profiling tool. NOT AN ELIMINATION ROUND — every candidate who appeared cleared it. There is nothing to practise and nothing to revise; the only useful advice from the drive is to answer honestly and consistently, because personality instruments carry cross-validation questions that ask the same thing in different words specifically to detect inconsistency."
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical & HR Interview",
+            "notes": "Mixed technical and HR in one sitting. The technical half is driven almost entirely by the projects on your resume — what was built, how it was built, which technologies and why — and it tests depth rather than surface familiarity. Because Cloudium works in cloud technologies, cloud knowledge was a significant advantage: the key insight recorded from this drive is that having completed a cloud course beyond the curriculum and showing genuine interest in the domain made a strong impression on the panel. Revise IaaS, PaaS, SaaS, virtualisation and deployment models, plus OS, CN and DBMS fundamentals. The HR half covers future plans, career goals, readiness to start, and why this company.",
+            "picks": [
+              { "category": "os", "type": "text", "count": 2 },
+              { "category": "cn", "type": "text", "count": 2 },
+              { "category": "dbms", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "Explain the cloud service models IaaS, PaaS and SaaS, and the public, private and hybrid deployment models.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Frames the three service models as a spectrum of who manages what: the further up you go, the more the provider runs and the less you control",
+                  "Defines IaaS as raw compute, storage and network where you still manage the operating system and everything above it, giving an example such as EC2 or a plain virtual machine",
+                  "Defines PaaS as the provider managing the runtime and operating system so you deploy only application code, and SaaS as finished software consumed over the network with nothing to manage at all",
+                  "Distinguishes the deployment models: public cloud is shared multi-tenant infrastructure, private is dedicated to one organisation whether hosted or on-premises, and hybrid deliberately combines them, usually to keep regulated data private while bursting other workloads to public capacity",
+                  "Shows judgement about the trade rather than reciting definitions: moving up the stack buys speed and removes operational burden but costs control, portability and often money at scale, which is why the choice depends on the workload"
+                ]
+              },
+              {
+                "text": "Why do you want to join Cloudium, and how does cloud computing align with your interests?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Answers both halves, since the alignment question is the one this company actually weights",
+                  "Points to something concrete that was done beyond the curriculum — a cloud course, a certification, a project deployed on a cloud provider — because the recorded differentiator here was demonstrated interest rather than stated interest",
+                  "Connects that to what the company does rather than to cloud in the abstract, which requires having looked the company up first",
+                  "Describes what they want to learn next in the domain, so the interest reads as ongoing rather than as a single completed course",
+                  "Stays honest about the current level: a clear account of a small amount of real cloud work beats a vague claim to broad familiarity that the panel can puncture with one question"
+                ]
+              },
+              {
+                "text": "Walk me through your project. What does it do, how did you build it, and what was your specific contribution?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Opens with what the project does and who it is for, in one or two sentences, before any technology is named",
+                  "Explains how it was built at the level of components and flow rather than reciting a stack list, so the panel can follow the design",
+                  "Justifies the technology choices, saying what was considered and why the chosen option won, since being asked why these tools is documented for this round",
+                  "States their own contribution precisely, distinguishing what they built from what the team built, without inflating or hiding behind we",
+                  "Names a real challenge and how it was resolved, and can go a level deeper on any part mentioned, because this round explicitly tests depth of understanding rather than familiarity"
                 ]
               }
             ]

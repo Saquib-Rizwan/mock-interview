@@ -712,6 +712,21 @@ a {
   border-bottom: 1px solid var(--border);
 }
 
+/**
+ * Attempted questions carry a thick rule in the margin — a different device
+ * from the spine's filled node on purpose, because two lists that mark the
+ * same idea the same way read as generated. Every row reserves the 3px, so
+ * answering a question changes its colour and never the layout.
+ */
+.questions li {
+  border-left: 3px solid transparent;
+  padding-left: 1rem;
+}
+
+.questions li.is-done {
+  border-left-color: var(--accent);
+}
+
 .tile {
   display: flex;
   align-items: center;
@@ -835,6 +850,27 @@ a.question:hover .question-text {
   background: var(--accent);
   border-color: var(--accent);
   color: var(--bg);
+}
+
+/**
+ * Round state. Two devices, neither of them colour alone:
+ *   done    — the node fills solid ink, the same treatment a company mark gets
+ *   started — a thick accent rule under the number
+ *
+ * Selectors are deliberately `li.is-done` and not `.spine li.is-done`: at two
+ * classes they sit *below* `.spine-item:hover` at three, so hover always wins.
+ * That keeps the accent meaning exactly one thing on this page — where the
+ * cursor is — rather than competing with where you have got to.
+ */
+li.is-done .spine-node {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+li.is-started .spine-node {
+  box-shadow: inset 0 -3px 0 var(--accent);
+  color: var(--text);
 }
 
 .spine-item .tile-title {
@@ -1395,4 +1431,91 @@ code.io {
   font-size: 0.8rem;
   white-space: pre-wrap;
   overflow-x: auto;
+}
+
+/**
+ * Catalogue filter bar.
+ *
+ * Deliberately NOT reusing `.field`: that class carries the vermilion
+ * registration marks, which exist to mark the one thing a student actually does
+ * on the site — writing an answer. Putting them on three filter controls would
+ * spend the device on furniture and it would stop meaning anything on the page
+ * where it matters.
+ *
+ * The label is a sibling of the input rather than its parent, because the global
+ * `label` rule sets uppercase 0.68rem and `input` inherits its font — nesting
+ * would render the typed value in tiny capitals.
+ */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1.25rem;
+  margin: 2rem 0 1.1rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-field .field-label {
+  margin-bottom: 0.4rem;
+}
+
+.filters input,
+.filters select {
+  margin-bottom: 0;
+}
+
+.filters input[type="search"] {
+  min-width: 15rem;
+}
+
+.filters input[type="number"] {
+  width: 7rem;
+}
+
+/* A control that reads as a text action rather than a second primary button. */
+.linkish {
+  background: none;
+  border: 0;
+  padding: 0 0 0.8rem;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  cursor: pointer;
+}
+
+.count-line {
+  margin: 0 0 0.75rem;
+}
+
+.tile-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 0 0 auto;
+}
+
+/* A CGPA cutoff is a gate, so it gets a solid block — ink, not the accent,
+   which on this page already means "the row under your cursor". */
+.badge-cutoff {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+
+@media (max-width: 560px) {
+  .filters {
+    gap: 0.9rem;
+  }
+  .filters input[type="search"] {
+    min-width: 100%;
+  }
 }

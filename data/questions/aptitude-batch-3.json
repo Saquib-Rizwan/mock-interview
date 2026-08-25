@@ -1,0 +1,28 @@
+[
+  {
+    "text": "What day of the week was 15 August 1947? Explain the method rather than only the answer.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Introduces the idea of odd days, the remainder left after dividing a span of days by 7, since only that remainder decides the day of the week",
+      "Counts the completed years by breaking 1946 into 1600 plus 300 plus 46: a 400-year block contributes 0 odd days, 300 years contributes 1, and 46 years holding 11 leap years gives 11 times 2 plus 35, which is 57 and leaves 1",
+      "Counts the days elapsed in 1947 up to the date itself, being 31, 28, 31, 30, 31, 30, 31 and 15, totalling 227, which leaves 3 odd days",
+      "Adds the parts to get 5 odd days and maps that onto the week counting 0 as Sunday, giving Friday",
+      "Notes the leap-year rule that the count depends on, that a century year is a leap year only when divisible by 400, so 1900 was not and 2000 was, and that 1947 itself being a common year is why February contributes 28"
+    ]
+  },
+  {
+    "text": "Two runners start together from the same point on a circular 400 m track, running in the same direction at 5 m/s and 3 m/s. After how long do they first meet anywhere on the track, and after how long are they both back at the starting point together? Explain your approach.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Separates the two questions, since meeting anywhere on the track and meeting at the starting line are different events with different answers",
+      "For the first meeting, uses relative speed: running the same way the gap closes at 5 minus 3, which is 2 m/s, and one runner must gain a full lap of 400 m, so they meet after 200 seconds",
+      "For the starting point, works in lap times instead: 400 over 5 is 80 seconds and 400 over 3 is 400/3 seconds, and both are at the start only at a common multiple of those",
+      "Takes the LCM of the two lap times, which for fractions is the LCM of the numerators over the HCF of the denominators, giving 400 seconds, and verifies it by checking that in 400 seconds one runs 5 laps and the other exactly 3",
+      "States what changes if they run in opposite directions, that the speeds add rather than subtract so the first meeting comes after 400 divided by 8, which is 50 seconds, while the time to meet at the start is unchanged because it depends only on the lap times"
+    ]
+  }
+]

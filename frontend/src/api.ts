@@ -35,7 +35,29 @@ export type QuestionCategory =
 
 export type Difficulty = "easy" | "medium" | "hard";
 
-export type CompanySummary = { id: string; name: string; roleCount: number };
+/**
+ * Eligibility as the placement material stated it. Three states, and the
+ * difference matters — see the Role comment in prisma/schema.prisma.
+ *
+ *   openToAllBranches       the source explicitly said "All Branches"
+ *   eligibleBranches = []   the source said nothing; unknown, NOT open to all
+ *   minCgpa = null          no cutoff was stated, NOT "there is no cutoff"
+ */
+export type Eligibility = {
+  eligibleBranches: string[];
+  openToAllBranches: boolean;
+  minCgpa: number | null;
+};
+
+export type RoleEligibility = { id: string; name: string } & Eligibility;
+
+export type CompanySummary = {
+  id: string;
+  name: string;
+  roleCount: number;
+  /** Full roles, so search and filtering happen in the browser. */
+  roles: RoleEligibility[];
+};
 export type RoleSummary = { id: string; name: string; roundCount: number };
 
 export type CompanyDetail = {
@@ -51,11 +73,20 @@ export type RoundSummary = {
   roundName: string;
   notes: string | null;
   questionCount: number;
+  /**
+   * How many of this round's questions this user has attempted at least once.
+   * Coverage, not score — a wrong answer still counts as answered, and the
+   * progress page is what grades. Always <= questionCount.
+   */
+  answeredCount: number;
 };
 
 export type RoleDetail = {
   id: string;
   name: string;
+  eligibleBranches: string[];
+  openToAllBranches: boolean;
+  minCgpa: number | null;
   company: { id: string; name: string };
   rounds: RoundSummary[];
 };
@@ -67,6 +98,8 @@ export type QuestionSummary = {
   category: QuestionCategory;
   difficulty: Difficulty;
   questionType: "text" | "coding";
+  /** Whether this user has a saved attempt at it. Never reveals the score. */
+  attempted: boolean;
 };
 
 export type QuestionDetail = {

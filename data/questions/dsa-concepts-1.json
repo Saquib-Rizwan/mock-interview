@@ -1,0 +1,132 @@
+[
+  {
+    "text": "Explain the two-pointer technique. When would you use it in preference to a brute-force nested loop?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes the technique: two indices move through the data under some rule, rather than every pair being examined by nested loops",
+      "Names the two common shapes, opposite-ends pointers converging inward, as in checking a palindrome or finding a pair summing to a target in a sorted array, and same-direction pointers such as slow and fast, as in removing duplicates in place or detecting a cycle in a linked list",
+      "States the payoff concretely: it usually turns an O(n squared) scan into O(n) time with O(1) extra space, because each pointer traverses the data at most once",
+      "States the precondition that makes it valid, normally that the data is sorted or that some monotonic property lets one pointer move without ever needing to go back, and notes that on unsorted data the sort itself may cost O(n log n)",
+      "Contrasts it with the alternative honestly: a hash map also solves two-sum in O(n) and needs no sorting, but costs O(n) space, so two pointers is the better answer when the input is already sorted or memory is constrained"
+    ]
+  },
+  {
+    "text": "Which data structure would you use to implement a browser's back and forward buttons, and why?",
+    "category": "dsa",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Identifies a stack as the right structure, because navigation is last-in-first-out: the page you return to is always the most recent one you left",
+      "Recognises that two stacks are needed, one for back history and one for forward, not just one",
+      "Explains the mechanics: visiting a page pushes the current one onto the back stack, going back pops from back and pushes onto forward, and going forward does the reverse",
+      "Identifies the rule that is easy to miss, that navigating to a new page from a mid-history position must clear the forward stack, since that branch of history is no longer reachable",
+      "Notes the practical qualification that a real browser caps history depth and so uses a bounded structure such as a deque or circular buffer, since an unbounded stack would grow without limit"
+    ]
+  },
+  {
+    "text": "How would you reverse a string in place without using any built-in reverse function? Give the approach and its complexity.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes the two-pointer swap: one index at the start, one at the end, swap the characters and move both inward until they meet or cross",
+      "States the loop condition correctly as while left is less than right, and notes that a middle character in an odd-length string needs no swap because it stays where it is",
+      "Gives the complexity as O(n) time and O(1) extra space, and notes that only n/2 swaps are performed",
+      "Raises the language constraint that decides whether in place is even possible: strings are immutable in Java and Python, so the work is done on a character array or list and rebuilt, whereas C++ std::string and a C char array can genuinely be reversed in place",
+      "Notes the correctness trap in real text, that reversing by code unit breaks multi-byte characters and combining sequences, so reversing a UTF-8 or UTF-16 string safely means working in whole characters rather than bytes"
+    ]
+  },
+  {
+    "text": "What is the difference between an array and a linked list, and when would you choose one over the other?",
+    "category": "dsa",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the structural difference: an array occupies one contiguous block with elements reachable by computed offset, while a linked list scatters nodes anywhere and joins them with pointers",
+      "Gives the access cost: an array indexes in O(1), whereas a linked list must be walked from the head, making the same lookup O(n)",
+      "Gives the modification cost the other way round: inserting or deleting in the middle of an array shifts every later element and costs O(n), while a linked list only rewires two pointers in O(1) once the position is known, which is the qualification that is usually forgotten",
+      "Notes the memory difference: an array needs a contiguous block and, if dynamic, periodically reallocates and copies, while a linked list grows piecewise but pays a pointer of overhead per node",
+      "Adds the reason arrays usually win in practice despite the theory, that contiguous memory is cache-friendly and prefetchable while pointer chasing causes cache misses, so a linked list is chosen for frequent middle insertions or when a stable address per element is needed, not merely because insertion is O(1)"
+    ]
+  },
+  {
+    "text": "What is the difference between a stack and a queue? Give a real use for each.",
+    "category": "dsa",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the ordering rule for each: a stack is last-in-first-out, a queue is first-in-first-out",
+      "Names the operations: push and pop at one end for a stack, enqueue at the rear and dequeue at the front for a queue, all O(1)",
+      "Gives a genuine use for a stack — the call stack holding return addresses, undo history, matching brackets, or depth-first traversal — and explains why LIFO is the right order there",
+      "Gives a genuine use for a queue — a print or task queue, requests waiting on a server, or breadth-first traversal — and explains why arrival order must be preserved",
+      "Draws out the consequence that matters: depth-first and breadth-first search are the same algorithm with a stack swapped for a queue, which is the clearest illustration that the container choice determines the traversal order"
+    ]
+  },
+  {
+    "text": "How do you work out the time complexity of a piece of code you have written?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Starts by defining what n actually is for this problem, since a bound is meaningless without saying what it grows with, and there may be more than one input dimension",
+      "Counts the work structurally: sequential blocks add and take the maximum, nested loops multiply, and a loop that halves the range each time contributes a log n factor",
+      "States that constants and lower-order terms are dropped, so the answer describes growth rather than runtime, and that O(2n) and O(n + 5) are both just O(n)",
+      "Looks inside called functions rather than treating them as free, since a sort inside a loop or a linear search inside a scan is where an unnoticed factor usually hides",
+      "Distinguishes worst, average and amortised cases and says which is being quoted, giving an example such as a dynamic array push being O(n) on a resize but O(1) amortised"
+    ]
+  },
+  {
+    "text": "How does a hash table work, and when does its O(1) lookup stop being O(1)?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes the mechanism: a hash function maps a key to a bucket index, so the bucket is computed directly rather than searched for, which is where the constant-time claim comes from",
+      "Explains collisions and the two standard resolutions, chaining where each bucket holds a list, and open addressing where a colliding key probes for another slot",
+      "States that the O(1) is average-case and depends on a good hash spreading keys evenly and on the load factor staying low, which is why the table resizes and rehashes as it fills",
+      "Names the degradation: if many keys collide, lookups walk a chain and the cost slides towards O(n), which is the worst case, and adversarially chosen keys can force it deliberately",
+      "Notes the requirements on keys, that they must be hashable and that a mutable object used as a key must not change after insertion, since its hash would then no longer locate its own bucket"
+    ]
+  },
+  {
+    "text": "When would you choose recursion over iteration, and what are the risks?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the case for recursion: it matches problems whose structure is self-similar, such as trees, graphs and divide-and-conquer, where the recursive form is far shorter and closer to the definition",
+      "States the case for iteration: it avoids call overhead and stack growth, and is the natural fit for straightforward linear traversal",
+      "Names the main risk precisely, that each call consumes a stack frame so deep recursion causes stack overflow, and notes that Python caps recursion depth around a thousand by default",
+      "Notes the performance trap of naive recursion recomputing the same subproblem, as in plain Fibonacci at O(2 to the n), and that memoisation or a bottom-up table fixes it",
+      "Mentions tail-call optimisation as the qualification: where a compiler implements it a tail-recursive function costs no extra stack, but Python and Java do not, so the safe assumption is that depth costs memory"
+    ]
+  },
+  {
+    "text": "Explain binary search. What must be true for it to work, and what are the common mistakes?",
+    "category": "dsa",
+    "difficulty": "easy",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Describes the algorithm: compare with the middle element and discard the half that cannot contain the target, repeating until the range is empty",
+      "States the precondition that the data must be sorted on the key being searched, and that it must allow O(1) access by index, which is why it works on an array but not on a linked list",
+      "Gives the complexity as O(log n) time and O(1) space iteratively, and explains that the log comes from halving the search range each step",
+      "Names the classic bugs: computing the midpoint as (low + high) / 2 can overflow in fixed-width integers so low + (high - low) / 2 is preferred, and getting the loop boundary wrong by mixing an inclusive high with a while low < high condition causes an infinite loop or a missed element",
+      "Notes the wider use beyond finding a value: binary searching the answer space works whenever a predicate is monotonic, which is how minimum-capacity and minimum-time problems are solved"
+    ]
+  },
+  {
+    "text": "Compare the common sorting algorithms. Which would you use in practice and why?",
+    "category": "dsa",
+    "difficulty": "medium",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "Gives the complexities that matter: bubble, selection and insertion sort at O(n squared), merge sort at O(n log n) always, quicksort at O(n log n) average but O(n squared) worst case, and heapsort at O(n log n) guaranteed",
+      "Covers space: merge sort needs O(n) auxiliary space, quicksort and heapsort sort in place, which is often the deciding factor on large inputs",
+      "Explains stability, that a stable sort preserves the relative order of equal keys, and why it matters when sorting by one field after another; merge and insertion sort are stable, quicksort and heapsort are not",
+      "Answers the practical question directly: use the standard library, and explains what it actually does, typically an introsort that starts with quicksort and switches to heapsort on bad recursion depth, or a merge-based stable sort such as Timsort in Python and Java for objects",
+      "Names the cases where a hand-rolled choice still wins: insertion sort on very small or nearly sorted inputs, counting or radix sort when keys are bounded integers, and a heap when only the top k are needed rather than a full ordering"
+    ]
+  }
+]

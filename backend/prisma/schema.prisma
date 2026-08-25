@@ -132,6 +132,30 @@ model Role {
   id        String  @id @default(uuid())
   companyId String  @map("company_id")
   name      String
+
+  // Eligibility, as stated by the placement material — three states, not two.
+  //
+  // The distinction that makes this worth three fields rather than one: a
+  // document that SAYS "All Branches" is telling a mechanical student they may
+  // apply, while a document that is SILENT tells them nothing. Collapsing those
+  // into one empty list would turn an absence of information into a claim, and
+  // the whole catalogue rule is that we encode only what the source contains.
+  //
+  // Lives on Role rather than Company because eligibility is stated per drive,
+  // and several companies here run two roles with different criteria.
+
+  /// Branch codes exactly as the source gives them, e.g. ["CS", "EC", "EEE"].
+  /// Empty means the source did not state eligibility, NOT that anyone may apply.
+  eligibleBranches String[] @default([]) @map("eligible_branches")
+
+  /// True only when the source explicitly says "All Branches". Distinct from an
+  /// empty eligibleBranches, which means unknown.
+  openToAllBranches Boolean @default(false) @map("open_to_all_branches")
+
+  /// Minimum CGPA where the source states a cutoff. Null means not stated —
+  /// never assume it means there is no cutoff.
+  minCgpa Float? @map("min_cgpa")
+
   company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   rounds    Round[]
 

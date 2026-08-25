@@ -1,10 +1,12 @@
 # Phase 9 — Catalogue expansion
 
-Status: **groundwork done, five pools authored to target, first company added.**
-`os`, `cn`, `oops` and `general_hr` are at **40 questions each** and `dbms` at
-**43**, up from 15. Only `aptitude` (8) is still thin, and it is blocked on a
-design decision rather than on effort. **Aays** is the first company written from
-the placement-cell material (section 5); the rest await screenshots.
+Status: **every pool authored to target, six companies added.**
+`os`, `cn`, `oops`, `general_hr` and `aptitude` are at **40 questions each** and
+`dbms` at **43**, up from 15 (and 8 for aptitude). No pool is thin any more.
+**Aays**, **Abilytics**, **Alfaedge**, **Anora Labs**, **Armada** and
+**Cloudium** are written from the placement-cell material (sections 5, 8 and 9),
+taking the catalogue to **16 companies, 19 roles and 65 rounds**. Between them,
+Abilytics and Anora supply everything Phase 10 was blocked on.
 
 The insight that shapes the phase: **company breadth multiplies against pool
 depth.** The pools were 15 questions each in `os`, `dbms`, `cn`, `oops`,
@@ -340,6 +342,34 @@ badly in the browser the cheap fix is dropping rings 3 and 4 and rescaling — a
 deliberate simplification and should only be done after looking at the real
 thing.
 
+### The other five logos: a wrong assumption, corrected
+
+I had recorded that Amazon, Microsoft, Deloitte, Cognizant and Capgemini were
+"all in simple-icons, so those five are mechanical". **That was wrong.** Checked
+against v16.28.0: it carries 3453 icons, including all five brands already in
+this file, and **none of those five**. They were monograms because they were
+never available, not because nobody got round to them.
+
+The five split into three different problems, not one:
+
+- **Microsoft — done, and it needed no source.** The mark is four equal squares,
+  so it is *constructed* rather than traced: side 11.52 with a 0.96 gap, a gap of
+  one twelfth of a side. Exact at any size. Rendered at 19, 21 and 26 px it is
+  the crispest logo in the set — no antialiasing to lose, unlike every traced
+  mark.
+- **Amazon — needs a source.** The smile-arrow is a drawn curve, not geometry.
+  Constructing it by hand would be exactly the approximation that was rejected
+  for Aays, so it waits for an image.
+- **Deloitte, Cognizant, Capgemini — a design question, not a sourcing one.**
+  All three are wordmarks. At 19-26 px a monochrome wordmark is illegible, so
+  even a perfect trace would render as a grey smear. The two-letter monogram is
+  very likely the better mark at this size, and the fallback already produces it.
+
+The route that works, when a source is needed, is the one Aays proved: the
+placement document has each company's logo on its own page, and the trace
+pipeline above turns one into exact path data. That makes logos a by-product of
+adding a company rather than a separate errand.
+
 ### What the document did not say, and so is not encoded
 
 No cut-off marks, no time limits, no section structure, no eligibility CGPA. The
@@ -347,6 +377,430 @@ document is silent on all of it, so the catalogue is too. Round 2's difficulty
 rating (7/10) and Round 3's (8/10) are recorded in `notes` as prose because
 `Difficulty` is a three-value enum and mapping 7/10 onto it would be inventing
 precision the source does not have.
+
+## 6. Aptitude, 8 to 40
+
+`data/questions/aptitude-batch-1.json` — 32 questions taking the last thin pool
+to target. Written in the shape the existing eight established: a word problem
+ending in *"Explain your approach"*, marked against five points that follow the
+solution rather than only its answer — set it up, do the arithmetic, state the
+result, and one point on the trap the question exists to catch.
+
+Coverage is the standard placement syllabus, deliberately one question per
+topic rather than several per topic:
+
+| Area | Topics |
+|---|---|
+| Arithmetic | successive percentages, ratio, averages, ages, SI, CI vs SI, depreciation |
+| Rates | relative speed, boats and streams, pipes and cisterns, worker-days, average speed |
+| Commerce | partnership by capital-time, profit and loss on two articles, mixture replacement |
+| Numbers | remainders by cyclicity, LCM, arithmetic progression sum, odd one out |
+| Counting | combinations, at-least-one probability, inclusion-exclusion |
+| Reasoning | syllogism, seating, coding-decoding, direction, clock angle, ranking, painted cube, mislabelled boxes |
+| Interpretation | percentage on a two-year table |
+
+### Every answer is computed, not asserted
+
+The rule that governs coding questions — *expected outputs are computed, never
+hand-written* — applies at least as strongly here, because a wrong answer key in
+an aptitude question is invisible until a student loses marks trusting it.
+
+So all 32 were re-derived independently in a script rather than checked by
+re-reading: exact arithmetic in `Fraction` where a decimal would round, `pow(2,
+31, 7)` for the cyclicity question, `math.lcm` for the bells, `comb` for the
+committee. The two pure-logic ones were brute-forced rather than argued:
+
+- **The mislabelled boxes.** Enumerating the permutations where no label is
+  correct gives exactly two worlds; drawing from the box labelled *Mixed*
+  separates them, and drawing from either other box leaves an ambiguity. The
+  marking scheme claims exactly this, and now it is checked rather than asserted.
+- **The syllogism.** Enumerating small models found one satisfying both premises
+  while falsifying the conclusion, which confirms the answer is *does not
+  follow* rather than merely *probably not*.
+
+30 numeric answers plus both logic questions verified, 0 mismatches.
+
+### The duplicate scan does not transfer to aptitude
+
+Run at the usual 0.25 Jaccard threshold, the scan returned **143 flags**, up to
+0.50. Almost none were real. Aptitude word problems share far more surface
+vocabulary than CS prose does — *"what is the"*, *"how many"*, *"explain your
+approach"*, plus rupees and bare numerals — so the baseline similarity between
+two entirely unrelated problems is much higher. The worst offender was *"What is
+the **angle between** the hour and minute hands"* matching two dozen CS
+questions of the form *"What is the **difference between** X and Y"*.
+
+Re-running with stopwords and shared aptitude vocabulary removed, and comparing
+only distinctive tokens, left **4 pairs (2 unique) at 0.31** — CI-versus-SI
+against both the simple-interest question and the depreciation question. Those
+are a topic cluster, not duplication: compound growth, compound decay and
+solving for principal are three different mechanics.
+
+The lesson is about the tool, not the batch: **0.25 on raw tokens is calibrated
+for CS prose and over-reports badly on word problems.** For aptitude the
+stopword-stripped comparison is the one to trust.
+
+### It is still text, and that is a deliberate bet
+
+These are graded by the LLM against five points, exactly like every other text
+question. If Phase 10 later makes aptitude an MCQ assessment round, **the
+question stems and the worked reasoning survive and the five-point schemes are
+the part that is wasted.** That trade was accepted knowingly: the alternative was
+leaving the thinnest pool at 8 while a schema decision that is deferred
+indefinitely blocks it. Every aptitude round in the catalogue draws from this
+pool today.
+
+## 7. Round state on the spine
+
+Rounds gave no signal about what had been done in them. The spine listed them in
+order and every one looked identical whether you had answered all of it or none.
+
+`backend/src/catalog/attempted.ts` answers one question — which of these
+question ids has this user attempted — and both catalogue routes use it:
+
+- `/catalog/roles/:id` returns `answeredCount` beside `questionCount` per round
+- `/catalog/rounds/:id` returns `attempted` per question
+
+"Attempted" means a `Submission` or a `CodeSubmission` exists. Both tables have
+to be asked because they are deliberately separate, and a round mixing written
+and coding questions needs the union. **Neither is filtered on score.** This
+answers *have you been here*, not *did you do well* — the progress page is what
+grades, and conflating the two would make the spine imply a mastery it has not
+measured.
+
+`/roles/:id` swapped its `_count` aggregate for the question ids themselves,
+since the same rows now answer both "how many" and "how many attempted"; one
+lookup covers the whole role rather than one per round.
+
+### Three states, and a fight over the accent
+
+Done, started, and not started — *started* being the one worth separating,
+because it is the only round you can usefully resume.
+
+The devices differ per list, per the Phase 8 rule that uniform rows read as
+generated: the spine node **fills solid ink** when a round is complete and
+carries a **thick accent rule** when it is part-done, while an attempted
+question in the round listing gets a **thick accent rule in the margin** instead.
+
+One real trap surfaced. `.spine-item:hover .spine-node` already fills the node
+with the accent, so a done-state rule at higher specificity would have beaten
+hover and the accent would have meant two different things at once. The state
+selectors are therefore written as `li.is-done .spine-node` — two classes, not
+three — so they sit *below* hover and lose to it deliberately. On this page the
+accent means the cursor and nothing else.
+
+Every question row reserves the 3px rule whether or not it is filled, so
+answering a question changes a colour and never the layout.
+
+## 8. Abilytics and Alfaedge
+
+Two more companies from the same placement document, and between them they broke
+two assumptions the catalogue was quietly carrying.
+
+| | Abilytics | Alfaedge |
+|---|---|---|
+| Role | Software Engineer / DevOps Engineer | Software Engineer |
+| Rounds | 4 | 2 |
+| Placed | 2 | 3 |
+| Questions | 25 | 14 |
+
+**Abilytics** runs the process the catalogue was built to expect: MCQ screen,
+coding round, technical interview, final round. **Alfaedge runs none of it** —
+its document says explicitly that there was *no aptitude test, no coding round
+and no group discussion anywhere in the process*. Resume shortlisting led
+straight into two interviews, both heavily project-driven, on the same day.
+
+That is worth recording because a catalogue built only from companies like
+Abilytics would teach students that every process has a test in it. Alfaedge is
+the counter-example, and it is a two-round process that placed three people.
+
+### Abilytics Round 1 is the data Phase 10 was waiting for
+
+The Phase 10 deferral above lists exactly what was missing. Abilytics supplies
+most of it:
+
+| Needed | Abilytics says |
+|---|---|
+| Duration | 45 minutes |
+| Per-section or overall timer | Not stated |
+| Sections and counts | Topics listed, counts not stated |
+| Negative marking | **Yes** — "attempt only when confident" |
+| Revisit questions | Not stated |
+| Per-section cut-off | Not stated |
+
+So Phase 10 is **unblocked but not fully specified**. Enough to design an
+`AssessmentAttempt` around — timed, negative marking, whole-test grading — but
+still silent on sectioning, which was the structural variance that caused the
+deferral in the first place. One more company with a sectioned test would settle
+it. **Nothing was built for it here**, deliberately: the brief was to add
+companies without disturbing what works.
+
+### The format gap is recorded, not papered over
+
+Abilytics Round 1 is mapped to `roundType: aptitude` and draws written questions
+from `aptitude`, `oops`, `cn` and `dbms`. That is a genuine mismatch — the real
+round is multiple choice under negative marking — and the round `notes` say so
+in as many words: practising these builds the knowledge but not the speed or the
+guess-discipline the real round tests.
+
+Writing that down was the alternative to two worse options: silently pretending
+a written round is an MCQ round, or leaving the company out until Phase 10 lands.
+
+### Where the documented questions went
+
+The same rule as Aays. Generic with a pool home goes to the pool; company-specific
+or homeless stays inline.
+
+**To the pool** — three DSA concepts that were genuine holes, since `dsa` held
+only coding questions and no text at all, plus three more added so two rounds
+drawing from it do not overlap (`dsa-concepts-1.json`, 6 questions): the
+two-pointer technique, the browser back-button data structure, reversing a string
+in place, array versus linked list, stack versus queue, and working out time
+complexity.
+
+**To the pool** — the two classic puzzles Alfaedge asked (`aptitude-batch-2.json`),
+taking aptitude to 42: the **9-balls balance problem** and the **two-ropes
+45-minute problem**. Both are generic classics rather than company property, so
+they belong in the shared pool; Alfaedge's round notes name them explicitly so
+the connection is not lost when the cursor hands them to someone else.
+
+**Inline** — DevOps and CI/CD. There is no `devops` category and adding an enum
+value is a two-migration schema change, which is exactly what "do not break the
+working nature" rules out. It sits as an Abilytics `specific`, the same treatment
+Aays' data-pipeline questions got. **If a second company asks DevOps, that is the
+argument for the category**; one company is not.
+
+**Inline** — the four CEO questions, the coding-round follow-up, and Alfaedge's
+five project-interrogation questions plus its three behavioural ones.
+
+### One overlap accepted rather than removed
+
+The scan flagged the same collision shape as Aays: managerial specifics reading
+as longer versions of `general_hr` pool entries — *"Where do you see yourself in
+five years, and how does this role fit"* against the pool's *"Where do you see
+yourself in five years?"* at 0.50.
+
+Abilytics Round 4 takes no `general_hr` picks, so those cannot meet in one round.
+**Alfaedge Round 1 keeps its picks and accepts the risk**, which is a different
+call from the one made for Aays, for a reason: Aays' document enumerated its
+final round completely, so pool draws could only restate it. Alfaedge's says
+there were behavioural questions *and* names two, so generic HR still adds
+something the document does not cover. The residual overlap is *"why join this
+company"* against *"why a startup and not a big company"* — lexically close,
+genuinely different questions.
+
+### One logo in, one deliberately rejected
+
+**Abilytics is a hummingbird** and traced cleanly. The source is a colour
+gradient, so the mask was taken on saturation rather than darkness, upscaled 6x,
+and run through potrace for real Bezier curves — two subpaths, body-with-tail and
+the upper wing. Re-rendered against the source mask it matches. At 19, 21 and 26
+px it stays recognisably a bird, because a solid silhouette survives where Aays'
+64 dots did not.
+
+**Alfaedge is a wordmark and was rejected on evidence.** It traced fine — 18
+subpaths, 5,302 characters — but the mark is 3.6:1, so fitted into a 24-wide box
+it is under six units tall and every letter lands on about two pixels. Rendered
+at all three real sizes it is an unreadable grey smear. The letter monogram is
+genuinely the better mark here, and the fallback already produces it. The
+wordmark carries a small rocket in its "g" which would read at size, but Alfaedge
+is not known to use it standalone, and inventing an icon mark for a company is
+the same error as the first Aays attempt.
+
+Two data points now: **silhouettes trace and survive, wordmarks trace and die.**
+That is the rule to apply to the remaining monograms rather than tracing them all
+and looking afterwards.
+
+## 9. Anora Labs, Armada and Cloudium
+
+Three more, taking the catalogue to **16 companies, 19 roles, 65 rounds**. The
+instruction for this batch was CS roles only, so Anora's electronics and
+mechanical content is flagged where it exists but not encoded.
+
+| | Anora Labs | Armada | Cloudium |
+|---|---|---|---|
+| Role | Trainee Engineer | Technical Intern | Software Engineer Trainee |
+| Rounds | 3 | 4 | 3 |
+| Placed | 2 | 3 | 1 |
+| Questions | 16 | 19 | 15 |
+
+### Anora Round 1 finally settles Phase 10
+
+Abilytics unblocked the MCQ decision but left sectioning open, which was the
+exact structural variance that caused the deferral. **Anora supplies it.** Its
+Round 1 is one assessment made of three consecutive sections, each with its own
+timer and its own question count:
+
+| Section | Time | Questions | Kind |
+|---|---|---|---|
+| 1 | 75 min | 65 MCQ (50 core technical + 15 aptitude) | single mark each |
+| 2 | 30 min | 5 | coding, text editor, **no compiler** |
+| 3 | 15 min | 15 | psychometric, Highly Agree to Highly Disagree |
+
+That is the shape a flat `AssessmentAttempt` would not survive, and now there is
+a real example to design against rather than a guess. Two companies also differ
+on marking — Abilytics applies negative marking, Anora is single mark each — so
+that has to be per-assessment rather than global. **Still nothing built for it**;
+the standing instruction is to add companies without disturbing what works.
+
+Anora's paper is also **branch-specific** (about 2 hours for EC, 1.5 for ME),
+which is a further wrinkle: the same round is not the same test for every
+candidate.
+
+### Two more assumptions broken
+
+**Armada is CGPA-gated at 9.0** — the first hard eligibility criterion in the
+catalogue, and the first case where a student can be ineligible before any round
+exists. Its Round 1 shortlisting is unusually strict too: only candidates who
+*completely* solved both problems advanced, so partial credit was worth nothing.
+Both facts live in the round notes; neither is modelled, and an eligibility field
+would be a schema change.
+
+**Cloudium's Personality Test is the second zero-question round**, after Aays'
+resume screen, and it is explicitly not an elimination stage. The empty-round
+copy fixed in section 5 now earns its place twice.
+
+### CS-only, and saying so
+
+Anora's Round 2 runs two panels — Analog and Circuit Design, and Digital
+Electronics and Programming — and its Round 1 technical section is mostly EC or
+ME core. Per the instruction for this batch, none of that is encoded. What is
+encoded is the part a CS candidate actually faces: C programming and logic
+writing without a compiler, the project and resume discussion every candidate
+gets, the general aptitude, and the HR round.
+
+The round notes say plainly that the heaviest part of Section 1 is EC or ME
+material not covered here. **That matters more than usual**: a CS student reading
+a thin round description could otherwise conclude the paper is easy, when in fact
+most of it is a syllabus they have never studied. Recording the gap is the
+honest version of filtering it out.
+
+### The dsa text pool went from zero to ten
+
+`dsa` held 66 coding questions and **no text at all**, which is why the
+two-pointer and back-button questions from section 8 had nowhere to go. It grew
+in two steps as demand appeared — 3, then 6 so two rounds would not overlap, then
+10 once six companies were drawing from it. Ten questions against exactly ten
+draws across the catalogue is one clean cycle with no repetition: hash tables,
+recursion against iteration, binary search, sorting, two pointers, the browser
+back-button, reversing a string, array against linked list, stack against queue,
+and working out time complexity.
+
+Aptitude also gained two, to 44 — a calendar question and a circular-track speed
+question, both named in Anora's Section 1 topic list and both absent. Both
+answers were verified by computation, including cross-checking 15 August 1947
+against `datetime` as well as by the odd-days method.
+
+### Logos: two icons in, one monogram, and the rule holding
+
+**Anora Labs and Armada both use an icon-plus-wordmark lockup**, so what is
+traced is the icon alone — the graphic element their own designers drew to stand
+apart from the text. The split point was found from the column ink profile rather
+than by eye: a three-pixel gap at x=37 for Anora's pulse trace, and x=21 for
+Armada's two sails. That is a different act from inventing a mark for a company
+that has none, which is what the first Aays attempt did wrong.
+
+**Cloudium is a wordmark end to end** — no icon, just "cloudium" with a macron
+over the i — so it takes the monogram, exactly as Alfaedge did.
+
+The section 8 rule has now held four times: **silhouettes and icons survive at
+19-26px, wordmarks do not.** Both new icons were rendered cream-on-ink at all
+three real sizes before being committed, and both read clearly.
+
+## 10. Eligibility as data, and browsing at scale
+
+Done **before** the next batch of companies rather than after, and that ordering
+is the whole point. The cheapest moment to add a field is before you enter fifty
+records, not once they are all in: every company added from here carries
+eligibility from the start, because whoever is reading that page is already
+looking at the line that states it. Retrofitting means reopening sixty-odd
+documents.
+
+The trigger was a measurement. At 16 companies the pools cycle roughly once; at
+66 they cycle 4 to 6 times, meaning **about every sixth company would draw an
+identical `general_hr` round**. But the sharper number was that inline specifics
+average only **2.3 per company** — most companies are almost entirely pool
+draws, and pool draws are the part that repeats. The fix for that is to encode
+more of each company's documented questions, not to grow the pools forever.
+
+### Three states, not two
+
+Eligibility went on `Role` rather than `Company`, because the material states it
+per drive and several companies here run two roles.
+
+| Field | Meaning |
+|---|---|
+| `openToAllBranches` | the source explicitly said "All Branches" |
+| `eligibleBranches: []` | the source said nothing — **unknown**, not open |
+| `minCgpa: null` | no cutoff stated — **not** "there is no cutoff" |
+
+Three fields rather than one because there are genuinely three states. A document
+that *says* "All Branches" is telling a mechanical student they may apply; a
+document that is *silent* tells them nothing. Collapsing those into one empty
+list converts an absence of information into a claim, which is the single thing
+this catalogue is not allowed to do.
+
+The proof that it matters is in the current data: **only 6 of 19 roles have any
+eligibility recorded.** The other 13 predate the placement material entirely.
+Rendering those as "open to all" would have been a fabrication applied to two
+thirds of the catalogue.
+
+### One migration this time, and why
+
+`20260825160000_add_role_eligibility` is a single migration, unlike the aptitude
+split at `20260812130633`. Nothing here adds an enum value, so there is no
+Postgres restriction on using a new value in the transaction that creates it.
+Three plain column adds, all defaulted or nullable, so existing rows need no
+backfill and nothing breaks mid-deploy.
+
+### The filter rule, and where the user overrode it
+
+The first implementation refused to filter on an unstated criterion at all, and
+tagged every such row *eligibility not recorded*. **The user changed this**: drop
+the per-row label, and assume 7.5 where no cutoff is on record.
+
+It is implemented as `ASSUMED_MIN_CGPA` in `pages/Companies.tsx` — a
+**filter-layer constant, not data**. `minCgpa` stays null in the database and
+`catalog.json` still claims no cutoff it was not given, so one number changes
+every unrecorded role at once and a real figure overrides it automatically. Where
+a role does have eligibility recorded, both pages show it; where it does not,
+they now say nothing rather than announcing the gap on every row.
+
+**The objection, recorded because it will matter later:** the unrecorded set is
+mostly the large service companies — TCS, Infosys, Wipro, Cognizant, Capgemini —
+and in practice those run the *lowest* cutoffs of anyone in the catalogue, often
+6.0 to 6.5. Assuming 7.5 therefore hides exactly those companies from students in
+the 6.5 to 7.5 band, who are the people those companies actually hire. The
+default is wrong in the direction that costs the most. It is confined to one
+constant precisely so that lowering it, or recording the real figures, is a
+one-line fix.
+
+Branch is treated differently and still never excludes: there is no sensible
+default for *which branches does this company take*, so an unrecorded role stays
+visible to everyone regardless of the branch filter.
+
+Armada, at CGPA 9.0, is the only role with a cutoff actually on record.
+
+### Filtering happens in the browser
+
+`/catalog/companies` now returns each company's roles in full rather than a
+count. At sixty-plus companies that is a few hundred short strings — far cheaper
+than a request per keystroke, and search stays instant. Search matches role names
+as well as company names, so *"data engineer"* finds Aays without the student
+knowing which company that is.
+
+### One design trap avoided
+
+The filter controls do **not** reuse `.field`. That class carries the vermilion
+registration marks, which exist to mark the one thing a student actually does on
+this site — write an answer. Spending that device on three filter inputs would
+have made it furniture, and it would have stopped meaning anything on the page
+where it earns its keep.
+
+A smaller one: the label is a **sibling** of its input, not its parent. The
+global `label` rule sets uppercase at 0.68rem and `input` declares `font:
+inherit`, so nesting would have rendered whatever the student typed in tiny
+capitals.
 
 ## What I verified
 
@@ -381,17 +835,33 @@ precision the source does not have.
   no endpoint or UI surfaces "more like this" so far.
 - **The four test drafts are still in `data/questions/drafts/`** — untouched,
   gitignored, and usable as a starting point.
+- **Round state has never been rendered.** Backend and frontend both typecheck
+  and the query is straightforward, but no round has been seen showing a
+  done or part-done node, and the CSS specificity argument that keeps hover
+  winning over the done state is reasoned rather than observed. That one is
+  worth a deliberate look: it is exactly the kind of claim that is easy to get
+  right on paper and wrong in a browser.
+- **`aptitude-batch-1.json` and `dbms-batch-4.json` have not been ingested**,
+  and Aays has not been seeded. Every answer in the aptitude batch is verified
+  by computation, but computation cannot tell whether a marking scheme reads
+  fairly to a student — see the point above about no scheme ever having been
+  graded.
+- **The traced Aays logo has been seen and approved by the user**; the round
+  state and both question batches have not.
 
 ## Still to do in this phase
 
 1. ~~Take `os`, `dbms`, `cn` and `oops` from 15 to 40~~ — **done**
 2. ~~`general_hr` 15 → 40~~ — **done**
-3. `aptitude` 8 → 40 — deferred until Phase 10 lands, see below
+3. ~~`aptitude` 8 → 40~~ — **done**, see section 6
 4. Add companies from the user's placement-cell material, batch by batch —
-   **Aays done**, see section 5; the rest await screenshots
+   **Aays, Abilytics and Alfaedge done** (sections 5 and 8); the rest await
+   screenshots
 5. Company logos as each is added — one line in `components/companyLogos.ts`.
-   Amazon, Microsoft, Deloitte, Cognizant and Capgemini are still monograms and
-   are all in simple-icons, so those five are mechanical
+   **Microsoft** (constructed), **Aays** and **Abilytics** (traced) done.
+   **Alfaedge stays a monogram on purpose** — see section 8. Amazon, Deloitte,
+   Cognizant and Capgemini still need source images, and on the wordmark rule
+   from section 8 the last three are likely monograms for good
 6. Surface "more like this" using `patterns` once tagged questions exist
 
 ### HR marking schemes work differently
@@ -445,6 +915,17 @@ the reason the aptitude category split was done first: authoring 32 questions in
 one format and then migrating them is the mistake this project keeps avoiding.
 
 ### Phase 10 is deferred, deliberately
+> **Update, after sections 8 and 9: this deferral is resolved.** Abilytics gave
+> the MCQ shape (45 minutes, negative marking) and **Anora gave the sectioning**
+> — three consecutive sections at 75, 30 and 15 minutes with 65, 5 and 15
+> questions. That was the missing structural variance. Marking differs between
+> the two companies, so it belongs per-assessment rather than global, and Anora's
+> paper is branch-specific, so a round is not even the same test for every
+> candidate. **Phase 10 can now be designed against real data. Nothing has been
+> built for it yet** — by instruction, companies were added without disturbing
+> what works.
+
+
 
 A full plan was written and then **not built**, on the user's judgement that the
 assessment round is "highly undefined and varietyful for different companies".

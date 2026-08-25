@@ -1,0 +1,28 @@
+[
+  {
+    "text": "You have 9 balls. Eight weigh exactly 1 kg and one weighs 1.5 kg. Using only a balance scale, what is the minimum number of weighings that guarantees you identify the heavy ball, and what is the strategy? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the answer as 2 weighings, and gives a strategy that guarantees it rather than one that merely often works",
+      "Splits the 9 balls into three groups of three and weighs group A against group B: if one side sinks the heavy ball is in that group, and if they balance it is in the untouched group C",
+      "Takes the identified group of three and weighs one ball against another, applying the same logic: the heavier side holds it, and if they balance it is the third ball",
+      "Explains why 2 is not merely achievable but minimal: each weighing has three possible outcomes, so k weighings distinguish at most 3 to the power k cases; one weighing separates only 3 and nine balls need 9, which 3 squared exactly meets",
+      "Identifies the key insight that makes the balanced outcome useful rather than wasted, that learning nothing about the balls on the scale is itself information because it locates the heavy ball in the group that was never weighed, which is why splitting into three and not two is correct"
+    ]
+  },
+  {
+    "text": "You have two ropes and a box of matches. Each rope takes exactly 60 minutes to burn from end to end, but neither burns at a uniform rate. Using only these, how do you measure exactly 45 minutes? Explain your reasoning.",
+    "category": "aptitude",
+    "difficulty": "hard",
+    "questionType": "text",
+    "expectedAnswerPoints": [
+      "States the central idea, that lighting a rope at both ends makes it burn out in exactly 30 minutes however unevenly it burns, because the two flames together always consume the whole rope's worth of burning time",
+      "At time zero, lights the first rope at both ends and the second rope at one end only",
+      "When the first rope burns out, which is exactly 30 minutes in, immediately lights the second end of the second rope",
+      "Reasons that the second rope had exactly 30 minutes of burn remaining, so burning it from both ends consumes that in 15 minutes, and it finishes at 45 minutes",
+      "Explains why the non-uniform burn rate does not break the method: no assumption is ever made about how far along a rope the flame has travelled, only about how much burning time is left, which is the quantity that halves when a second flame is added"
+    ]
+  }
+]
