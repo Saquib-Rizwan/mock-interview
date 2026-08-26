@@ -1,0 +1,34 @@
+[
+  {
+    "text": "A train running at 60 km/h crosses a pole in 9 seconds. What is the length of the train?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["90 m", "150 m", "166 m", "540 m"],
+    "correctIndex": 1,
+    "solution": "Crossing a pole means covering exactly the train's own length, because a pole has no width. Convert the speed first: 60 km/h times 5/18 gives 16.67 m/s. Distance is speed times time, so 16.67 times 9 = 150 m. The 540 distractor is what you get by multiplying 60 by 9 without converting the units."
+  },
+  {
+    "text": "A is the brother of B. B is the sister of C. C is the mother of D. How is A related to D?",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "options": ["Father", "Brother", "Uncle", "Grandfather"],
+    "correctIndex": 2,
+    "solution": "Work the chain outward one link at a time. A is B's brother and B is C's sister, so A, B and C are all siblings. C is D's mother, so D is the child of A's sibling — making A the uncle. The useful habit is to sketch the generations: A, B and C sit on one line and D on the line below, after which the answer is read off rather than reasoned about."
+  },
+  {
+    "text": "A company's annual budget of 12,00,000 rupees is split HR 20%, IT 25%, Marketing 15%, Operations 30%, R&D 10%. What is the difference between the Operations and R&D allocations?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["1,20,000", "2,40,000", "3,60,000", "4,80,000"],
+    "correctIndex": 1,
+    "solution": "Take the difference in percentage points first and apply it once, rather than computing both amounts and subtracting. Operations minus R&D is 30% minus 10% = 20%, and 20% of 12,00,000 is 2,40,000 rupees. Checking the long way: Operations is 3,60,000 and R&D is 1,20,000, and the difference is the same. Note the percentages sum to 100, which is the quick sanity check on any pie-chart question."
+  },
+  {
+    "text": "Choose the correct option: He ______ to the market yesterday.",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["go", "goes", "went", "gone"],
+    "correctIndex": 2,
+    "solution": "The word 'yesterday' fixes the tense as simple past, and the simple past of 'go' is 'went'. 'go' and 'goes' are present tense and disagree with the time marker. 'gone' is the past participle and cannot stand alone as a verb — it needs an auxiliary, as in 'has gone'. Verbal ability sections test exactly this pairing of a time marker with the right verb form."
+  }
+]

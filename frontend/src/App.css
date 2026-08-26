@@ -127,7 +127,11 @@
 .rail-user {
   font-size: 0.78rem;
   color: var(--text-2);
-  overflow-wrap: anywhere;
+  /* `break-word`, not `anywhere`: the latter permits a break at ANY
+     character to minimise width, which shattered ordinary words like
+     "Technical" into "Technica / l" in narrow columns at 375px. It
+     still protects against an unbreakable string overflowing. */
+  overflow-wrap: break-word;
 }
 
 /**
@@ -340,7 +344,9 @@ label {
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 3.2vw, 2.05rem);
   font-weight: 700;
-  line-height: 1.12;
+  /* 1.12 was tight enough that descenders on the final line read as clipped
+     against the margin below. 1.2 costs almost nothing and stops it. */
+  line-height: 1.2;
   letter-spacing: -0.02em;
   text-transform: none;
   max-width: 28ch;
@@ -1186,7 +1192,11 @@ code {
 }
 
 .bar-label {
-  overflow-wrap: anywhere;
+  /* `break-word`, not `anywhere`: the latter permits a break at ANY
+     character to minimise width, which shattered ordinary words like
+     "Technical" into "Technica / l" in narrow columns at 375px. It
+     still protects against an unbreakable string overflowing. */
+  overflow-wrap: break-word;
   font-weight: 600;
 }
 
@@ -1813,4 +1823,209 @@ hr.rule {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   white-space: nowrap;
+}
+
+/* ===== Phase 11 — round briefing ======================================== */
+
+/*
+ * Two-line clamp for the spine.
+ *
+ * The notes carry every process detail a source document gave — format,
+ * duration, outcome, tips — and printing all of it against each spine row
+ * turned a sequence of rounds into a wall of paragraphs. The sequence is the
+ * one thing that page exists to show, so the note is trimmed there and lives in
+ * full on the round itself.
+ */
+.clamp-2 {
+  /* Descenders on the LAST clamped line sit below a box whose height is
+     lines x line-height, so overflow:hidden shaves them. Padding restores the
+     space and the negative margin cancels it, leaving layout untouched. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/*
+ * Facts before prose.
+ *
+ * A fifth list device, and the only one set as a row of label-over-value pairs:
+ * these are the answers you want before deciding whether to read anything, so
+ * they are scannable in one pass and typographically unlike every other list in
+ * the app. Numbers are mono with lining figures; the display face never sets
+ * them.
+ */
+.facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 2.5rem;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  border-top: 2px solid var(--text);
+  padding-top: 0.9rem;
+}
+
+.facts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fact-label {
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.fact-value {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/*
+ * The briefing itself: three lines, then a control.
+ *
+ * Progressive disclosure rather than a scrollbox or a modal — the text is
+ * reference material you consult once, not something to hide behind a click for
+ * its own sake. The accent rule down the left marks it as an aside rather than
+ * body copy, which is a device used nowhere else on this page.
+ */
+.briefing {
+  margin: 1.6rem 0 0;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  border-left: 3px solid var(--accent);
+}
+
+.briefing-label {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+}
+
+.briefing-body {
+  /* Descenders on the LAST clamped line sit below a box whose height is
+     lines x line-height, so overflow:hidden shaves them. Padding restores the
+     space and the negative margin cancels it, leaving layout untouched. */
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+  margin: 0;
+  max-width: var(--measure);
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.briefing.is-open .briefing-body {
+  display: block;
+  overflow: visible;
+}
+
+.briefing .linkish {
+  padding: 0.5rem 0 0;
+}
+
+@media (max-width: 560px) {
+  .facts { gap: 0 1.5rem; }
+}
+
+/* ===== Phase 11 — coding problem readability ============================ */
+
+/*
+ * A coding problem statement is a specification, not a headline. At display
+ * size and 28ch it wrapped to five lines and pushed the editor below the fold.
+ */
+.lead.is-compact {
+  font-family: var(--font-sans);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+  max-width: var(--measure);
+}
+
+/*
+ * Worked examples.
+ *
+ * The old form was one line per case: `[1,2,3,1] -> true`. Correct, and it told
+ * you nothing about which value was which argument. Naming them turns each case
+ * into a readable statement, which matters most on the two-argument questions
+ * where position was the only clue.
+ */
+.examples {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+}
+
+.examples > li {
+  display: flex;
+  gap: 0.9rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ex-num {
+  flex: 0 0 1.6rem;
+  height: 1.6rem;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.ex-body { flex: 1; min-width: 0; }
+
+.ex-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+  margin: 0 0 0.3rem;
+  flex-wrap: wrap;
+}
+
+.ex-label {
+  flex: 0 0 5rem;
+  font-family: var(--font-sans);
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+}
+
+/* The return value gets the accent rule, so the answer is findable at a glance
+   rather than being one more identical row. */
+.ex-row.is-out {
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 2px solid var(--accent);
+}
+
+.ex-row .io {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 560px) {
+  .ex-label { flex-basis: 100%; }
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../api";
 import { Breadcrumbs } from "../components/Breadcrumbs";
@@ -7,6 +8,7 @@ import { useFetch } from "../useFetch";
 export function RoundDetail() {
   const { id = "" } = useParams();
   const { data, error, loading } = useFetch(api.round, id);
+  const [briefingOpen, setBriefingOpen] = useState(false);
 
   if (loading) return <p className="centered">Loading…</p>;
   if (error) return <p className="error">{error}</p>;
@@ -35,7 +37,59 @@ export function RoundDetail() {
       <p className="muted">
         Round {round.order} of {round.role.name} at {round.role.company.name}.
       </p>
-      {round.notes && <p className="note">{round.notes}</p>}
+      {/* Facts first, prose second.
+          The strip is built only from fields that are genuinely structured —
+          round type, question count, and an assessment's duration and marking.
+          Nothing here is parsed out of the note text, so nothing here can be
+          wrong about a round whose note is worded unusually. */}
+      <ul className="facts">
+        <li>
+          <span className="fact-label">Format</span>
+          <span className="fact-value">{ROUND_TYPE_LABELS[round.roundType]}</span>
+        </li>
+        <li>
+          <span className="fact-label">Questions</span>
+          <span className="fact-value">{round.questions.length || "—"}</span>
+        </li>
+        {round.assessment && (
+          <>
+            <li>
+              <span className="fact-label">Time limit</span>
+              <span className="fact-value">
+                {round.assessment.totalDurationMin
+                  ? `${round.assessment.totalDurationMin} min`
+                  : "—"}
+              </span>
+            </li>
+            <li>
+              <span className="fact-label">Wrong answer</span>
+              <span className="fact-value">
+                {round.assessment.negativeMarking
+                  ? `−${round.assessment.negativeMarking}`
+                  : "no penalty"}
+              </span>
+            </li>
+          </>
+        )}
+      </ul>
+
+      {round.notes && (
+        <div className={`briefing${briefingOpen ? " is-open" : ""}`}>
+          <p className="briefing-label">Round briefing</p>
+          {/* Clamped to three lines until asked for. These notes carry every
+              process detail the source document gave — format, outcome, tips —
+              and printing all of it above the questions buried the questions. */}
+          <p className="briefing-body">{round.notes}</p>
+          <button
+            type="button"
+            className="linkish"
+            onClick={() => setBriefingOpen((v) => !v)}
+            aria-expanded={briefingOpen}
+          >
+            {briefingOpen ? "Show less" : "Read the full briefing"}
+          </button>
+        </div>
+      )}
 
       {/* Additive: a round that is a timed test keeps its written practice
           questions below AND offers the mock. Neither replaces the other. */}

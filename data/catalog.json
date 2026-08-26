@@ -461,6 +461,79 @@
     "name": "Deloitte",
     "roles": [
       {
+        "name": "Analyst",
+        "eligibleBranches": ["CS", "CU", "EC", "EEE", "ME"],
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Aptitude Test",
+            "notes": "Online MCQ test, 9 September 2025. 67 questions in about 60 minutes, and SECTIONAL CUT-OFFS APPLY — each section must be cleared on its own, so a strong overall score does not save a weak section. Around 40 candidates were shortlisted. The questions were mostly simple; the difficulty was the clock. Six areas: quantitative aptitude (number systems, percentages, profit and loss, interest, time-speed-distance, time and work, probability, averages, algebra), logical reasoning (coding-decoding, blood relations, seating, syllogisms, series), English grammar and vocabulary, computer fundamentals (Java OOP, MySQL joins and normalisation, cloud service and deployment models), MS Office, and data interpretation from tables and charts. Coding questions were based on Python. The mock below keeps the real pace rather than the real clock — 67 questions in 60 minutes is about 54 seconds each — and it does NOT enforce the sectional cut-off, because the source states that one exists but never says what it is.",
+            "assessment": {
+              "totalDurationMin": 8,
+              "sections": [
+                {
+                  "name": "Aptitude, Fundamentals & Cloud",
+                  "marksPerQuestion": 1,
+                  "picks": [
+                    { "category": "aptitude", "count": 3 },
+                    { "category": "cloud", "count": 2 },
+                    { "category": "dbms", "count": 2 },
+                    { "category": "python", "count": 2 }
+                  ]
+                }
+              ]
+            },
+            "picks": [{ "category": "aptitude", "type": "text", "count": 2 }]
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Technical & HR Interview",
+            "notes": "Offline, 12 September 2025. Opens with a self-introduction, then technical questions drawn mainly from the projects on your resume, then HR. SQL is the recurring technical theme — join variations especially. On the HR side the panel looked for clarity about career goals, genuine interest in the company, and alignment with its values, so a generic motivation answer is the weak spot here.",
+            "picks": [
+              { "category": "dbms", "type": "text", "count": 2 },
+              { "category": "general_hr", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "What is the difference between a LEFT OUTER JOIN and a LEFT JOIN in SQL?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Recognises the trick: there is NO difference. LEFT JOIN is shorthand for LEFT OUTER JOIN and the two are identical in every SQL dialect",
+                  "Explains why the word is optional: OUTER carries no meaning beyond what LEFT already implies, and the same holds for RIGHT OUTER JOIN and FULL OUTER JOIN",
+                  "States what a LEFT JOIN actually does — every row from the left table, matched rows from the right, and NULLs where no match exists",
+                  "Contrasts it with INNER JOIN, which keeps only matching rows, and notes that INNER is likewise optional since a bare JOIN means INNER JOIN",
+                  "Handles the question with confidence rather than inventing a distinction to fill the silence, since inventing one is exactly what this question is designed to catch"
+                ]
+              },
+              {
+                "text": "What are aggregate functions in SQL? Give examples and explain how they interact with GROUP BY.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Defines an aggregate as a function collapsing many rows into a single value, and names the standard set: COUNT, SUM, AVG, MIN and MAX",
+                  "Explains GROUP BY as what decides the collapsing: without it the whole result is one group, with it one row is returned per distinct combination of the grouped columns",
+                  "States the NULL behaviour that interviews probe: COUNT(*) counts rows including those with NULLs, while COUNT(column) and AVG skip NULLs entirely, so AVG is not the same as SUM divided by COUNT(*)",
+                  "Distinguishes WHERE from HAVING — WHERE filters rows before grouping and cannot reference an aggregate, HAVING filters the groups afterwards and can",
+                  "Notes that any non-aggregated column in the SELECT list must appear in GROUP BY, which strict databases enforce and MySQL historically did not"
+                ]
+              },
+              {
+                "text": "Why do you want to work at Deloitte, and why did you not pursue higher studies?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Answers both halves, since the second is asked directly at this drive and being caught without a view on it is the real risk",
+                  "Says something specific about the company — the kind of consulting work, the client exposure, the breadth early in a career — rather than praise that would fit any large firm",
+                  "Frames the higher-studies answer as a considered choice rather than a rejection: wanting industry experience first, and being clear about whether study is deferred or ruled out",
+                  "Avoids implying either path is lesser, and avoids the answer that industry was simply the easier option",
+                  "Ties both halves together so the two answers support each other, which is what alignment with the company's values is actually being read from"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "Business Analyst",
         "rounds": [
           {
@@ -899,7 +972,20 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "Online Assessment",
-            "notes": "Online, held 19 September 2025. THE PAPER IS BRANCH-SPECIFIC — around 2 hours for EC, around 1.5 hours for ME — and it runs as three consecutive sections. Section 1, 75 minutes, 65 single-mark MCQs made up of 50 core technical and 15 general aptitude, some as long paragraph questions: ratio and proportion, percentages, work and time, calendar problems, circular-track speed and time, puzzles, sequence reasoning and data interpretation from graphs and pie charts, plus C programming on pointers, functions, arrays, decimal-to-binary and output prediction. Section 2, 30 minutes, 5 coding questions in a TEXT EDITOR WITH NO COMPILER — logic writing rather than DSA, 2 easy and 3 hard with long descriptions. Section 3, 15 minutes, 15 situational psychometric MCQs on a Highly Agree to Highly Disagree scale. Note this is an electronics-leaning role: the heaviest part of Section 1 is EC or ME core technical, which is not covered by the questions below.",
+            "notes": "Online, held 19 September 2025. THE PAPER IS BRANCH-SPECIFIC — around 2 hours for EC, around 1.5 hours for ME — and it runs as three consecutive sections. Section 1, 75 minutes, 65 single-mark MCQs made up of 50 core technical and 15 general aptitude, some as long paragraph questions: ratio and proportion, percentages, work and time, calendar problems, circular-track speed and time, puzzles, sequence reasoning and data interpretation from graphs and pie charts, plus C programming on pointers, functions, arrays, decimal-to-binary and output prediction. Section 2, 30 minutes, 5 coding questions in a TEXT EDITOR WITH NO COMPILER — logic writing rather than DSA, 2 easy and 3 hard with long descriptions. Section 3, 15 minutes, 15 situational psychometric MCQs on a Highly Agree to Highly Disagree scale. Note this is an electronics-leaning role: the heaviest part of Section 1 is EC or ME core technical, which is not covered by the questions below. The mock below covers SECTION 1 ONLY, and only its CS-relevant part: general aptitude and C programming. Its time limit is derived rather than quoted — the real paper allows 75 minutes for 65 questions, about 69 seconds each, so a shorter mock is given the same pace rather than the same clock. Sections 2 and 3, the no-compiler coding and the psychometric, are not modelled.",
+            "assessment": {
+              "totalDurationMin": 9,
+              "sections": [
+                {
+                  "name": "Aptitude & C Programming",
+                  "marksPerQuestion": 1,
+                  "picks": [
+                    { "category": "c_programming", "count": 6 },
+                    { "category": "aptitude", "count": 2 }
+                  ]
+                }
+              ]
+            },
             "picks": [
               { "category": "aptitude", "type": "text", "count": 4 },
               { "category": "dsa", "type": "text", "count": 1 }
@@ -1087,7 +1173,20 @@
             "order": 1,
             "roundType": "aptitude",
             "roundName": "Aptitude Test",
-            "notes": "Offline written test, moderate difficulty, and explicitly weighted towards clarity of concepts and logical thinking rather than memorised shortcuts. Arithmetic questions were fairly easy and rewarded presence of mind — the documented example is an algebraic trick: the product (x-a)(x-b) through to (x-z) is zero, because the sequence necessarily contains the term (x-x), so no calculation is required at all. Logical reasoning had two parts, maths-based reasoning and pure logical reasoning, including flowchart and program-execution questions where you trace a flowchart or short program and give the output. A third section covered basic CS concepts and Python. CAT arithmetic papers are the recommended preparation.",
+            "notes": "Offline written test, moderate difficulty, and explicitly weighted towards clarity of concepts and logical thinking rather than memorised shortcuts. Arithmetic questions were fairly easy and rewarded presence of mind — the documented example is an algebraic trick: the product (x-a)(x-b) through to (x-z) is zero, because the sequence necessarily contains the term (x-x), so no calculation is required at all. Logical reasoning had two parts, maths-based reasoning and pure logical reasoning, including flowchart and program-execution questions where you trace a flowchart or short program and give the output. A third section covered basic CS concepts and Python. CAT arithmetic papers are the recommended preparation. The mock below reflects the CS and Python section plus the reasoning; NO DURATION AND NO NEGATIVE MARKING are set, because the source states neither and inventing them would misrepresent the paper.",
+            "assessment": {
+              "sections": [
+                {
+                  "name": "CS, Python & Reasoning",
+                  "marksPerQuestion": 1,
+                  "picks": [
+                    { "category": "python", "count": 5 },
+                    { "category": "aptitude", "count": 2 },
+                    { "category": "dsa", "count": 1 }
+                  ]
+                }
+              ]
+            },
             "picks": [
               { "category": "aptitude", "type": "text", "count": 5 },
               { "category": "dsa", "type": "text", "count": 1 }
@@ -1141,6 +1240,215 @@
                   "Justifies the technology choices, saying what was considered and why the chosen option won, since being asked why these tools is documented for this round",
                   "States their own contribution precisely, distinguishing what they built from what the team built, without inflating or hiding behind we",
                   "Names a real challenge and how it was resolved, and can go a level deeper on any part mentioned, because this round explicitly tests depth of understanding rather than familiarity"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Electrifex",
+    "roles": [
+      {
+        "name": "Embedded Software Engineer / Software Engineer",
+        "eligibleBranches": ["CS", "CU", "EC", "EEE", "EB"],
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "aptitude",
+            "roundName": "Aptitude Test",
+            "notes": "Offline at MEC campus, 10 July 2025. 30 MCQs in 30 minutes, with a choice of C++ or Python. Rated relatively easy — the difficulty is the clock, not the content. Covers programming fundamentals (pointer problems, output prediction, binary shifting, hexadecimal-to-character conversion), core Computer Networks at MCQ level and core Operating Systems at MCQ level. The mock below matches the real pace rather than the real clock: 30 questions in 30 minutes is 60 seconds each, so a shorter paper gets the same seconds per question.",
+            "assessment": {
+              "totalDurationMin": 8,
+              "sections": [
+                {
+                  "name": "Programming, CN & OS",
+                  "marksPerQuestion": 1,
+                  "picks": [
+                    { "category": "c_programming", "count": 4 },
+                    { "category": "cn", "count": 2 },
+                    { "category": "os", "count": 2 }
+                  ]
+                }
+              ]
+            },
+            "picks": [{ "category": "aptitude", "type": "text", "count": 2 }]
+          },
+          {
+            "order": 2,
+            "roundType": "coding",
+            "roundName": "Coding Round",
+            "notes": "Offline at MEC campus, 10 July 2025. EACH CANDIDATE RECEIVED A UNIQUE PROBLEM SET of 2 questions, so there is no single paper to revise. Problems were lengthy and given with no explanation — you were expected to read and understand them unaided. Difficulty was LeetCode-hard. The stated emphasis matters more than it usually does: demonstrating a solid approach or solution strategy was valued OVER arriving at the exact output, so talk through the method even if the code does not finish. Documented problems included N-Queens, implementing a Trie, a bus group-allocation problem (find every seat capacity that seats all groups without splitting one) and a modified crossword search allowing left, right, up, down and L-shaped knight moves. Greedy and graph problems appeared across sets.",
+            "picks": [{ "category": "dsa", "type": "coding", "count": 3 }]
+          },
+          {
+            "order": 3,
+            "roundType": "technical",
+            "roundName": "Technical Interview 1",
+            "notes": "Offline at MEC campus, conducted by the Kernel Lead and the CS Lead. Focus is conceptual understanding over textbook accuracy — the panel assessed whether you could apply knowledge, reason through an unfamiliar problem and communicate your thinking, not whether you had memorised definitions. Computer Networks is the major area: IPv4 against IPv6, protocol-level understanding, and a diagram question on how data travels in a host-hub-host setup. Also memory mapping and logical-to-physical address translation from OS. Note for CS candidates: this round also covers 8085/8086 microprocessor pin diagrams and memory interfacing, which is electronics material and is not covered by the questions below.",
+            "picks": [
+              { "category": "cn", "type": "text", "count": 3 },
+              { "category": "os", "type": "text", "count": 2 }
+            ],
+            "specific": [
+              {
+                "text": "What are the differences between IPv4 and IPv6, and why was IPv6 introduced when NAT already existed?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Gives the core difference in address space: IPv4 is 32 bits giving about 4.3 billion addresses, IPv6 is 128 bits, and states the notation difference between dotted decimal and hexadecimal groups",
+                  "Names real protocol differences beyond size: IPv6 has a simpler fixed-length header with extension headers, no header checksum, built-in support for autoconfiguration, and no fragmentation by routers",
+                  "Answers the actual question rather than only listing differences: NAT does conserve addresses, but it does so by breaking the end-to-end model, since hosts behind it are not directly addressable",
+                  "Explains what that costs in practice — inbound connections need port forwarding or relays, peer-to-peer and VoIP need workarounds such as STUN and TURN, and every NAT box holds connection state that must be maintained and can be exhausted",
+                  "Concludes that NAT postponed exhaustion rather than solving it, and that IPv6 restores globally unique addressing, which is the property NAT gave away"
+                ]
+              },
+              {
+                "text": "Draw and explain how data travels between two hosts connected through a hub.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Draws the topology plainly — two hosts each cabled to a hub — and labels what each device is before describing any traffic",
+                  "States the defining property of a hub: it is a Physical layer repeater with no addressing, so a frame arriving on one port is regenerated out of every other port",
+                  "Traces one frame end to end: the sender builds it with source and destination MAC addresses, the hub floods it, and every host inspects the destination address while only the intended one accepts it",
+                  "Names the consequence that follows: all ports share one collision domain, so simultaneous transmission causes a collision and CSMA/CD backoff, and throughput is shared rather than per-port",
+                  "Contrasts with a switch, which learns MAC addresses into a table and forwards only to the correct port, giving each port its own collision domain — which is why hubs are effectively obsolete"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 4,
+            "roundType": "technical",
+            "roundName": "Technical Interview 2",
+            "notes": "Offline at the company office, around 1.5 hours, conducted by the Android Lead. The deepest round: the interviewer worked through the resume closely, broke each project into its components, and discussed use cases and implementation choices per feature or module. Core networking is revisited at greater depth than Round 3 (TCP, HTTP). Also Linux system administration — viewing system logs, the default administrative user — the boot process when several drives each carry an OS, SQL normalisation performed step by step on a table given to you, Flutter state management and cross-platform questions, and a data-structures logic problem. Microprocessor versus microcontroller also appears and is electronics material not covered below.",
+            "picks": [
+              { "category": "cn", "type": "text", "count": 2 },
+              { "category": "dbms", "type": "text", "count": 2 },
+              { "category": "os", "type": "text", "count": 1 }
+            ],
+            "specific": [
+              {
+                "text": "Given plate weights [1, 2, 4, 8, ..., 64], return the smallest number of plates that reach a target weight. For a target of 130 the answer is [2, 64, 64].",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Notices the weights are powers of two, and that plates may be reused — the worked example uses 64 twice, which rules out a subset-sum reading of the problem",
+                  "Applies the greedy rule that works here: repeatedly take the largest plate not exceeding the remaining target, so 130 gives 64, then 64, then 2",
+                  "Justifies why greedy is optimal rather than merely asserting it: each denomination is a multiple of every smaller one, so no combination of smaller plates ever beats taking the larger one",
+                  "Notes that this is exactly binary representation when each plate may be used once, and states the complexity as O(number of denominations) after sorting, or O(log target)",
+                  "States where the greedy would break — an arbitrary denomination set such as 1, 3, 4 targeting 6, where greedy gives 4+1+1 and the optimum is 3+3 — and that the general case needs dynamic programming"
+                ]
+              },
+              {
+                "text": "If a machine has several hard drives, each with its own operating system installed, how does it decide which one to boot?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Starts with firmware: on power-on the BIOS or UEFI runs POST and then consults its configured boot order to decide which device to try first",
+                  "Describes the legacy BIOS path — read the first sector of the chosen disk, the MBR, and execute the boot code it contains, which then chains to a partition's boot loader",
+                  "Describes the UEFI path, which is genuinely different: firmware reads the EFI System Partition, finds .efi boot loader files, and keeps its own list of boot entries in NVRAM rather than relying on a boot sector",
+                  "Explains where the user's choice actually happens: a boot loader such as GRUB can present a menu listing every OS it has detected across drives, so the firmware picks a loader and the loader picks the OS",
+                  "Notes the practical failure mode, that installing a second OS often overwrites the boot loader of the first, which is why the machine can end up booting only one of them until the loader is repaired"
+                ]
+              }
+            ]
+          },
+          {
+            "order": 5,
+            "roundType": "hr",
+            "roundName": "HR Interview",
+            "notes": "Offline at the company office, around 10 minutes. Short and conversational, mixing project follow-ups with standard HR questions. The recorded advice is unusually direct: candidates were told to AVOID PRE-REHEARSED OR GENERIC ANSWERS, and genuine, thoughtful responses reflecting real self-awareness were strongly encouraged. Treat a polished answer as a liability here rather than an asset.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 3 }],
+            "specific": [
+              {
+                "text": "Where do you see yourself in ten years?",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Gives a direction rather than a job title, since a specific title ten years out reads as either rehearsed or inflexible",
+                  "Describes the kind of problems they want to be trusted with and the depth they want to reach, which is the answerable part of a question this far out",
+                  "Shows the answer is their own rather than a template — this drive explicitly warned against pre-rehearsed responses, so a textbook answer works against you here",
+                  "Connects the direction to something already begun, so the ambition has evidence behind it rather than being a statement of intent",
+                  "Stays honest about uncertainty at ten years, which reads as self-awareness rather than as lacking a plan"
+                ]
+              },
+              {
+                "text": "Why did you choose to study engineering, and what is your favourite subject?",
+                "difficulty": "easy",
+                "expectedAnswerPoints": [
+                  "Gives a real reason rather than the expected one, and does not claim a lifelong passion that the rest of the conversation will not support",
+                  "Is comfortable saying the decision was partly circumstantial if that is true, then describing what has kept them in it since",
+                  "Names a specific favourite subject and says what about it appeals — a mechanism, a way of thinking, a problem it solved",
+                  "Expects the follow-up and can go one level deeper on that subject, because naming a favourite invites exactly that",
+                  "Keeps the two halves consistent: a favourite subject unrelated to everything else said in the interview needs explaining rather than ignoring"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Electrobit",
+    "roles": [
+      {
+        "name": "ML Intern",
+        "openToAllBranches": true,
+        "rounds": [
+          {
+            "order": 1,
+            "roundType": "other",
+            "roundName": "Resume Shortlisting",
+            "notes": "Offline resume submission with no written test at all — profile screening is the SOLE shortlisting criterion for this drive. Resumes were analysed and candidates picked on relevance of experience and profile strength; shortlisted candidates from MEC and other colleges were then invited to a single offline interview. Highlight ML projects prominently and include any electronics coursework, certification or hands-on work. Keep it precise and honest: every item listed will be discussed in Round 2, so anything you cannot defend is a liability rather than padding."
+          },
+          {
+            "order": 2,
+            "roundType": "technical",
+            "roundName": "Interview",
+            "notes": "Offline, around 30 minutes, deliberately relaxed. The recorded key insight is that the panel cared less about whether answers were right than about HOW CONFIDENTLY AND CLEARLY they were communicated. Almost every question came from the resume, and candidates were asked to draw and explain the block diagram of their projects. The interviewers focused specifically on the machine-learning aspects: which algorithm and why, preprocessing and feature engineering, evaluation metrics and results, and the challenges hit during implementation. Electronics fundamentals also appear — MOSFET structure and working, digital and analog basics — which are not covered by the questions below. Extracurriculars were assessed too: clubs, technical committees, and your specific contribution to them.",
+            "picks": [{ "category": "general_hr", "type": "text", "count": 2 }],
+            "specific": [
+              {
+                "text": "Draw the block diagram of your project and walk me through each block.",
+                "difficulty": "medium",
+                "expectedAnswerPoints": [
+                  "Draws the diagram before explaining it, naming each block and the direction data flows between them — this round asks for it to be drawn live, so practise the act and not just the content",
+                  "Says what the project does and for whom before descending into blocks, so the listener has somewhere to fit the detail",
+                  "Traces one real input end to end through the diagram, which is what shows the system is understood rather than memorised as a picture",
+                  "Names the technology at each block and why it was chosen, and is precise about which blocks they personally built",
+                  "Keeps the diagram at a level a listener can hold — a handful of blocks with clear responsibilities beats an exhaustive one nobody can follow"
+                ]
+              },
+              {
+                "text": "Which machine learning model did you use, and why did you choose it over the alternatives?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Names the model and the problem type it was chosen for — classification, regression, clustering — rather than naming a library",
+                  "States at least one genuine alternative that was considered and why it lost, since a choice presented without alternatives reads as a default rather than a decision",
+                  "Grounds the choice in the actual constraints: dataset size, feature types, interpretability needed, training time and hardware available",
+                  "Is honest about the trade accepted — a simpler model that generalised better, or a heavier one justified by a real gain",
+                  "Can say what would be tried next given more data or time, which shows the choice was contextual rather than the only thing known"
+                ]
+              },
+              {
+                "text": "How did you preprocess your data, and what evaluation metrics did you use?",
+                "difficulty": "hard",
+                "expectedAnswerPoints": [
+                  "Describes preprocessing concretely: handling missing values, encoding categoricals, scaling or normalising, and any feature engineering actually performed",
+                  "Explains why each step was needed for this model rather than reciting a generic pipeline — scaling matters for distance-based models and barely at all for trees",
+                  "States how the data was split and why, and shows awareness of leakage: the scaler and encoders must be fitted on the training set alone",
+                  "Names metrics appropriate to the problem and justifies them, in particular why accuracy is misleading on imbalanced data and precision, recall, F1 or AUC were used instead",
+                  "Reports the actual numbers achieved and reads them honestly, including where the model performed worst, rather than quoting only the best figure"
+                ]
+              },
+              {
+                "text": "What clubs or technical committees have you been part of, and what was your specific contribution?",
+                "difficulty": "easy",
+                "expectedAnswerPoints": [
+                  "Names the activity and their actual role in it rather than listing memberships, since this drive assessed contribution rather than participation",
+                  "Describes something concrete they did or built, with a scale attached — how many people, how often, what changed",
+                  "Picks an example that says something about how they work, since that is what this question is being used to find out",
+                  "Is honest about the size of the contribution; an inflated claim in a thirty-minute conversation is easy to unpick with one follow-up",
+                  "Can describe a memorable experience or difficulty from it, because that follow-up is documented as being asked"
                 ]
               }
             ]

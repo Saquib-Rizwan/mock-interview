@@ -42,7 +42,7 @@ progressRouter.get(
   asyncHandler(async (req, res) => {
     const userId = req.userId!;
 
-    const [textSubs, codeSubs, roles] = await Promise.all([
+    const [textSubs, codeSubs, attempts, roles] = await Promise.all([
       prisma.submission.findMany({
         where: { userId },
         orderBy: { createdAt: "desc" },
@@ -65,6 +65,35 @@ progressRouter.get(
           passedCount: true,
           totalCount: true,
           question: { select: { text: true, category: true } },
+        },
+      }),
+      // Submitted mock tests only. An attempt that was started and abandoned
+      // has null scoring columns and is deliberately excluded: counting it
+      // would drag every average towards zero for tests nobody ever finished.
+      prisma.assessmentAttempt.findMany({
+        where: { userId, submittedAt: { not: null } },
+        orderBy: { submittedAt: "desc" },
+        select: {
+          id: true,
+          submittedAt: true,
+          score: true,
+          maxScore: true,
+          correctCount: true,
+          wrongCount: true,
+          unansweredCount: true,
+          assessment: {
+            select: {
+              id: true,
+              round: {
+                select: {
+                  roundName: true,
+                  role: {
+                    select: { name: true, company: { select: { name: true } } },
+                  },
+                },
+              },
+            },
+          },
         },
       }),
       // The catalogue side: what each role asks, so "attempted" can be
@@ -208,7 +237,7 @@ progressRouter.get(
         return {
           kind: "text" as const,
           id: s.id,
-          questionId: s.questionId,
+          href: `/questions/${s.questionId}`,
           questionText: s.question.text,
           category: s.question.category,
           createdAt: s.createdAt,
@@ -219,16 +248,76 @@ progressRouter.get(
       ...codeSubs.map((s) => ({
         kind: "coding" as const,
         id: s.id,
-        questionId: s.questionId,
+        href: `/questions/${s.questionId}`,
         questionText: s.question.text,
-        category: s.question.category,
+        category: s.question.category as QuestionCategory | null,
         createdAt: s.createdAt,
         covered: s.passedCount,
         total: s.totalCount,
       })),
+      // A mock test spans several categories, so it reports none rather than
+      // picking one. `covered/total` is questions right out of questions asked,
+      // matching how the other two rows read; the mark-adjusted score, which
+      // negative marking can push below zero, lives in the assessments block.
+      ...attempts.map((a) => ({
+        kind: "assessment" as const,
+        id: a.id,
+        href: `/attempts/${a.id}`,
+        questionText: `${a.assessment.round.role.company.name} — ${a.assessment.round.roundName}`,
+        category: null as QuestionCategory | null,
+        createdAt: a.submittedAt!,
+        covered: a.correctCount,
+        total: (a.correctCount ?? 0) + (a.wrongCount ?? 0) + (a.unansweredCount ?? 0),
+      })),
     ]
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
       .slice(0, MAX_RECENT);
+
+    // ---- mock tests ---------------------------------------------------------
+
+    const byAssessment = new Map<
+      string,
+      {
+        assessmentId: string;
+        companyName: string;
+        roleName: string;
+        roundName: string;
+        attempts: number;
+        bestScore: number;
+        maxScore: number;
+        lastAt: Date;
+      }
+    >();
+    for (const a of attempts) {
+      const key = a.assessment.id;
+      const row = byAssessment.get(key);
+      const score = a.score ?? 0;
+      if (!row) {
+        byAssessment.set(key, {
+          assessmentId: key,
+          companyName: a.assessment.round.role.company.name,
+          roleName: a.assessment.round.role.name,
+          roundName: a.assessment.round.roundName,
+          attempts: 1,
+          bestScore: score,
+          maxScore: a.maxScore ?? 0,
+          lastAt: a.submittedAt!,
+        });
+      } else {
+        row.attempts++;
+        // Best rather than latest: the question a student is asking here is
+        // "how well can I do this", not "how did the last one go".
+        if (score > row.bestScore) row.bestScore = score;
+        if (a.submittedAt! > row.lastAt) row.lastAt = a.submittedAt!;
+      }
+    }
+
+    const assessmentRows = [...byAssessment.values()]
+      .map((r) => ({
+        ...r,
+        bestPct: r.maxScore > 0 ? Math.round((r.bestScore / r.maxScore) * 100) : 0,
+      }))
+      .sort((a, b) => b.lastAt.getTime() - a.lastAt.getTime());
 
     res.json({
       progress: {
@@ -238,11 +327,13 @@ progressRouter.get(
           codingQuestions: codeQuestionIds.size,
           codingSolved: solvedQuestionIds.size,
           codingAttempts: codeSubs.length,
+          assessmentAttempts: attempts.length,
         },
         subjects: subjectRows,
         languages: languageRows,
         recurringGaps,
         readiness,
+        assessments: assessmentRows,
         recent,
       },
     });

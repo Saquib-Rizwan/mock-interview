@@ -21,13 +21,47 @@ function draftKey(questionId: string, language: CodingLanguage) {
   return `mockinterview.code.${questionId}.${language}`;
 }
 
+/**
+ * Parameter names, read out of the Python starter.
+ *
+ * The API sends types (`int[]`, `string`) but not names, and a reader needs
+ * names: `nums = [1,2,3]` says what the value IS, where `int[]` only says what
+ * shape it is. The Python signature is the one place the names already exist,
+ * and it is generated from the same metadata as the types so the two cannot
+ * drift. Falls back to positional labels if the shape is ever unexpected.
+ */
+function paramNames(starter: string, count: number): string[] {
+  const m = starter.match(/def\s+\w+\s*\(([^)]*)\)/);
+  const names = m
+    ? m[1].split(",").map((x) => x.trim().split(/[:=\s]/)[0]).filter(Boolean)
+    : [];
+  return names.length === count
+    ? names
+    : Array.from({ length: count }, (_, i) => `arg${i + 1}`);
+}
+
+/** `[1,2,3]` is hard to scan; `[1, 2, 3]` is not. */
+function pretty(v: unknown): string {
+  return JSON.stringify(v)?.replace(/,/g, ", ") ?? String(v);
+}
+
 /** Sample inputs are stored as a JSON array of arguments; show them readably. */
 function formatArgs(json: string): string {
   try {
     const args = JSON.parse(json) as unknown[];
-    return args.map((a) => JSON.stringify(a)).join(", ");
+    return args.map(pretty).join(", ");
   } catch {
     return json;
+  }
+}
+
+/** One argument per line, named, so an example reads as a statement. */
+function argLines(json: string, names: string[]): { name: string; value: string }[] {
+  try {
+    const args = JSON.parse(json) as unknown[];
+    return args.map((a, i) => ({ name: names[i] ?? `arg${i + 1}`, value: pretty(a) }));
+  } catch {
+    return [{ name: "input", value: json }];
   }
 }
 
@@ -119,6 +153,7 @@ export function CodingWorkspace({ questionId }: { questionId: string }) {
   if (!question) return null;
 
   const signature = `${question.returnType} ${question.functionName}(${question.paramTypes.join(", ")})`;
+  const names = paramNames(question.starterCode.python ?? "", question.paramTypes.length);
   const passed = result?.submission?.passedCount ?? 0;
   const total = result?.submission?.totalCount ?? 0;
   const allPassed = result?.submission != null && passed === total;
@@ -132,15 +167,28 @@ export function CodingWorkspace({ questionId }: { questionId: string }) {
 
       <section className="coding-samples">
         <h2>Examples</h2>
-        <ul>
-          {question.sampleTests.map((t) => (
+        <ol className="examples">
+          {question.sampleTests.map((t, i) => (
             <li key={t.id}>
-              <code className="io">{formatArgs(t.input)}</code>
-              <span aria-hidden="true"> → </span>
-              <code className="io">{t.expected}</code>
+              <span className="ex-num">{i + 1}</span>
+              <div className="ex-body">
+                {/* Named and one per line. The old single line read
+                    `[1,2,3,1] → true`, which is correct and tells you nothing
+                    about which value is which argument. */}
+                {argLines(t.input, names).map((a) => (
+                  <p key={a.name} className="ex-row">
+                    <span className="ex-label">{a.name}</span>
+                    <code className="io">{a.value}</code>
+                  </p>
+                ))}
+                <p className="ex-row is-out">
+                  <span className="ex-label">returns</span>
+                  <code className="io">{formatArgs(`[${t.expected}]`)}</code>
+                </p>
+              </div>
             </li>
           ))}
-        </ul>
+        </ol>
         {question.hiddenTestCount > 0 && (
           <p className="muted small">
             Plus {question.hiddenTestCount} hidden test{" "}

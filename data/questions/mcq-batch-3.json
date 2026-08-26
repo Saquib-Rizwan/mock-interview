@@ -1,0 +1,166 @@
+[
+  {
+    "text": "The average of 5 numbers is 20. When one number is removed, the average of the rest becomes 22. Which number was removed?",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "options": ["12", "18", "22", "28"],
+    "correctIndex": 0,
+    "solution": "Work with totals rather than averages. Five numbers averaging 20 sum to 100. The remaining four averaging 22 sum to 88. The removed number is the difference, 100 minus 88 = 12. Notice it is below the original average, which is why removing it pulled the average up."
+  },
+  {
+    "text": "A number increased by 20% becomes 96. What was the original number?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["76", "76.8", "80", "115.2"],
+    "correctIndex": 2,
+    "solution": "An increase of 20% multiplies by 1.2, so the original is 96 divided by 1.2 = 80. Check: 80 plus 20% of 80 is 80 plus 16 = 96. The trap answer is 76.8, which comes from subtracting 20% of 96 rather than dividing — the percentage was taken on the original, not on the result."
+  },
+  {
+    "text": "If a : b = 2 : 3 and b : c = 4 : 5, what is a : c?",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "options": ["2 : 5", "6 : 15", "8 : 15", "8 : 12"],
+    "correctIndex": 2,
+    "solution": "The two ratios share b, so scale them to give b the same value. Multiply the first by 4 to get a : b = 8 : 12, and the second by 3 to get b : c = 12 : 15. Now b is 12 in both and the chain reads a : b : c = 8 : 12 : 15, so a : c = 8 : 15. Multiplying 2 by 4 and 3 by 5 to get 2 : 5 is the common error — the shared term must be matched first."
+  },
+  {
+    "text": "A can complete a job in 10 days and B in 15 days. Working together, how long do they take?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["5 days", "6 days", "12.5 days", "25 days"],
+    "correctIndex": 1,
+    "solution": "Add rates, never times. A does 1/10 of the job per day and B does 1/15, so together they do 1/10 + 1/15 = 3/30 + 2/30 = 5/30 = 1/6 per day. The time is the reciprocal, 6 days. Averaging the two times to get 12.5 is the classic mistake, and it should look wrong immediately: together they must be faster than either alone."
+  },
+  {
+    "text": "A train 200 metres long passes a stationary pole in 10 seconds. What is its speed?",
+    "category": "aptitude",
+    "difficulty": "medium",
+    "options": ["20 km/h", "36 km/h", "72 km/h", "200 km/h"],
+    "correctIndex": 2,
+    "solution": "Passing a pole means covering exactly the train's own length, because the pole has no width — so the distance is 200 m, not more. Speed is 200 divided by 10 = 20 m/s, and converting with the 18/5 factor gives 20 times 18/5 = 72 km/h. Answering 20 km/h is forgetting the unit conversion; the 20 is metres per second."
+  },
+  {
+    "text": "What is the simple interest on 5,000 rupees at 8% per annum for 3 years?",
+    "category": "aptitude",
+    "difficulty": "easy",
+    "options": ["400", "1,200", "1,300", "1,400"],
+    "correctIndex": 1,
+    "solution": "Simple interest is principal times rate times time divided by 100: 5000 times 8 times 3 divided by 100 = 1,200 rupees. The amount repayable would be 6,200, but the question asks for the interest alone. Compound interest at the same rate would come to 1,298.56, which is why 1,300 is offered as a distractor."
+  },
+  {
+    "text": "Which of the following is NOT a state in the process life cycle?",
+    "category": "os",
+    "difficulty": "easy",
+    "options": ["Ready", "Running", "Compiled", "Waiting"],
+    "correctIndex": 2,
+    "solution": "The standard states are New, Ready, Running, Waiting (also called Blocked) and Terminated. Compilation happens before the program is ever a process — it turns source into an executable, and a process only exists once that executable is loaded and scheduled. Ready means runnable but not currently on the CPU; Waiting means blocked on an event such as I/O and therefore not schedulable at all."
+  },
+  {
+    "text": "Which of the following is NOT one of the four necessary conditions for deadlock?",
+    "category": "os",
+    "difficulty": "medium",
+    "options": ["Mutual exclusion", "Hold and wait", "Preemption", "Circular wait"],
+    "correctIndex": 2,
+    "solution": "The four Coffman conditions are mutual exclusion, hold and wait, NO preemption, and circular wait — all four must hold simultaneously for deadlock to be possible. Preemption is the opposite of the real condition: if a resource can be forcibly taken from a process, deadlock is broken rather than caused. Deadlock prevention works precisely by denying one of the four."
+  },
+  {
+    "text": "A page fault occurs when",
+    "category": "os",
+    "difficulty": "medium",
+    "options": [
+      "a page is corrupted on disk",
+      "a referenced page is not present in main memory",
+      "the page table is full",
+      "two processes access the same page"
+    ],
+    "correctIndex": 1,
+    "solution": "A page fault is a trap raised when a process references a virtual page whose valid bit says it is not currently in a physical frame. The OS then finds the page on the backing store, loads it into a frame — evicting another page if none is free — updates the page table and restarts the faulting instruction. It is a normal part of demand paging, not an error; only an excessive rate of them, which is thrashing, is a problem."
+  },
+  {
+    "text": "Which normal form eliminates transitive dependency of a non-key attribute on the primary key?",
+    "category": "dbms",
+    "difficulty": "medium",
+    "options": ["1NF", "2NF", "3NF", "4NF"],
+    "correctIndex": 2,
+    "solution": "A transitive dependency is where a non-key attribute depends on another non-key attribute rather than directly on the key — for example if a table holds employee, department and department location, the location really depends on the department. 3NF removes it by splitting the table. 1NF requires atomic values and 2NF removes partial dependency on part of a composite key, both of which come first. 4NF concerns multi-valued dependencies."
+  },
+  {
+    "text": "Which ACID property guarantees that a transaction either completes entirely or has no effect at all?",
+    "category": "dbms",
+    "difficulty": "easy",
+    "options": ["Atomicity", "Consistency", "Isolation", "Durability"],
+    "correctIndex": 0,
+    "solution": "Atomicity is the all-or-nothing guarantee: if any step fails, everything already done is rolled back, which is what makes a bank transfer safe from debiting one account without crediting the other. Consistency means the database moves between valid states satisfying its constraints. Isolation means concurrent transactions do not observe each other's partial work. Durability means a committed result survives a crash."
+  },
+  {
+    "text": "A foreign key in a relational database is",
+    "category": "dbms",
+    "difficulty": "easy",
+    "options": [
+      "a key that must be unique within its own table",
+      "a column referencing the primary key of another table",
+      "an index used to speed up joins",
+      "a key encrypted for security"
+    ],
+    "correctIndex": 1,
+    "solution": "A foreign key holds values that must exist as a primary key in the referenced table, which is what enforces referential integrity — you cannot record an order for a customer who does not exist. It need not be unique in its own table, since one customer can have many orders. It is not inherently an index, though databases usually recommend indexing one because joins and cascade checks use it constantly."
+  },
+  {
+    "text": "Which transport-layer protocol is connectionless?",
+    "category": "cn",
+    "difficulty": "easy",
+    "options": ["TCP", "UDP", "HTTP", "FTP"],
+    "correctIndex": 1,
+    "solution": "UDP sends datagrams without a handshake, without acknowledgement and without ordering guarantees, which is what makes it fast and suitable for live video, voice and DNS queries. TCP is connection-oriented and establishes a three-way handshake before any data flows. HTTP and FTP are application-layer protocols and both run over TCP, so they are not transport protocols at all."
+  },
+  {
+    "text": "What is the default port number for HTTPS?",
+    "category": "cn",
+    "difficulty": "easy",
+    "options": ["21", "80", "443", "8080"],
+    "correctIndex": 2,
+    "solution": "HTTPS uses port 443 by default, HTTP uses 80, FTP uses 21 for its control connection, and 8080 is a common unprivileged alternative that servers use in development. Ports below 1024 are well-known and on Unix-like systems require elevated privileges to bind, which is one reason development servers pick 8080 instead."
+  },
+  {
+    "text": "At which OSI layer does a router primarily operate?",
+    "category": "cn",
+    "difficulty": "easy",
+    "options": ["Physical layer", "Data Link layer", "Network layer", "Transport layer"],
+    "correctIndex": 2,
+    "solution": "A router forwards packets between networks using logical addresses, which is the Network layer's job. A switch operates one layer down at the Data Link layer, forwarding frames by MAC address within a single network. A hub is a Physical layer device that simply repeats signals to every port. The layer a device works at is decided by which address it reads to make its forwarding decision."
+  },
+  {
+    "text": "Which kind of method cannot be overridden in Java?",
+    "category": "oops",
+    "difficulty": "medium",
+    "options": ["static", "public", "protected", "abstract"],
+    "correctIndex": 0,
+    "solution": "A static method belongs to the class rather than to an instance, so there is no object whose actual type could drive dynamic dispatch. Declaring one with the same signature in a subclass is method hiding, resolved at compile time from the reference type — which behaves differently from overriding and is a favourite exam trap. private and final methods also cannot be overridden. Abstract methods must be overridden, and public and protected ones freely can be."
+  },
+  {
+    "text": "In Java, which version of an overridden method runs is decided by",
+    "category": "oops",
+    "difficulty": "medium",
+    "options": [
+      "the type of the reference variable, at compile time",
+      "the actual type of the object, at run time",
+      "the order of the class declarations",
+      "whichever is declared last"
+    ],
+    "correctIndex": 1,
+    "solution": "Overriding is dynamic dispatch: the JVM looks at what the object actually is at run time and calls that class's version, regardless of the declared type of the reference holding it. That is the whole mechanism behind run-time polymorphism, and it is why an Animal reference pointing at a Dog calls Dog's method. Overloading is the opposite — resolved at compile time from the argument types."
+  },
+  {
+    "text": "Which statement about abstract classes in Java is TRUE?",
+    "category": "oops",
+    "difficulty": "medium",
+    "options": [
+      "They can be instantiated directly",
+      "They must contain at least one abstract method",
+      "They can have constructors",
+      "They cannot have instance variables"
+    ],
+    "correctIndex": 2,
+    "solution": "An abstract class can and usually should have a constructor, because it has instance fields that need initialising — it simply runs as part of constructing a subclass rather than being called with new. An abstract class cannot be instantiated directly, need not contain any abstract method at all (marking it abstract is enough to block instantiation), and may hold instance variables freely, which is one of the main things distinguishing it from an interface."
+  }
+]

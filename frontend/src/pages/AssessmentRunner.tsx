@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api, type AttemptResult, type AttemptReview } from "../api";
+import { api, type AttemptResult, type AttemptReview, type AttemptSummary } from "../api";
+import { AttemptReviewView } from "../components/AttemptReviewView";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { useFetch } from "../useFetch";
 
@@ -22,6 +23,7 @@ export function AssessmentRunner() {
   const [busy, setBusy] = useState(false);
   const [runError, setRunError] = useState<string | null>(null);
   const [review, setReview] = useState<AttemptReview | null>(null);
+  const [past, setPast] = useState<AttemptSummary[]>([]);
 
   const assessment = data?.assessment;
 
@@ -65,6 +67,20 @@ export function AssessmentRunner() {
 
   const submitRef = useRef(submit);
   submitRef.current = submit;
+
+  // Past sittings, loaded only on the start screen. Failing quietly is right
+  // here: not being able to list history is no reason to block a new attempt.
+  useEffect(() => {
+    if (attemptId) return;
+    let live = true;
+    api
+      .attemptsFor(id)
+      .then(({ attempts }) => live && setPast(attempts))
+      .catch(() => live && setPast([]));
+    return () => {
+      live = false;
+    };
+  }, [id, attemptId]);
 
   // The clock ticks off the server's startedAt rather than a local countdown,
   // so reloading the page cannot buy extra time.
@@ -193,64 +209,7 @@ export function AssessmentRunner() {
         {review && (
           <>
             <hr className="rule" />
-            {review.sections.map((section) => (
-              <section key={section.id}>
-                {review.sections.length > 1 && <h2>{section.name}</h2>}
-                <ol className="review-list">
-                  {section.questions.map((rq, i) => (
-                    <li
-                      key={rq.id}
-                      className={
-                        rq.chosenIndex === null
-                          ? "is-skipped"
-                          : rq.correct
-                            ? "is-right"
-                            : "is-wrong"
-                      }
-                    >
-                      <div className="review-head">
-                        <span className="review-num">{i + 1}</span>
-                        <span className="review-verdict">
-                          {rq.chosenIndex === null
-                            ? "not answered"
-                            : rq.correct
-                              ? "correct"
-                              : "wrong"}
-                        </span>
-                        <span className="review-marks">
-                          {rq.marks > 0 ? `+${rq.marks}` : rq.marks}
-                        </span>
-                      </div>
-
-                      <p className="question-text">{rq.text}</p>
-
-                      <ul className="review-options">
-                        {rq.options.map((opt, oi) => (
-                          <li
-                            key={oi}
-                            className={
-                              (oi === rq.correctIndex ? "is-key " : "") +
-                              (oi === rq.chosenIndex ? "is-yours" : "")
-                            }
-                          >
-                            <span className="mcq-letter">{String.fromCharCode(65 + oi)}</span>
-                            <span>{opt}</span>
-                            {oi === rq.correctIndex && (
-                              <span className="review-tag">correct answer</span>
-                            )}
-                            {oi === rq.chosenIndex && oi !== rq.correctIndex && (
-                              <span className="review-tag">you chose this</span>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-
-                      {rq.solution && <p className="note">{rq.solution}</p>}
-                    </li>
-                  ))}
-                </ol>
-              </section>
-            ))}
+            <AttemptReviewView review={review} />
           </>
         )}
 
@@ -296,8 +255,31 @@ export function AssessmentRunner() {
 
         {runError && <p className="error">{runError}</p>}
         <button type="button" onClick={begin} disabled={busy || total === 0}>
-          {busy ? "Starting…" : "Start the test"}
+          {busy ? "Starting…" : past.length > 0 ? "Take it again" : "Start the test"}
         </button>
+
+        {past.length > 0 && (
+          <>
+            <hr className="rule" />
+            <h2>Your attempts</h2>
+            <ul className="score-lines">
+              {past.map((a) => (
+                <li key={a.id}>
+                  <Link to={`/attempts/${a.id}`}>
+                    {new Date(a.submittedAt).toLocaleString()}
+                  </Link>
+                  {" · "}
+                  <strong>
+                    {a.score}/{a.maxScore}
+                  </strong>{" "}
+                  <span className="muted small">
+                    {a.correctCount} right · {a.wrongCount} wrong · {a.unansweredCount} blank
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
         {total === 0 && (
           <p className="muted small">This assessment has no questions attached yet.</p>
         )}

@@ -76,7 +76,12 @@ export function QuestionDetail() {
           eyebrow above it — the arrangement of an article, and the thing that
           makes the page read as something to concentrate on. */}
       <p className="eyebrow">{CATEGORY_LABELS[question.category]}</p>
-      <h1 className="lead">{question.text}</h1>
+      {/* A coding problem statement is a spec, not a headline. Set as display
+          type at 28ch it wrapped to five lines and dominated the page above the
+          editor; compact drops it to body size at a comfortable measure. */}
+      <h1 className={question.questionType === "coding" ? "lead is-compact" : "lead"}>
+        {question.text}
+      </h1>
       <div className="tags">
         <span className={`badge badge-${question.difficulty}`}>
           {question.difficulty}

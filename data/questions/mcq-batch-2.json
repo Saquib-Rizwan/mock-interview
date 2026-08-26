@@ -1,0 +1,331 @@
+[
+  {
+    "text": "On a system where sizeof(int) is 4, an int pointer p holds address 1000. What does p + 1 evaluate to?",
+    "category": "c_programming",
+    "difficulty": "easy",
+    "options": ["1001", "1002", "1004", "1008"],
+    "correctIndex": 2,
+    "solution": "Pointer arithmetic advances in units of the pointed-to type, not in bytes. Adding 1 to an int pointer moves it forward by sizeof(int), which is 4 bytes here, giving 1004. The compiler scales the arithmetic for you, which is exactly why a char pointer would have given 1001 and a double pointer 1008 from the same starting address."
+  },
+  {
+    "text": "In C, which expression is exactly equivalent to a[i] for an array a?",
+    "category": "c_programming",
+    "difficulty": "easy",
+    "options": ["*(a + i)", "&a + i", "*(a) + i", "a + *i"],
+    "correctIndex": 0,
+    "solution": "Subscripting is defined as *(a + i): the array name decays to a pointer to its first element, i is scaled by the element size, and the result is dereferenced. A curious consequence is that a[i] and i[a] are both legal and identical, because addition commutes. *(a) + i dereferences first and then adds to the value, which is a different thing entirely."
+  },
+  {
+    "text": "What is the difference between *p++ and (*p)++ in C?",
+    "category": "c_programming",
+    "difficulty": "medium",
+    "options": [
+      "They are identical",
+      "*p++ increments the pointer; (*p)++ increments the value it points to",
+      "*p++ increments the value; (*p)++ increments the pointer",
+      "(*p)++ is a syntax error"
+    ],
+    "correctIndex": 1,
+    "solution": "Postfix ++ binds more tightly than unary *, so *p++ parses as *(p++): the pointer is advanced and the value at the old address is produced. The parentheses in (*p)++ force the dereference first, so it is the pointed-to value that is incremented and the pointer does not move. This precedence pair is one of the most common sources of output-prediction mistakes."
+  },
+  {
+    "text": "What is wrong with a C function that returns the address of a local variable?",
+    "category": "c_programming",
+    "difficulty": "medium",
+    "options": [
+      "Nothing, it is a normal way to return data",
+      "It will not compile",
+      "The local's storage is released when the function returns, so the pointer dangles",
+      "It leaks memory on every call"
+    ],
+    "correctIndex": 2,
+    "solution": "An ordinary local lives in the function's stack frame, which is released the moment the function returns. The returned address then points at memory the program no longer owns, and using it is undefined behaviour — it may appear to work until another call overwrites that frame, which is what makes the bug so hard to find. Returning a pointer is fine if the object was heap-allocated with malloc, or declared static, or supplied by the caller."
+  },
+  {
+    "text": "In C, what happens if you try to modify a string literal, as in char *s = \"hi\"; s[0] = 'H';?",
+    "category": "c_programming",
+    "difficulty": "medium",
+    "options": [
+      "The string is modified normally",
+      "It is undefined behaviour and typically crashes",
+      "The compiler always rejects it",
+      "A copy is modified and the original is untouched"
+    ],
+    "correctIndex": 1,
+    "solution": "A string literal has static storage duration and is usually placed in a read-only section, so writing through a pointer to it is undefined behaviour and commonly a segmentation fault. Note the compiler generally accepts the code — the failure is at run time. Writing char s[] = \"hi\" instead copies the characters into a modifiable array, and that version is perfectly safe to change."
+  },
+  {
+    "text": "What is the difference between malloc and calloc in C?",
+    "category": "c_programming",
+    "difficulty": "easy",
+    "options": [
+      "malloc zeroes the memory, calloc does not",
+      "calloc takes a count and size and zeroes the memory, malloc does neither",
+      "calloc allocates on the stack, malloc on the heap",
+      "There is no difference"
+    ],
+    "correctIndex": 1,
+    "solution": "malloc(n) allocates n bytes and leaves the contents indeterminate. calloc(count, size) allocates count times size bytes and initialises every byte to zero. Both allocate from the heap and both are released with free. The zeroing is not free, so malloc is preferred when the buffer is about to be overwritten anyway."
+  },
+  {
+    "text": "In C, a variable declared static inside a function",
+    "category": "c_programming",
+    "difficulty": "medium",
+    "options": [
+      "is destroyed when the function returns, like any local",
+      "keeps its value between calls and is initialised only once",
+      "becomes visible to other translation units",
+      "cannot be assigned to"
+    ],
+    "correctIndex": 1,
+    "solution": "static inside a function changes the variable's storage duration from automatic to static: it lives for the whole run of the program, is initialised once before main, and retains its value across calls. Its scope is unchanged — it is still visible only inside that function. static at file scope means something different again: it restricts a name to that translation unit."
+  },
+  {
+    "text": "What does the following C loop print?  int i = 0; while (i++ < 3) printf(\"%d \", i);",
+    "category": "c_programming",
+    "difficulty": "hard",
+    "options": ["0 1 2", "1 2 3", "0 1 2 3", "1 2 3 4"],
+    "correctIndex": 1,
+    "solution": "i++ yields the old value for the comparison and then increments. Pass one compares 0 < 3, i becomes 1, prints 1. Pass two compares 1 < 3, i becomes 2, prints 2. Pass three compares 2 < 3, i becomes 3, prints 3. Pass four compares 3 < 3, which is false, so the loop ends with i equal to 4 but nothing further printed. The output is 1 2 3."
+  },
+  {
+    "text": "In C, what does passing an array to a function actually pass?",
+    "category": "c_programming",
+    "difficulty": "medium",
+    "options": [
+      "A complete copy of the array",
+      "A pointer to the first element",
+      "A reference that cannot be reassigned",
+      "The array's size and contents"
+    ],
+    "correctIndex": 1,
+    "solution": "An array argument decays to a pointer to its first element, so the function receives an address, not a copy. Two consequences follow: modifying elements inside the function changes the caller's array, and sizeof inside the function gives the size of a pointer rather than of the array, which is why array length must be passed as a separate parameter."
+  },
+  {
+    "text": "Which statement about NULL pointers in C is correct?",
+    "category": "c_programming",
+    "difficulty": "easy",
+    "options": [
+      "Dereferencing NULL returns 0",
+      "NULL and an uninitialised pointer are the same thing",
+      "Dereferencing NULL is undefined behaviour and usually crashes",
+      "NULL can be freed safely only once"
+    ],
+    "correctIndex": 2,
+    "solution": "NULL is a well-defined value meaning 'points at nothing', and dereferencing it is undefined behaviour — on most systems it faults immediately, which is actually the helpful outcome. An uninitialised pointer is different and worse: it holds whatever garbage was on the stack, so it may point at valid memory and corrupt it silently. Incidentally free(NULL) is explicitly defined as a no-op and is always safe."
+  },
+  {
+    "text": "In Python, which of these is immutable?",
+    "category": "python",
+    "difficulty": "easy",
+    "options": ["list", "dict", "set", "tuple"],
+    "correctIndex": 3,
+    "solution": "Tuples cannot be changed after creation, which is why they are hashable and can be used as dictionary keys or set members. Lists, dicts and sets are all mutable and therefore unhashable. Note that immutability is shallow: a tuple containing a list can still have that inner list mutated, and such a tuple is not hashable."
+  },
+  {
+    "text": "What is the difference between == and is in Python?",
+    "category": "python",
+    "difficulty": "medium",
+    "options": [
+      "They are interchangeable",
+      "== compares values, is compares object identity",
+      "is compares values, == compares identity",
+      "is works only on numbers"
+    ],
+    "correctIndex": 1,
+    "solution": "== asks whether two objects are equal, which classes control through __eq__. is asks whether two names refer to the very same object in memory. They coincide often enough to be confusing — small integers and short strings are interned and cached, so 256 is 256 may be True while 1000 is 1000 may be False. The rule is to use is only for None, True and False."
+  },
+  {
+    "text": "What happens when a Python function uses a mutable default argument, as in def f(x, acc=[]):?",
+    "category": "python",
+    "difficulty": "hard",
+    "options": [
+      "A fresh empty list is created on every call",
+      "The same list is shared by every call that omits the argument",
+      "Python raises a SyntaxError",
+      "The default is copied on each call"
+    ],
+    "correctIndex": 1,
+    "solution": "Default arguments are evaluated once, when the function is defined, not on each call. The same list object therefore persists across calls, so values accumulate between invocations that omit the argument — a classic and confusing bug. The standard fix is to default to None and create the list inside the body: def f(x, acc=None): if acc is None: acc = []."
+  },
+  {
+    "text": "What is the average-case time complexity of looking up a key in a Python dictionary?",
+    "category": "python",
+    "difficulty": "easy",
+    "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
+    "correctIndex": 0,
+    "solution": "A dict is a hash table, so the key is hashed to a slot and found directly rather than searched for — O(1) on average. The worst case degrades towards O(n) when many keys collide into the same slot. Lookups in a list, by contrast, are O(n) because every element may have to be compared, which is why a dict or set is the right structure for membership tests."
+  },
+  {
+    "text": "In Python, what does a slice such as lst[1:3] return?",
+    "category": "python",
+    "difficulty": "easy",
+    "options": [
+      "A view onto the original list",
+      "A new list containing elements at index 1 and 2",
+      "A new list containing elements at index 1, 2 and 3",
+      "The original list with other elements removed"
+    ],
+    "correctIndex": 1,
+    "solution": "Slicing a list produces a new list, and the stop index is exclusive, so lst[1:3] holds the elements at index 1 and 2. The copy is shallow: the new list holds the same objects, so mutating one of those objects is visible through both lists. lst[:] is the idiomatic shallow copy of a whole list, and NumPy arrays differ here — their slices really are views."
+  },
+  {
+    "text": "What is the difference between a list comprehension and a generator expression in Python?",
+    "category": "python",
+    "difficulty": "medium",
+    "options": [
+      "There is none; the brackets are cosmetic",
+      "A comprehension builds the whole list in memory; a generator yields items lazily",
+      "A generator is always faster to iterate fully",
+      "A comprehension can only be used with numbers"
+    ],
+    "correctIndex": 1,
+    "solution": "[x*x for x in data] constructs the entire list immediately and holds all of it in memory. (x*x for x in data) creates a generator that produces each value on demand, using constant memory regardless of input size — which is what makes it right for a large or infinite source. The trade-off is that a generator can be consumed only once and does not support indexing or len."
+  },
+  {
+    "text": "Why are Python strings immutable?",
+    "category": "python",
+    "difficulty": "medium",
+    "options": [
+      "They are not; s[0] = 'x' is legal",
+      "Because immutability makes them hashable and safely shareable",
+      "Because they are stored on the stack",
+      "To make concatenation faster"
+    ],
+    "correctIndex": 1,
+    "solution": "Immutability is what lets a string be hashed once and used as a dictionary key, and lets identical literals be interned and shared without risk. The cost is that every apparent modification builds a new string, which is why concatenating in a loop is O(n squared) and \"\".join(parts) is the correct idiom. s[0] = 'x' raises a TypeError."
+  },
+  {
+    "text": "What does the Global Interpreter Lock (GIL) in CPython mean for threads?",
+    "category": "python",
+    "difficulty": "hard",
+    "options": [
+      "Threads cannot be used at all",
+      "Only one thread executes Python bytecode at a time, so CPU-bound work does not parallelise",
+      "Threads run in true parallel on all cores",
+      "It applies only to I/O operations"
+    ],
+    "correctIndex": 1,
+    "solution": "The GIL allows only one thread to execute Python bytecode at any moment, so CPU-bound work gains nothing from threading in CPython. Threads remain genuinely useful for I/O-bound work, because the lock is released while waiting on a socket, file or subprocess. For CPU-bound parallelism the usual answer is multiprocessing, which sidesteps the GIL by using separate interpreter processes."
+  },
+  {
+    "text": "In Python, what does copy.copy() do that copy.deepcopy() does not?",
+    "category": "python",
+    "difficulty": "medium",
+    "options": [
+      "copy() duplicates nested objects; deepcopy() does not",
+      "copy() creates a shallow copy sharing nested objects; deepcopy() duplicates them recursively",
+      "They are identical",
+      "copy() works only on lists"
+    ],
+    "correctIndex": 1,
+    "solution": "A shallow copy creates a new outer container whose elements are the same objects as the original's, so mutating a nested list is visible through both copies. deepcopy recursively duplicates everything, giving a fully independent structure, and it handles cycles correctly by tracking objects it has already copied. Deep copying is considerably more expensive, so it is worth using only when the sharing actually matters."
+  },
+  {
+    "text": "What is the difference between a Python list and a tuple, beyond mutability?",
+    "category": "python",
+    "difficulty": "medium",
+    "options": [
+      "Tuples cannot contain mixed types",
+      "Tuples are hashable when their contents are, so they can be dict keys",
+      "Lists cannot be nested",
+      "Tuples are always slower"
+    ],
+    "correctIndex": 1,
+    "solution": "The consequence interviews actually probe is hashability: because a tuple cannot change, it has a stable hash and can serve as a dictionary key or set member, which a list can never do. Both hold mixed types and both nest freely. Tuples are also marginally lighter and slightly faster to construct, and convention uses them for fixed heterogeneous records such as a coordinate pair."
+  },
+  {
+    "text": "In cloud computing, which service model leaves the customer responsible for managing the operating system?",
+    "category": "cloud",
+    "difficulty": "easy",
+    "options": [
+      "Infrastructure as a Service",
+      "Platform as a Service",
+      "Software as a Service",
+      "None of them"
+    ],
+    "correctIndex": 0,
+    "solution": "The three models form a spectrum of who manages what. With IaaS the provider supplies compute, storage and network, and everything from the operating system upward is yours — patching included. PaaS moves the OS and runtime to the provider so you deploy only application code. SaaS is finished software where nothing is yours to manage at all."
+  },
+  {
+    "text": "A company keeps regulated data on its own hardware while running its public website on a provider's infrastructure. What is this called?",
+    "category": "cloud",
+    "difficulty": "easy",
+    "options": ["Public cloud", "Private cloud", "Hybrid cloud", "Community cloud"],
+    "correctIndex": 2,
+    "solution": "Hybrid cloud deliberately combines private and public deployment, usually so regulated or latency-sensitive workloads stay in-house while everything else uses public capacity. Public cloud is shared multi-tenant infrastructure; private cloud is dedicated to one organisation whether hosted or on-premises. The usual driver for hybrid is exactly this: compliance on one side and elasticity on the other."
+  },
+  {
+    "text": "What is the difference between vertical and horizontal scaling?",
+    "category": "cloud",
+    "difficulty": "medium",
+    "options": [
+      "Vertical adds more machines; horizontal makes one machine bigger",
+      "Vertical makes one machine bigger; horizontal adds more machines",
+      "They mean the same thing",
+      "Horizontal applies only to databases"
+    ],
+    "correctIndex": 1,
+    "solution": "Vertical scaling, or scaling up, gives a single machine more CPU, memory or disk. It is simple and needs no application change, but it has a hard ceiling and usually requires downtime to resize. Horizontal scaling, or scaling out, adds more machines behind a load balancer — effectively unbounded and the basis of cloud elasticity, but it requires the application to be stateless or to externalise its state."
+  },
+  {
+    "text": "What is the main difference between a virtual machine and a container?",
+    "category": "cloud",
+    "difficulty": "medium",
+    "options": [
+      "A container includes its own full guest operating system",
+      "A VM includes a full guest OS; a container shares the host kernel",
+      "Containers are slower to start than VMs",
+      "VMs cannot be run in the cloud"
+    ],
+    "correctIndex": 1,
+    "solution": "A virtual machine virtualises hardware and runs a complete guest operating system on a hypervisor, which costs gigabytes and tens of seconds to boot. A container virtualises the operating system instead: it packages the application and its dependencies but shares the host kernel, so it is megabytes and starts in under a second. The trade is isolation — separate kernels give VMs a stronger boundary, which is why untrusted workloads still tend to get one."
+  },
+  {
+    "text": "In cloud infrastructure, what is an availability zone?",
+    "category": "cloud",
+    "difficulty": "medium",
+    "options": [
+      "A geographic area containing several isolated data centre locations",
+      "An isolated location within a region, with independent power and networking",
+      "A network firewall boundary",
+      "A billing category"
+    ],
+    "correctIndex": 1,
+    "solution": "A region is a geographic area; an availability zone is one isolated location within it, with its own power, cooling and networking, connected to the other zones by low-latency links. Spreading instances across zones survives a single data centre failure while keeping latency low, which is why load balancers are configured across zones. Surviving the loss of a whole region requires replicating to a second region, which is a larger and costlier undertaking."
+  },
+  {
+    "text": "Which storage type is best suited to serving large numbers of static files such as images over HTTP?",
+    "category": "cloud",
+    "difficulty": "medium",
+    "options": ["Block storage", "Object storage", "A relational database", "In-memory cache"],
+    "correctIndex": 1,
+    "solution": "Object storage holds each file as an object with metadata under a flat key, is accessed over HTTP, scales essentially without limit and is cheap per gigabyte — exactly the shape of an image or video workload, and it pairs naturally with a CDN. Block storage presents a raw volume that must be attached to one machine and formatted, which suits databases and boot disks. Storing large binaries in a relational database is a well-known anti-pattern."
+  },
+  {
+    "text": "Under the cloud shared responsibility model, who is responsible for configuring access permissions on your data?",
+    "category": "cloud",
+    "difficulty": "medium",
+    "options": [
+      "The cloud provider",
+      "The customer",
+      "Nobody; permissions are automatic",
+      "It varies by region"
+    ],
+    "correctIndex": 1,
+    "solution": "The provider is responsible for security OF the cloud — physical facilities, hardware, the hypervisor and the managed services themselves. The customer is responsible for security IN the cloud, which includes access control, encryption choices, network rules and patching anything they run. Nearly every well-known cloud data breach has fallen on the customer side of that line, typically a storage bucket left publicly readable."
+  },
+  {
+    "text": "What distinguishes elasticity from scalability in cloud computing?",
+    "category": "cloud",
+    "difficulty": "hard",
+    "options": [
+      "They are synonyms",
+      "Scalability is the ability to grow; elasticity is growing and shrinking automatically with demand",
+      "Elasticity applies only to storage",
+      "Scalability is a billing model"
+    ],
+    "correctIndex": 1,
+    "solution": "Scalability is the capacity to handle more load by adding resources, and it says nothing about how or when that happens. Elasticity is the automatic part: provisioning as demand rises and, crucially, releasing when it falls, so capacity tracks the workload. The second half is where the saving lives — a system that scales up and never scales back down is scalable but not elastic, and it is billed as if it were permanently at peak."
+  }
+]

@@ -124,6 +124,36 @@ assessmentsRouter.post(
   })
 );
 
+/**
+ * This user's finished sittings of one assessment, newest first.
+ *
+ * Submitted only. An abandoned attempt has null scoring columns and would show
+ * as a zero, which is a different and misleading claim from "never finished".
+ */
+assessmentsRouter.get(
+  "/:id/attempts",
+  asyncHandler(async (req, res) => {
+    const attempts = await prisma.assessmentAttempt.findMany({
+      where: {
+        assessmentId: req.params.id,
+        userId: req.userId!,
+        submittedAt: { not: null },
+      },
+      orderBy: { submittedAt: "desc" },
+      select: {
+        id: true,
+        submittedAt: true,
+        score: true,
+        maxScore: true,
+        correctCount: true,
+        wrongCount: true,
+        unansweredCount: true,
+      },
+    });
+    res.json({ attempts });
+  })
+);
+
 /** Loads an attempt, scoped to its owner. */
 async function ownedAttempt(attemptId: string, userId: string) {
   const attempt = await prisma.assessmentAttempt.findUnique({

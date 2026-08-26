@@ -309,14 +309,45 @@ export type RoleReadiness = {
 };
 
 export type RecentActivity = {
-  kind: "text" | "coding";
+  kind: "text" | "coding" | "assessment";
   id: string;
-  questionId: string;
+  /**
+   * Where this row links to, decided by the server. Replaces the old
+   * `questionId`: a mock test has no single question, so the row can no longer
+   * build its own URL from one.
+   */
+  href: string;
+  /** Question text, or "Company — Round" for a mock test. */
   questionText: string;
-  category: QuestionCategory;
+  /** Null for a mock test, which spans several categories. */
+  category: QuestionCategory | null;
   createdAt: string;
   covered: number | null;
   total: number | null;
+};
+
+/** One finished sitting, as listed on an assessment or in progress. */
+export type AttemptSummary = {
+  id: string;
+  submittedAt: string;
+  score: number | null;
+  maxScore: number | null;
+  correctCount: number | null;
+  wrongCount: number | null;
+  unansweredCount: number | null;
+};
+
+export type AssessmentProgress = {
+  assessmentId: string;
+  companyName: string;
+  roleName: string;
+  roundName: string;
+  attempts: number;
+  /** Best rather than latest: the question is "how well can I do this". */
+  bestScore: number;
+  maxScore: number;
+  bestPct: number;
+  lastAt: string;
 };
 
 export type Progress = {
@@ -326,11 +357,13 @@ export type Progress = {
     codingQuestions: number;
     codingSolved: number;
     codingAttempts: number;
+    assessmentAttempts: number;
   };
   subjects: SubjectProgress[];
   languages: LanguageProgress[];
   recurringGaps: RecurringGap[];
   readiness: RoleReadiness[];
+  assessments: AssessmentProgress[];
   recent: RecentActivity[];
 };
 
@@ -476,6 +509,9 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ answers }),
     }),
+
+  attemptsFor: (assessmentId: string) =>
+    request<{ attempts: AttemptSummary[] }>(`/assessments/${assessmentId}/attempts`),
 
   attemptReview: (attemptId: string) =>
     request<{ review: AttemptReview }>(`/attempts/${attemptId}/review`),

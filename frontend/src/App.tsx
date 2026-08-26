@@ -7,6 +7,7 @@ import { Companies } from "./pages/Companies";
 import { CompanyDetail } from "./pages/CompanyDetail";
 import { Login } from "./pages/Login";
 import { AssessmentRunner } from "./pages/AssessmentRunner";
+import { AttemptDetail } from "./pages/AttemptDetail";
 import { Progress } from "./pages/Progress";
 import { QuestionDetail } from "./pages/QuestionDetail";
 import { RoleDetail } from "./pages/RoleDetail";
@@ -103,6 +104,15 @@ function App() {
         element={
           <Private>
             <AssessmentRunner />
+          </Private>
+        }
+      />
+
+      <Route
+        path="/attempts/:id"
+        element={
+          <Private>
+            <AttemptDetail />
           </Private>
         }
       />

@@ -81,7 +81,13 @@ export function RoleDetail() {
                 </span>
                 <span className="round-body">
                   <span className="tile-title">{round.roundName}</span>
-                  {round.notes && <span className="muted small">{round.notes}</span>}
+                  {/* Clamped to two lines. A full briefing here made every
+                      spine row a paragraph and destroyed the sense of a
+                      sequence, which is the one thing this page exists to
+                      show. The whole note is on the round itself. */}
+                  {round.notes && (
+                    <span className="muted small clamp-2">{round.notes}</span>
+                  )}
                   <span className="muted small">
                     {round.questionCount === 0
                       ? "No practice questions"

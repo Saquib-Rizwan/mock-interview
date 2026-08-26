@@ -17,7 +17,8 @@ export function Progress() {
   if (error) return <p className="error">{error}</p>;
   if (!data) return null;
 
-  const { totals, subjects, languages, recurringGaps, readiness, recent } = data.progress;
+  const { totals, subjects, languages, recurringGaps, readiness, assessments, recent } =
+    data.progress;
   const nothingYet = totals.textAttempts === 0 && totals.codingAttempts === 0;
 
   if (nothingYet) {
@@ -133,6 +134,42 @@ export function Progress() {
         </section>
       )}
 
+      {assessments.length > 0 && (
+        <section>
+          <h2>Mock tests</h2>
+          <p className="muted small">
+            Your best score on each timed paper. Retaking one replaces the figure
+            only if you beat it.
+          </p>
+          <ul className="bars">
+            {assessments.map((a) => (
+              <li key={a.assessmentId}>
+                <span className="bar-label">
+                  <Link to={`/assessments/${a.assessmentId}`}>{a.companyName}</Link>
+                  <br />
+                  <span className="muted small">{a.roundName}</span>
+                </span>
+                <span className="bar-track">
+                  {/* Negative marking can drive a score below zero, and a bar
+                      cannot show that — clamped at 0 so the row stays readable,
+                      with the real signed figure printed beside it. */}
+                  <span
+                    className="bar-fill neutral"
+                    style={{ width: `${Math.max(a.bestPct, 1)}%` }}
+                  />
+                </span>
+                <span className="bar-value">
+                  {a.bestScore}/{a.maxScore}
+                </span>
+                <span className="muted small bar-note">
+                  {a.bestPct}% · {a.attempts} {a.attempts === 1 ? "attempt" : "attempts"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {readiness.length > 0 && (
         <section>
           <h2>Company readiness</h2>
@@ -197,8 +234,11 @@ function RecentRow({ activity: a }: { activity: RecentActivity }) {
   return (
     <li>
       <p className="muted small">
-        {new Date(a.createdAt).toLocaleString()} · {CATEGORY_LABELS[a.category]} ·{" "}
-        {a.kind === "coding" ? "code" : "written"}
+        {new Date(a.createdAt).toLocaleString()}
+        {/* A mock test spans several categories, so it reports none and the
+            label alone identifies it. */}
+        {a.category && <> · {CATEGORY_LABELS[a.category]}</>} ·{" "}
+        {a.kind === "coding" ? "code" : a.kind === "assessment" ? "mock test" : "written"}
         {scored && (
           <>
             {" · "}
@@ -209,7 +249,7 @@ function RecentRow({ activity: a }: { activity: RecentActivity }) {
         )}
       </p>
       <p className="attempt-answer">
-        <Link to={`/questions/${a.questionId}`}>{a.questionText}</Link>
+        <Link to={a.href}>{a.questionText}</Link>
       </p>
     </li>
   );

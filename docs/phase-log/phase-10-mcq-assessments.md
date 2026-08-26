@@ -1,9 +1,8 @@
 # Phase 10 — MCQ assessment rounds
 
-Status: **10a, 10b and 10c complete — the loop closes.** Schema and loader,
-then taking the test timed and scored, then the review with worked solutions.
-What remains is 10d: enough questions for the per-company filtering to mean
-something.
+Status: **10a-10d complete.** Schema and loader, taking the test timed and
+scored, the review with worked solutions, and enough questions that three
+companies now sit three genuinely different papers.
 
 The format most companies actually screen with, and the one the catalogue could
 not express. Until now an MCQ round was encoded as written questions with an
@@ -320,6 +319,69 @@ Checked across the whole backend rather than by looking at one response:
 
 A static sweep is the stronger check here — a browser test only covers the
 response you thought to open.
+
+## 10d — depth, and the filtering becoming visible
+
+MCQ bank: **15 to 61.** Three assessments attached, and they are not the same
+test with different names:
+
+| Company | Questions | Time | Negative | Mix |
+|---|---|---|---|---|
+| Abilytics | 12 | 45 min | **0.25** | broad CS spread |
+| Anora Labs | 8 | 9 min | none | **6 of 8 C programming** |
+| Cloudium | 8 | untimed | none | **5 of 8 Python** |
+
+That is the point of the phase made concrete. Anora's paper is C-heavy and
+tightly paced; Cloudium's is Python-led and untimed; Abilytics' is broad and
+punishes guessing. Each falls out of its own source document.
+
+### Nothing was copied
+
+The four subject PDFs carry 239 MCQs between them — 45 OOPS, 36 DBMS, 123 OS,
+35 CN — complete with answer keys and explanations. **They were used as a
+concept map and to check correctness, and not one question was transcribed.**
+Same rule as the LeetCode statements: the notes are somebody else's copyright
+and this repository is public. Facts are free, wording is not.
+
+Rewriting also produced better questions than transcription would have. Several
+of the source options are ambiguous, and authoring fresh ones allowed each
+distractor to be chosen for a specific misconception — the 76.8 in the
+percentage question is what you get by subtracting 20% of the result instead of
+dividing, and 12.5 in the work-rate question is the average of the two times.
+
+### Two derived numbers, both declared
+
+- **Anora's mock runs 9 minutes, not 75.** The real paper allows 75 minutes for
+  65 questions, about 69 seconds each. A shorter mock given the full 75 would
+  teach the wrong pace entirely, so it inherits the *rate* instead, and the
+  round notes say so and show the arithmetic.
+- **Abilytics keeps its documented 45 minutes**, because its question count was
+  never stated and there is no pace to derive. Quoting the real figure is the
+  honest option where the ratio is unknown.
+
+**Cloudium gets no duration and no negative marking at all**, because its source
+states neither. An untimed mock is a worse mock; inventing a limit would be a
+worse catalogue.
+
+### Categories earned their keep immediately
+
+`c_programming` and `python` went from empty to carrying the distinguishing
+weight of two companies' papers within the same session they were added. Had the
+150 questions been authored first and the categories added after, every one of
+them would have needed migrating — which is precisely the argument that put the
+migration before the authoring.
+
+### Verified before anything ran
+
+- All 61 checked against the loader's own rules: 0 structural problems, 0
+  duplicate texts, every `correctIndex` in range.
+- Every computable answer recomputed rather than re-read — the work-rate as an
+  exact `Fraction`, the ratio chain, the train conversion, the C pointer
+  arithmetic, and the postfix-increment loop simulated statement by statement.
+  **0 mismatches.**
+- Supply checked against demand per category: every pool now exceeds what the
+  catalogue draws, so **no two companies receive the same question**. Aptitude
+  was the pinch point at 2 against 6 draws before this batch.
 
 ## What I have **not** verified
 
